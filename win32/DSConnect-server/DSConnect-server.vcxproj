@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug(Profile)|Win32">
+      <Configuration>Debug(Profile)</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug(Profile)|x64">
+      <Configuration>Debug(Profile)</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -25,6 +33,19 @@
     <ClInclude Include="..\..\src\common\malloc.h" />
     <ClInclude Include="..\..\src\common\md52.h" />
     <ClInclude Include="..\..\src\common\mmo.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\Shiny.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyConfig.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyData.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyMacros.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyManager.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyNode.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyNodePool.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyNodeState.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyOutput.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyPrereqs.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyTools.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyVersion.h" />
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyZone.h" />
     <ClInclude Include="..\..\src\common\showmsg.h" />
     <ClInclude Include="..\..\src\common\socket.h" />
     <ClInclude Include="..\..\src\common\sql.h" />
@@ -46,6 +67,13 @@
     <ClCompile Include="..\..\src\common\kernel.cpp" />
     <ClCompile Include="..\..\src\common\malloc.cpp" />
     <ClCompile Include="..\..\src\common\md52.cpp" />
+    <ClCompile Include="..\..\src\common\shiny\ShinyManager.c" />
+    <ClCompile Include="..\..\src\common\shiny\ShinyNode.c" />
+    <ClCompile Include="..\..\src\common\shiny\ShinyNodePool.c" />
+    <ClCompile Include="..\..\src\common\shiny\ShinyNodeState.c" />
+    <ClCompile Include="..\..\src\common\shiny\ShinyOutput.c" />
+    <ClCompile Include="..\..\src\common\shiny\ShinyTools.c" />
+    <ClCompile Include="..\..\src\common\shiny\ShinyZone.c" />
     <ClCompile Include="..\..\src\common\showmsg.cpp" />
     <ClCompile Include="..\..\src\common\socket.cpp" />
     <ClCompile Include="..\..\src\common\sql.cpp" />
@@ -78,7 +106,19 @@
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug(Profile)|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug(Profile)|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
@@ -104,7 +144,13 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug(Profile)|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug(Profile)|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,7 +164,15 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\</OutDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug(Profile)|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\</OutDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug(Profile)|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\</OutDir>
   </PropertyGroup>
@@ -147,6 +201,23 @@
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug(Profile)|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;dsTCPSERV;DEBUGLOGLOGIN;SHINY_IS_COMPILED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\external;$(ProjectDir)..\external\mysql;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libmariadb.lib;WS2_32.Lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\lib</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>
@@ -154,6 +225,25 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;dsTCPSERV;DEBUGLOGLOGIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\external;$(ProjectDir)..\external\mysql;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libmariadb64.lib;WS2_32.Lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\lib64</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(ProjectName)_64$(TargetExt)</OutputFile>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug(Profile)|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;dsTCPSERV;DEBUGLOGLOGIN;SHINY_IS_COMPILED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\external;$(ProjectDir)..\external\mysql;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
