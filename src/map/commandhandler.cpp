@@ -28,6 +28,7 @@
 
 void CCommandHandler::init(lua_State* L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(L == NULL);
     m_LState = L;
 }

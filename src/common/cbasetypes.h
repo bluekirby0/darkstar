@@ -70,6 +70,9 @@
 #define DSP_DEBUG_BREAK_IF(_CONDITION_)
 #endif
 
+// include profiling macros (internally disabled when not compiled in profiling mode)
+#include "shiny/include/Shiny.h"
+
 //////////////////////////////////////////////////////////////////////////
 // typedefs to compensate type size change from 32bit to 64bit
 // MS implements LLP64 model, normal unix does LP64,

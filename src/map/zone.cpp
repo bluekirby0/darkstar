@@ -120,6 +120,11 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
   m_IsWeatherStatic = 0;
   m_useNavMesh = false;
   m_navMesh = NULL;
+  m_npcList = EntityList_t();
+  m_mobList = EntityList_t();
+  m_petList = EntityList_t();
+  m_charList = EntityList_t();
+  m_patrolList = EntityList_t();
 
   // settings should load first
   LoadZoneSettings();
@@ -451,7 +456,8 @@ void CZone::InsertNPC(CBaseEntity* PNpc)
             m_Transport = PNpc;
             return;
         }
-		m_npcList[PNpc->targid] = PNpc;
+		//m_npcList[PNpc->targid] = PNpc;
+		m_npcList.insert(std::pair<uint16,CBaseEntity*>(PNpc->targid, PNpc));
 	}
 }
 
@@ -1440,6 +1446,7 @@ void CZone::WideScan(CCharEntity* PChar, uint16 radius)
 
 void CZone::ZoneServer(uint32 tick)
 {
+	PROFILE_FUNC();
 	for (EntityList_t::const_iterator it = m_mobList.begin(); it != m_mobList.end() ; ++it)
 	{
 		CMobEntity* PMob = (CMobEntity*)it->second;

@@ -201,11 +201,13 @@ void CCharEntity::resetPetZoningInfo()
 
 void CCharEntity::pushPacket(CBasicPacket* packet)
 {
+	PROFILE_FUNC();
 	PacketList.push_back(packet);
 }
 
 CBasicPacket* CCharEntity::popPacket()
 {
+	PROFILE_FUNC();
 	CBasicPacket* PPacket = PacketList.front();
 	PacketList.pop_front();
 	return PPacket;

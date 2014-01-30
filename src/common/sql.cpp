@@ -70,6 +70,7 @@ struct s_column_length
 
 Sql_t* Sql_Malloc(void)
 {
+	PROFILE_FUNC();
 	Sql_t* self;
 
 	CREATE(self, Sql_t, 1);
@@ -268,6 +269,7 @@ size_t Sql_EscapeString(Sql_t* self, char *out_to, const char *from)
 
 int32 Sql_Query(Sql_t* self, const char* query, ...)
 {
+	PROFILE_FUNC();
 	int32 res;
 	va_list args;
 

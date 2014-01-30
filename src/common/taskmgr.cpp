@@ -39,6 +39,7 @@ CTaskMgr* CTaskMgr::getInstance()
 
 CTaskMgr::CTask *CTaskMgr::AddTask(std::string InitName, size_t InitTick, void *InitData,TASKTYPE InitType,TaskFunc_t InitFunc,size_t InitInterval)
 {
+	PROFILE_FUNC();
 	return AddTask( new CTask(InitName,InitTick,InitData,InitType,InitFunc,InitInterval) );
 }
 

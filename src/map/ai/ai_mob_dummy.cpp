@@ -89,6 +89,7 @@ CAIMobDummy::CAIMobDummy(CMobEntity* PMob)
 
 void CAIMobDummy::CheckCurrentAction(uint32 tick)
 {
+	PROFILE_FUNC();
 	m_Tick = tick;
 
 	m_PMob->PEnmityContainer->DecayEnmity();
@@ -128,6 +129,7 @@ void CAIMobDummy::CheckCurrentAction(uint32 tick)
 
 void CAIMobDummy::ActionRoaming()
 {
+	PROFILE_FUNC();
 	// If there's someone on our enmity list, go from roaming -> engaging
 	if (m_PMob->PEnmityContainer->GetHighestEnmity() != NULL && !(m_PMob->m_roamFlags & ROAMFLAG_IGNORE))
 	{
@@ -290,6 +292,7 @@ void CAIMobDummy::ActionRoaming()
 
 void CAIMobDummy::ActionEngage()
 {
+	PROFILE_FUNC();
 	SetupEngage();
 
 	m_ActionType = ACTION_ATTACK;
@@ -330,6 +333,7 @@ void CAIMobDummy::ActionEngage()
 
 void CAIMobDummy::ActionDisengage()
 {
+	PROFILE_FUNC();
 	m_PPathFind->Clear();
 
 	// this will let me decide to walk home or despawn
@@ -364,6 +368,7 @@ void CAIMobDummy::ActionDisengage()
 
 void CAIMobDummy::ActionFall()
 {
+	PROFILE_FUNC();
 	m_PMob->PEnmityContainer->Clear();
 	m_PPathFind->Clear();
 
@@ -390,6 +395,7 @@ void CAIMobDummy::ActionFall()
 
 void CAIMobDummy::ActionDropItems()
 {
+	PROFILE_FUNC();
     if (m_Tick >= m_LastActionTime + m_PMob->m_DropItemTime)
 	{
         CCharEntity* PChar = (CCharEntity*)m_PMob->loc.zone->GetEntity(m_PMob->m_OwnerID.targid, TYPE_PC);
@@ -521,6 +527,7 @@ void CAIMobDummy::ActionDropItems()
 
 void CAIMobDummy::ActionDeath()
 {
+	PROFILE_FUNC();
 	if (m_Tick > m_LastActionTime + 12000)
 	{
         m_PMob->StatusEffectContainer->KillAllStatusEffect();
@@ -543,6 +550,7 @@ void CAIMobDummy::ActionDeath()
 
 void CAIMobDummy::ActionFadeOut()
 {
+	PROFILE_FUNC();
 	if (m_Tick > m_LastActionTime + 15000 )
 	{
 		// reset pet cast time to now
@@ -564,6 +572,7 @@ void CAIMobDummy::ActionFadeOut()
 
 void CAIMobDummy::ActionDespawn()
 {
+	PROFILE_FUNC();
 	ActionFadeOut();
 
 	// do not go into action spawn!!!
@@ -583,6 +592,7 @@ void CAIMobDummy::ActionDespawn()
 
 void CAIMobDummy::ActionSpawn()
 {
+	PROFILE_FUNC();
 	if (m_Tick >= m_LastActionTime + m_PMob->m_RespawnTime)
 	{
 		m_NeutralTime = m_Tick;
@@ -669,6 +679,7 @@ void CAIMobDummy::ActionSpawn()
 
 void CAIMobDummy::ActionAbilityStart()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PBattleTarget == NULL);
 
     std::vector<CMobSkill*> MobSkills = battleutils::GetMobSkillsByFamily(m_PMob->getMobMod(MOBMOD_SKILLS));
@@ -824,6 +835,7 @@ void CAIMobDummy::ActionAbilityStart()
 ************************************************************************/
 void CAIMobDummy::ActionAbilityUsing()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PMobSkill == NULL);
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL);
 
@@ -872,6 +884,7 @@ void CAIMobDummy::ActionAbilityUsing()
 
 void CAIMobDummy::ActionAbilityFinish()
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PMobSkill == NULL);
 
 	// crash fix, a null target made it into CActionPacket
@@ -1002,6 +1015,7 @@ void CAIMobDummy::ActionAbilityFinish()
 
 void CAIMobDummy::ActionAbilityInterrupt()
 {
+	PROFILE_FUNC();
     m_LastActionTime = m_Tick;
 	//cancel the whole readying animation
 	apAction_t Action;
@@ -1030,6 +1044,7 @@ void CAIMobDummy::ActionAbilityInterrupt()
 
 void CAIMobDummy::ActionSleep()
 {
+	PROFILE_FUNC();
 	if (m_PMob->isDead()) {
 		m_ActionType = ACTION_FALL;
 		ActionFall();
@@ -1054,7 +1069,7 @@ void CAIMobDummy::ActionSleep()
 
 void CAIMobDummy::ActionStun()
 {
-
+	PROFILE_FUNC();
 	m_DeaggroTime = m_Tick;
 
 	// lets just chill here for a bit
@@ -1074,6 +1089,7 @@ void CAIMobDummy::ActionStun()
 
 void CAIMobDummy::ActionMagicStart()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PSpell == NULL);
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL);
 
@@ -1097,6 +1113,7 @@ void CAIMobDummy::ActionMagicStart()
 
 void CAIMobDummy::ActionMagicCasting()
 {
+	PROFILE_FUNC();
 	STATESTATUS status = m_PMagicState->Update(m_Tick);
 
 	if(status == STATESTATUS_INTERRUPT)
@@ -1121,6 +1138,7 @@ void CAIMobDummy::ActionMagicCasting()
 
 void CAIMobDummy::ActionMagicFinish()
 {
+	PROFILE_FUNC();
 	m_LastActionTime = m_Tick;
 	m_LastMagicTime = m_Tick - rand()%(uint32)((float)m_PMob->getBigMobMod(MOBMOD_MAGIC_COOL) / 2);
 	m_DeaggroTime = m_Tick;
@@ -1150,6 +1168,7 @@ void CAIMobDummy::ActionMagicFinish()
 
 void CAIMobDummy::ActionMagicInterrupt()
 {
+	PROFILE_FUNC();
 	m_LastActionTime = m_Tick;
 
 	m_PMagicState->InterruptSpell();
@@ -1170,6 +1189,7 @@ void CAIMobDummy::ActionMagicInterrupt()
 
 void CAIMobDummy::ActionAttack()
 {
+	PROFILE_FUNC();
 	m_PBattleTarget = m_PMob->PEnmityContainer->GetHighestEnmity();
 
     m_actionqueueability = false;
@@ -1711,6 +1731,7 @@ void CAIMobDummy::ActionAttack()
 
 void CAIMobDummy::FinishAttack()
 {
+	PROFILE_FUNC();
 	// launch OnMobFight every 3 sec (not everytime at 0 but 0~400).
 	if((m_Tick - m_StartBattle) % 3000 <= 400)
 	{
@@ -1728,6 +1749,7 @@ void CAIMobDummy::FinishAttack()
 
 bool CAIMobDummy::TryDeaggro()
 {
+	PROFILE_FUNC();
 	if(m_PBattleTarget == NULL && (m_PMob->PEnmityContainer != NULL && m_PMob->PEnmityContainer->GetHighestEnmity() == NULL))
     {
 		return true;
@@ -1781,6 +1803,7 @@ bool CAIMobDummy::TryDeaggro()
 
 void CAIMobDummy::TryLink()
 {
+	PROFILE_FUNC();
 	if(m_PBattleTarget == NULL)
 	{
 		return;
@@ -1833,7 +1856,7 @@ void CAIMobDummy::TryLink()
 
 bool CAIMobDummy::CanCastSpells()
 {
-
+	PROFILE_FUNC();
 	if (!m_PMob->SpellContainer->HasSpells()) return false;
 
 	// check for spell blockers e.g. silence
@@ -1852,6 +1875,7 @@ bool CAIMobDummy::CanCastSpells()
 
 bool CAIMobDummy::TryCastSpell()
 {
+	PROFILE_FUNC();
 	if(!CanCastSpells())
 	{
 		return false;
@@ -1900,7 +1924,7 @@ bool CAIMobDummy::TryCastSpell()
 
 void CAIMobDummy::ActionSpecialSkill()
 {
-
+	PROFILE_FUNC();
 	if(m_PSpecialSkill == NULL){
 		m_PBattleSubTarget = NULL;
 		TransitionBack();
@@ -1963,6 +1987,7 @@ void CAIMobDummy::ActionSpecialSkill()
 
 void CAIMobDummy::CastSpell(uint16 spellId, CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
 	m_PSpell = spell::GetSpell(spellId);
 
 	if(m_PSpell == NULL){
@@ -2026,6 +2051,7 @@ void CAIMobDummy::CastSpell(uint16 spellId, CBattleEntity* PTarget)
 
 bool CAIMobDummy::TrySpecialSkill()
 {
+	PROFILE_FUNC();
 	if(m_PSpecialSkill == NULL) return false;
 
 	if((m_PMob->m_specialFlags & SPECIALFLAG_HIDDEN) && !m_PMob->IsNameHidden())
@@ -2067,6 +2093,7 @@ bool CAIMobDummy::TrySpecialSkill()
 
 void CAIMobDummy::FollowPath()
 {
+	PROFILE_FUNC();
 	m_PPathFind->FollowPath();
 
 	if(m_ActionType == ACTION_ROAMING)
@@ -2116,6 +2143,7 @@ void CAIMobDummy::FollowPath()
 
 void CAIMobDummy::Stun(uint32 stunTime)
 {
+	PROFILE_FUNC();
 	m_StunTime = stunTime;
     m_LastStunTime = m_Tick;
 	m_ActionType = ACTION_STUN;
@@ -2123,6 +2151,7 @@ void CAIMobDummy::Stun(uint32 stunTime)
 
 void CAIMobDummy::SetupEngage()
 {
+	PROFILE_FUNC();
 	m_checkDespawn = false;
 	m_PMob->animation = ANIMATION_ATTACK;
 	m_StartBattle = m_Tick;
@@ -2157,7 +2186,7 @@ void CAIMobDummy::SetupEngage()
 
 void CAIMobDummy::WeatherChange(WEATHER weather, uint8 element)
 {
-
+	PROFILE_FUNC();
 	// can't detect by scent in this weather
 	if(m_PMob->m_Behaviour & BEHAVIOUR_SCENT)
 	{
@@ -2222,6 +2251,7 @@ void CAIMobDummy::WeatherChange(WEATHER weather, uint8 element)
 
 bool CAIMobDummy::CanAggroTarget(CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
 	// don't aggro i'm neutral
 	if(m_PMob->m_neutral) return false;
 
@@ -2237,6 +2267,7 @@ bool CAIMobDummy::CanAggroTarget(CBattleEntity* PTarget)
 
 void CAIMobDummy::Deaggro()
 {
+	PROFILE_FUNC();
 	if(m_PBattleTarget != NULL)
 	{
 		m_PMob->PEnmityContainer->Clear(m_PBattleTarget->id);
@@ -2257,6 +2288,7 @@ void CAIMobDummy::Deaggro()
 
 void CAIMobDummy::TransitionBack(bool skipWait)
 {
+	PROFILE_FUNC();
 	if(m_PMob->isDead())
 	{
 		m_ActionType = ACTION_FALL;
@@ -2282,15 +2314,18 @@ void CAIMobDummy::TransitionBack(bool skipWait)
 
 void CAIMobDummy::setMobSkillAttack(bool value)
 {
+	PROFILE_FUNC();
     m_mobskillattack = value;
 }
 
 bool CAIMobDummy::getMobSkillAttack()
 {
+	PROFILE_FUNC();
     return m_mobskillattack;
 }
 
 bool CAIMobDummy::isActionQueueAttack()
 {
+	PROFILE_FUNC();
     return m_actionqueueability;
 }

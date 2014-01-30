@@ -404,6 +404,7 @@ namespace spell
 
     void LoadSpellList()
     {
+		PROFILE_FUNC();
 	    memset(PSpellList, 0, sizeof(PSpellList));
 
 	    const int8* Query = "SELECT spellid, name, jobs, `group`, validTargets, skill, castTime, recastTime, animation, animationTime, mpCost, \

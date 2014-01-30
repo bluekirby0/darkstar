@@ -91,6 +91,7 @@ namespace battleutils
 
 void LoadEnmityTable()
 {
+	PROFILE_FUNC();
     for (uint32 x = 0; x < 100; ++x)
     {
         g_EnmityTable[x][0] = (uint8)abs(0.5441*x + 13.191);     // cmod
@@ -106,6 +107,7 @@ void LoadEnmityTable()
 
 void LoadSkillTable()
 {
+	PROFILE_FUNC();
 	memset(g_SkillTable,0, sizeof(g_SkillTable));
 	memset(g_SkillRanks,0, sizeof(g_SkillRanks));
 
@@ -153,6 +155,7 @@ void LoadSkillTable()
 
 void LoadWeaponSkillsList()
 {
+	PROFILE_FUNC();
 	memset(g_PWeaponSkillList,0,sizeof(g_PWeaponSkillList));
 
 	const int8* fmtQuery = "SELECT weaponskillid, name, jobs, type, skilllevel, element, animation, `range`, aoe, primary_sc, secondary_sc, tertiary_sc, main_only \
@@ -196,6 +199,7 @@ void LoadWeaponSkillsList()
 
 void LoadMobSkillsList()
 {
+	PROFILE_FUNC();
 	memset(g_PMobSkillList, 0, sizeof(g_PMobSkillList));
 
 	const int8* fmtQuery = "SELECT mob_skill_id, family_id, mob_anim_id, mob_skill_name, \
@@ -238,6 +242,7 @@ void LoadMobSkillsList()
 
 void LoadSkillChainDamageModifiers()
 {
+	PROFILE_FUNC();
     memset(g_SkillChainDamageModifiers, 0, sizeof(g_SkillChainDamageModifiers));
 
     const int8* fmtQuery = "SELECT chain_level, chain_count, initial_modifier, magic_burst_modifier \

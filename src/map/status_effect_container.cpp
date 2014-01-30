@@ -100,6 +100,7 @@ namespace effects
 
     void LoadEffectsParameters()
     {
+		PROFILE_FUNC();
         for (uint16 i = 0; i < MAX_EFFECTID; ++i)
         {
             EffectsParams[i].Flag = 0;

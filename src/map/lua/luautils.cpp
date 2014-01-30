@@ -74,6 +74,7 @@ lua_State*  LuaHandle = NULL;
 
 int32 init()
 {
+	PROFILE_FUNC();
 	ShowStatus("luautils::init:lua initializing...");
 	LuaHandle = luaL_newstate();
 	luaL_openlibs(LuaHandle);
@@ -821,6 +822,7 @@ int32 GetTextIDVariable(uint16 ZoneID, const char* variable)
 
 int32 OnServerStart()
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -870,6 +872,7 @@ int32 OnServerStart()
 
 int32 OnZoneInitialise(uint16 ZoneID)
 {
+	PROFILE_FUNC();
 	CZone* PZone = zoneutils::GetZone(ZoneID);
 
 	int8 File[255];

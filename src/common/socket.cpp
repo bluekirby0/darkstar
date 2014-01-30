@@ -1149,6 +1149,7 @@ void set_nonblocking(int fd, unsigned long yes)
 static int access_debug    = 0;
 int32 makeBind_udp(uint32 ip, uint16 port)
 {
+	PROFILE_FUNC();
 	struct sockaddr_in server_address;
 	int fd;
 	int result;

@@ -502,6 +502,7 @@ namespace itemutils
 
     void Initialize()
     {
+		PROFILE_FUNC();
         LoadItemList();
         LoadDropList();
         LoadLootList();
@@ -563,6 +564,7 @@ namespace nameSpaceUnlockableWeapons
 
     void LoadUnlockableWeaponList()
     {
+		PROFILE_FUNC();
         int32 ret = Sql_Query(SqlHandle, "SELECT itemid, points FROM item_weapon_unlocked WHERE Id < %u;", MAX_UNLOCKABLE_WEAPONS);
 
 	    if( ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)

@@ -78,6 +78,15 @@
     <Filter Include="Header Files\utils">
       <UniqueIdentifier>{4809b9f1-e6f6-4976-a83b-e246e6dc5671}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\common\shiny">
+      <UniqueIdentifier>{8482a1ff-073c-4295-83d0-4ea6aafd1e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\shiny">
+      <UniqueIdentifier>{63791cfd-aedd-42db-906f-0ed9bab98f3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\shiny\include">
+      <UniqueIdentifier>{38d74b05-b51e-4177-9f62-a2cccdb75278}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\map\ability.h">
@@ -782,6 +791,45 @@
     <ClInclude Include="..\..\src\map\ai\ai_ultimate_summon.h">
       <Filter>Header Files\ai</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\Shiny.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyConfig.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyData.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyMacros.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyManager.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyNode.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyNodePool.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyNodeState.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyOutput.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyPrereqs.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyTools.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyVersion.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\shiny\include\ShinyZone.h">
+      <Filter>Header Files\common\shiny\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\map\ability.cpp">
@@ -1428,6 +1476,27 @@
     </ClCompile>
     <ClCompile Include="..\..\src\map\ai\ai_ultimate_summon.cpp">
       <Filter>Source Files\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\shiny\ShinyManager.c">
+      <Filter>Source Files\common\shiny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\shiny\ShinyNode.c">
+      <Filter>Source Files\common\shiny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\shiny\ShinyNodePool.c">
+      <Filter>Source Files\common\shiny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\shiny\ShinyNodeState.c">
+      <Filter>Source Files\common\shiny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\shiny\ShinyOutput.c">
+      <Filter>Source Files\common\shiny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\shiny\ShinyTools.c">
+      <Filter>Source Files\common\shiny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\shiny\ShinyZone.c">
+      <Filter>Source Files\common\shiny</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

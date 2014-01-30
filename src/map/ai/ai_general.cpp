@@ -103,6 +103,7 @@ void CAIGeneral::Reset()
 
 ACTIONTYPE CAIGeneral::GetCurrentAction()
 {
+	PROFILE_FUNC();
 	return m_ActionType;
 }
 
@@ -114,6 +115,7 @@ ACTIONTYPE CAIGeneral::GetCurrentAction()
 
 uint32 CAIGeneral::GetBattleTime()
 {
+	PROFILE_FUNC();
 	return ((m_Tick - m_StartBattle) / 1000);
 }
 
@@ -125,6 +127,7 @@ uint32 CAIGeneral::GetBattleTime()
 
 void CAIGeneral::SetCurrentAction(ACTIONTYPE Action, uint16 TargetID)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_ActionTargetID != 0);
 
 	switch (Action)
@@ -248,21 +251,25 @@ void CAIGeneral::SetCurrentAction(ACTIONTYPE Action, uint16 TargetID)
 
 void CAIGeneral::SetLastActionTime(uint32 time)
 {
+	PROFILE_FUNC();
 	m_LastActionTime = time;
 }
 
 void CAIGeneral::SetLastMagicTime(uint32 time)
 {
+	PROFILE_FUNC();
 	m_LastMagicTime = time;
 }
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
 	m_PBattleTarget = PEntity;
 }
 
 void CAIGeneral::SetBattleSubTarget(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
 	m_PBattleSubTarget = PEntity;
 }
 
@@ -274,6 +281,7 @@ void CAIGeneral::SetBattleSubTarget(CBattleEntity* PEntity)
 
 void CAIGeneral::SetCurrentSpell(uint16 SpellID)
 {
+	PROFILE_FUNC();
 	if (m_ActionType != ACTION_MAGIC_START   &&
 		m_ActionType != ACTION_MAGIC_CASTING &&
 		m_ActionType != ACTION_MAGIC_FINISH  &&
@@ -291,6 +299,7 @@ void CAIGeneral::SetCurrentSpell(uint16 SpellID)
 
 CSpell* CAIGeneral::GetCurrentSpell()
 {
+	PROFILE_FUNC();
     // TODO: refactor this to only need magic state
     if(m_PMagicState != NULL)
     {
@@ -310,6 +319,7 @@ CSpell* CAIGeneral::GetCurrentSpell()
 
 void CAIGeneral::SetCurrentWeaponSkill(uint16 WSkillID)
 {
+	PROFILE_FUNC();
 	if (m_ActionType != ACTION_WEAPONSKILL_START   &&
 		m_ActionType != ACTION_WEAPONSKILL_FINISH)
 	{
@@ -325,6 +335,7 @@ void CAIGeneral::SetCurrentWeaponSkill(uint16 WSkillID)
 
 CWeaponSkill* CAIGeneral::GetCurrentWeaponSkill()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PWeaponSkill == NULL);
 
 	return m_PWeaponSkill;
@@ -338,6 +349,7 @@ CWeaponSkill* CAIGeneral::GetCurrentWeaponSkill()
 
 void CAIGeneral::SetCurrentJobAbility(uint16 JobAbilityID)
 {
+	PROFILE_FUNC();
 	if (m_ActionType != ACTION_JOBABILITY_START   &&
 		m_ActionType != ACTION_JOBABILITY_FINISH)
 	{
@@ -353,6 +365,7 @@ void CAIGeneral::SetCurrentJobAbility(uint16 JobAbilityID)
 
 CAbility* CAIGeneral::GetCurrentJobAbility()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PJobAbility == NULL);
 
 	return m_PJobAbility;
@@ -366,6 +379,7 @@ CAbility* CAIGeneral::GetCurrentJobAbility()
 
 CBattleEntity* CAIGeneral::GetBattleTarget()
 {
+	PROFILE_FUNC();
 	//DSP_DEBUG_BREAK_IF(m_PBattleTarget == NULL);
 
 	return m_PBattleTarget;
@@ -380,6 +394,7 @@ CBattleEntity* CAIGeneral::GetBattleTarget()
 
 CBattleEntity* CAIGeneral::GetBattleSubTarget()
 {
+	PROFILE_FUNC();
 	return m_PBattleSubTarget;
 }
 
@@ -391,6 +406,7 @@ CBattleEntity* CAIGeneral::GetBattleSubTarget()
 
 CMobSkill* CAIGeneral::GetCurrentMobSkill()
 {
+	PROFILE_FUNC();
 	return m_PMobSkill;
 }
 
@@ -402,6 +418,7 @@ CMobSkill* CAIGeneral::GetCurrentMobSkill()
 
 void CAIGeneral::SetCurrentMobSkill(CMobSkill* skill)
 {
+	PROFILE_FUNC();
 	m_PMobSkill = skill;
 }
 
@@ -413,11 +430,13 @@ void CAIGeneral::SetCurrentMobSkill(CMobSkill* skill)
 
 uint16 CAIGeneral::GetLastCorsairRoll()
 {
+	PROFILE_FUNC();
 	return m_CorsairDoubleUp;
 }
 
 void CAIGeneral::SetLastCorsairRoll(uint16 ability)
 {
+	PROFILE_FUNC();
 	m_CorsairDoubleUp = ability;
 }
 
@@ -429,10 +448,12 @@ void CAIGeneral::SetLastCorsairRoll(uint16 ability)
 
 void CAIGeneral::SetAutoAttackEnabled(bool enabled)
 {
+	PROFILE_FUNC();
 	m_AutoAttackEnabled = enabled;
 }
 void CAIGeneral::SetMagicCastingEnabled(bool enabled)
 {
+	PROFILE_FUNC();
     if(m_PMagicState != NULL)
     {
         m_PMagicState->m_enableCasting = enabled;
@@ -440,11 +461,13 @@ void CAIGeneral::SetMagicCastingEnabled(bool enabled)
 }
 void CAIGeneral::SetMobAbilityEnabled(bool enabled)
 {
+	PROFILE_FUNC();
 	m_MobAbilityEnabled = enabled;
 }
 
 bool CAIGeneral::MoveTo(position_t* pos)
 {
+	PROFILE_FUNC();
     if(m_PPathFind != NULL && m_ActionType == ACTION_ROAMING){
         m_PPathFind->StepTo(pos);
         return true;
@@ -454,6 +477,7 @@ bool CAIGeneral::MoveTo(position_t* pos)
 
 void CAIGeneral::Wait(int32 waitTime)
 {
+	PROFILE_FUNC();
 	if(waitTime == -1)
 	{
 		// wait forever

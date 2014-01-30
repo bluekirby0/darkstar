@@ -46,6 +46,7 @@ CVanaTime::CVanaTime()
 
 CVanaTime* CVanaTime::getInstance()
 {
+	PROFILE_FUNC();
 	if(_instance == NULL) {
 		_instance = new CVanaTime();
 	}
@@ -146,6 +147,7 @@ int32 CVanaTime::getCustomOffset()
 
 void CVanaTime::setCustomOffset(int32 offset)
 {
+	PROFILE_FUNC();
 	m_customOffset = offset;
 
 	SyncTime();

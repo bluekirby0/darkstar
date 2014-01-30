@@ -38,7 +38,6 @@
 	#include <unistd.h>
 #endif
 
-
 int runflag = 1;
 int arg_c = 0;
 char **arg_v = NULL;
@@ -219,6 +218,7 @@ void usercheck(void)
 
 int main (int argc, char **argv)
 {
+	PROFILE_BEGIN(Initialization);
 	{// initialize program arguments
 		char *p1 = SERVER_NAME = argv[0];
 		char *p2 = p1;
@@ -240,20 +240,23 @@ int main (int argc, char **argv)
 	socket_init();
 
 	do_init(argc,argv);
-
+	PROFILE_END();
 	{// Main runtime cycle
 		int next;
 
 		while (runflag) 
 		{
+			PROFILE_UPDATE();
 			next = CTaskMgr::getInstance()->DoTimer(gettick_nocache());
 			do_sockets(next);
 		}
 	}
-
+	PROFILE_BEGIN(Breakdown);
 	do_final();
 	timer_final();
 	socket_final();
 	malloc_final();
+	PROFILE_END();
+	PROFILE_OUTPUT(NULL);
 	return 0;
 }

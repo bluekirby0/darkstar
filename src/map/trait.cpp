@@ -148,6 +148,7 @@ namespace traits
 
     void LoadTraitsList()
     {
+		PROFILE_FUNC();
 	    const int8* Query = "SELECT traitid, job, level, rank, modifier, value \
 							 FROM traits \
                              WHERE traitid < %u \

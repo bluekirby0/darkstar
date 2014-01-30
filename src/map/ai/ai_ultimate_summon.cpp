@@ -68,6 +68,7 @@ CAIUltimateSummon::CAIUltimateSummon(CPetEntity* PPet)
 
 void CAIUltimateSummon::CheckCurrentAction(uint32 tick)
 {
+	PROFILE_FUNC();
 	m_Tick = tick;
 
 	switch(m_ActionType)
@@ -91,6 +92,7 @@ void CAIUltimateSummon::CheckCurrentAction(uint32 tick)
 
 void CAIUltimateSummon::ActionAbilityStart()
 {
+	PROFILE_FUNC();
 	if(m_PPet->StatusEffectContainer->HasPreventActionEffect())
 	{
 		return;
@@ -103,7 +105,9 @@ void CAIUltimateSummon::ActionAbilityStart()
 	}
 }
 
-void CAIUltimateSummon::preparePetAbility(CBattleEntity* PTarg){
+void CAIUltimateSummon::preparePetAbility(CBattleEntity* PTarg)
+{
+	PROFILE_FUNC();
 	if(m_PMobSkill!=NULL){
 
 		apAction_t Action;
@@ -152,6 +156,7 @@ void CAIUltimateSummon::preparePetAbility(CBattleEntity* PTarg){
 
 void CAIUltimateSummon::ActionAbilityUsing()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PMobSkill == NULL);
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL && m_PMobSkill->getValidTargets()==TARGET_ENEMY && m_PPet->getPetType()!=PETTYPE_AVATAR);
 
@@ -232,7 +237,9 @@ void CAIUltimateSummon::ActionAbilityUsing()
     m_PPet->loc.zone->PushPacket(m_PPet,CHAR_INRANGE,new CEntityUpdatePacket(m_PPet,ENTITY_UPDATE));
 }
 
-void CAIUltimateSummon::ActionAbilityFinish(){
+void CAIUltimateSummon::ActionAbilityFinish()
+{
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PMobSkill == NULL);
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL);
 
@@ -319,7 +326,9 @@ void CAIUltimateSummon::ActionAbilityFinish(){
 	m_ActionType = ACTION_ATTACK;
 }
 
-void CAIUltimateSummon::ActionAbilityInterrupt(){
+void CAIUltimateSummon::ActionAbilityInterrupt()
+{
+	PROFILE_FUNC();
 	m_LastActionTime = m_Tick + 10000;
 	//cancel the whole readying animation
 	apAction_t Action;
@@ -348,6 +357,7 @@ void CAIUltimateSummon::ActionAbilityInterrupt(){
 
 void CAIUltimateSummon::ActionRoaming()
 {
+	PROFILE_FUNC();
     if (m_PPet->PMaster == NULL || m_PPet->PMaster->isDead() || m_Tick > m_Timer + 10000){
 		m_ActionType = ACTION_FALL;
 		ActionFall();
@@ -362,6 +372,7 @@ void CAIUltimateSummon::ActionRoaming()
 
 void CAIUltimateSummon::ActionEngage()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PBattleTarget == NULL);
 
 	if( m_PPet->PMaster==NULL || m_PPet->PMaster->isDead())
@@ -427,6 +438,7 @@ void CAIUltimateSummon::ActionEngage()
 
 void CAIUltimateSummon::ActionAttack()
 {
+	PROFILE_FUNC();
     if (m_PPet->PMaster == NULL || m_PPet->PMaster->isDead() || m_PPet->isDead() || m_Tick > m_Timer + 10000){
 		m_ActionType = ACTION_FALL;
 		ActionFall();
@@ -455,6 +467,7 @@ void CAIUltimateSummon::ActionAttack()
 
 void CAIUltimateSummon::ActionSleep()
 {
+	PROFILE_FUNC();
     if (!m_PPet->StatusEffectContainer->HasPreventActionEffect())
     {
     	TransitionBack();
@@ -466,6 +479,7 @@ void CAIUltimateSummon::ActionSleep()
 
 void CAIUltimateSummon::ActionDisengage()
 {
+	PROFILE_FUNC();
 	if( m_PPet->PMaster==NULL || m_PPet->PMaster->isDead()){
 		m_ActionType = ACTION_FALL;
 		ActionFall();
@@ -488,6 +502,7 @@ void CAIUltimateSummon::ActionDisengage()
 
 void CAIUltimateSummon::ActionFall()
 {
+	PROFILE_FUNC();
     m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CEntityUpdatePacket(m_PPet, ENTITY_UPDATE));
 
 	if(m_PPet->PMaster->objtype == TYPE_PC && distance(m_PPet->loc.p, m_PPet->PMaster->loc.p) >= 50){
@@ -502,6 +517,7 @@ void CAIUltimateSummon::ActionFall()
 
 void CAIUltimateSummon::ActionDeath()
 {
+	PROFILE_FUNC();
 	if(m_Tick > m_LastActionTime + 3000){
 		m_PPet->status = STATUS_DISAPPEAR;
         m_PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH, true);
@@ -533,6 +549,7 @@ void CAIUltimateSummon::ActionDeath()
 
 void CAIUltimateSummon::ActionSpawn()
 {
+	PROFILE_FUNC();
 	if( m_PPet->PMaster==NULL || m_PPet->PMaster->isDead()){
 		m_ActionType = ACTION_FALL;
 		ActionFall();
@@ -548,7 +565,7 @@ void CAIUltimateSummon::ActionSpawn()
 
 void CAIUltimateSummon::TransitionBack(bool skipWait)
 {
-
+	PROFILE_FUNC();
 	if(m_PPet->animation == ANIMATION_ATTACK)
 	{
 		m_ActionType = ACTION_ATTACK;

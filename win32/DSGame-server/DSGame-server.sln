@@ -7,12 +7,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DSGame-server", "DSGame-ser
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug(Profile)|Win32 = Debug(Profile)|Win32
+		Debug(Profile)|x64 = Debug(Profile)|x64
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89A19910-84DB-454D-9C7F-0A47A293867B}.Debug(Profile)|Win32.ActiveCfg = Debug(Profile)|Win32
+		{89A19910-84DB-454D-9C7F-0A47A293867B}.Debug(Profile)|Win32.Build.0 = Debug(Profile)|Win32
+		{89A19910-84DB-454D-9C7F-0A47A293867B}.Debug(Profile)|x64.ActiveCfg = Debug(Profile)|x64
+		{89A19910-84DB-454D-9C7F-0A47A293867B}.Debug(Profile)|x64.Build.0 = Debug(Profile)|x64
 		{89A19910-84DB-454D-9C7F-0A47A293867B}.Debug|Win32.ActiveCfg = Debug|Win32
 		{89A19910-84DB-454D-9C7F-0A47A293867B}.Debug|Win32.Build.0 = Debug|Win32
 		{89A19910-84DB-454D-9C7F-0A47A293867B}.Debug|x64.ActiveCfg = Debug|x64

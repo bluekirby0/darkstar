@@ -555,7 +555,7 @@ namespace meritNameSpace
 
     void LoadMeritsList()
     {
-
+		PROFILE_FUNC();
         int32 ret = Sql_Query(SqlHandle, "SELECT m.meritid, m.value, m.jobs, m.upgrade, m.upgradeid, m.catagoryid, sl.spellid FROM merits m LEFT JOIN \
             spell_list sl ON m.name = sl.name ORDER BY m.meritid ASC LIMIT %u", MERITS_COUNT);
 

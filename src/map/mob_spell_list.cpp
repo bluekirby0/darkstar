@@ -57,6 +57,7 @@ namespace mobSpellList
 
     void LoadMobSpellList()
     {
+		PROFILE_FUNC();
 	    memset(PMobSpellList, 0, sizeof(PMobSpellList));
 		PMobSpellList[0] = new CMobSpellList();
 

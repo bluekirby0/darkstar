@@ -771,6 +771,7 @@ int _ShowMessage(MSGTYPE flag, const char *string, ...)
 
 int ShowMessage(const char *string, ...) 
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);
@@ -780,6 +781,7 @@ int ShowMessage(const char *string, ...)
 }
 int ShowStatus(const char *string, ...) 
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);
@@ -789,6 +791,7 @@ int ShowStatus(const char *string, ...)
 }
 int ShowSQL(const char *string, ...) 
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);
@@ -798,6 +801,7 @@ int ShowSQL(const char *string, ...)
 }
 int ShowInfo(const char *string, ...) 
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);
@@ -807,6 +811,7 @@ int ShowInfo(const char *string, ...)
 }
 int ShowNotice(const char *string, ...) 
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);
@@ -816,6 +821,7 @@ int ShowNotice(const char *string, ...)
 }
 int ShowWarning(const char *string, ...) 
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);
@@ -825,6 +831,7 @@ int ShowWarning(const char *string, ...)
 }
 int ShowDebug(const char *string, ...) 
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);
@@ -834,6 +841,7 @@ int ShowDebug(const char *string, ...)
 }
 int ShowError(const char *string, ...) 
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);
@@ -843,6 +851,7 @@ int ShowError(const char *string, ...)
 }
 int ShowFatalError(const char *string, ...) 
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);
@@ -852,6 +861,7 @@ int ShowFatalError(const char *string, ...)
 }
 int ShowScript(const char *string, ...) 
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);

@@ -123,6 +123,7 @@ namespace petutils
 
 void LoadPetList()
 {
+	PROFILE_FUNC();
 	FreePetList();
 
 	const int8* Query =

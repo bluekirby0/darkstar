@@ -49,6 +49,7 @@ CAICharPrisoner::CAICharPrisoner(CCharEntity* PChar)
 
 void CAICharPrisoner::CheckCurrentAction(uint32 tick)
 {
+	PROFILE_FUNC();
     m_Tick = tick;
     
     if(m_ActionType != ACTION_NONE)

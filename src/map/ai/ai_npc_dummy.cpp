@@ -41,6 +41,7 @@ CAINpcDummy::CAINpcDummy(CNpcEntity* PNpc)
 
 void CAINpcDummy::CheckCurrentAction(uint32 tick)
 {
+	PROFILE_FUNC();
   m_Tick = tick;
 
   switch(m_ActionType)
@@ -59,12 +60,13 @@ void CAINpcDummy::WeatherChange(WEATHER weather, uint8 element)
 
 void CAINpcDummy::ActionSpawn()
 {
+	PROFILE_FUNC();
   m_ActionType = ACTION_ROAMING;
 }
 
 void CAINpcDummy::ActionRoaming()
 {
-
+	PROFILE_FUNC();
   // wait my time
   if(m_Tick < m_LastWaitTime + m_WaitTime){
     return;
@@ -90,5 +92,6 @@ void CAINpcDummy::ActionRoaming()
 
 void CAINpcDummy::TransitionBack(bool skipWait)
 {
+	PROFILE_FUNC();
   m_ActionType = ACTION_ROAMING;
 }

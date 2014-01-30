@@ -45,6 +45,7 @@ namespace conquest
 
 	void LoadConquestSystem()
 	{
+		PROFILE_FUNC();
 		int8 regNum = 0;
 		const int8* Query =
         "SELECT region_id, region_control, sandoria_influence, bastok_influence, windurst_influence, beastmen_influence, graphics_arrows FROM conquest_system";

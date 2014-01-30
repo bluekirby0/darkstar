@@ -57,6 +57,7 @@ uint16 MessageOffset[MAX_ZONEID];
 
 void LoadFishingMessages()
 {
+	PROFILE_FUNC();
     for (uint16 ZoneID = 0; ZoneID < ARRAYLENGTH(MessageOffset); ZoneID++)
     {
         MessageOffset[ZoneID] = luautils::GetTextIDVariable(ZoneID, "FISHING_MESSAGE_OFFSET");

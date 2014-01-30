@@ -300,6 +300,7 @@ namespace linkshell
 
     void LoadLinkshellList()
     {
+		PROFILE_FUNC();
 	    int32 ret = Sql_Query(SqlHandle, "SELECT linkshellid, color, name, poster, message, messagetime FROM linkshells");
 
 	    if( ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)

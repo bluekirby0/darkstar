@@ -142,6 +142,7 @@ void (*PacketParser[512])(map_session_data_t*, CCharEntity*, int8*);
 
 void PrintPacket(int8* data)
 {
+	PROFILE_FUNC();
 	int8 message[50];
 	memset(&message,0,50);
 
@@ -4919,6 +4920,7 @@ void SmallPacket0x10F(map_session_data_t* session, CCharEntity* PChar, int8* dat
 
 void PacketParserInitialize()
 {
+	PROFILE_FUNC();
     for (uint16 i = 0; i < 512; ++i)
     {
         PacketSize[i]   = 0;

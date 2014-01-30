@@ -86,6 +86,7 @@ CAICharNormal::CAICharNormal(CCharEntity* PChar)
 
 void CAICharNormal::CheckCurrentAction(uint32 tick)
 {
+	PROFILE_FUNC();
 	m_Tick = tick;
 
     if(m_PChar->m_EquipSwap == true)
@@ -146,6 +147,7 @@ void CAICharNormal::WeatherChange(WEATHER weather, uint8 element)
 
 bool CAICharNormal::GetValidTarget(CBattleEntity** PBattleTarget, uint8 ValidTarget)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_ActionTargetID == 0);
 
     CBattleEntity* PTarget = (CBattleEntity*)m_PChar->loc.zone->GetEntity(m_ActionTargetID, TYPE_MOB | TYPE_PC | TYPE_PET);
@@ -202,6 +204,7 @@ bool CAICharNormal::GetValidTarget(CBattleEntity** PBattleTarget, uint8 ValidTar
 
 bool CAICharNormal::IsMobOwner(CBattleEntity* PBattleTarget)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PBattleTarget == NULL);
 
 	if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == m_PChar->id || PBattleTarget->objtype == TYPE_PC)
@@ -245,6 +248,7 @@ bool CAICharNormal::IsMobOwner(CBattleEntity* PBattleTarget)
 
 void CAICharNormal::ActionEngage()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_ActionTargetID == 0);
 
 	if (GetValidTarget(&m_PBattleTarget, TARGET_ENEMY))
@@ -305,6 +309,7 @@ void CAICharNormal::ActionEngage()
 
 void CAICharNormal::ActionChangeBattleTarget()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_ActionTargetID == 0);
     DSP_DEBUG_BREAK_IF(m_PBattleTarget == NULL);
 
@@ -346,6 +351,7 @@ void CAICharNormal::ActionChangeBattleTarget()
 
 void CAICharNormal::ActionDisengage()
 {
+	PROFILE_FUNC();
 	m_ActionType = ACTION_NONE;
 	m_LastActionTime = m_Tick;
     m_PBattleTarget = NULL;
@@ -370,6 +376,7 @@ void CAICharNormal::ActionDisengage()
 
 void CAICharNormal::ActionFall()
 {
+	PROFILE_FUNC();
 	m_ActionType = ACTION_DEATH;
 	m_ActionTargetID = 0;
 
@@ -412,6 +419,7 @@ void CAICharNormal::ActionFall()
 
 void CAICharNormal::ActionDeath()
 {
+	PROFILE_FUNC();
     // без задержки удаление эффектов не всегда правильно обрабатывается клиентом
     if (m_Tick >= m_LastActionTime + 1000)
     {
@@ -461,6 +469,7 @@ void CAICharNormal::ActionDeath()
 
 void CAICharNormal::ActionItemStart()
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_ActionTargetID == 0);
     DSP_DEBUG_BREAK_IF(m_PBattleSubTarget != NULL);
 
@@ -536,6 +545,7 @@ void CAICharNormal::ActionItemStart()
 
 void CAICharNormal::ActionItemUsing()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PItemUsable == NULL);
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL);
 
@@ -631,6 +641,7 @@ void CAICharNormal::ActionItemUsing()
 
 void CAICharNormal::ActionItemFinish()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PItemUsable == NULL);
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL);
 
@@ -680,6 +691,7 @@ void CAICharNormal::ActionItemFinish()
 
 void CAICharNormal::ActionItemInterrupt()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PItemUsable == NULL);
 
 	m_PItemUsable->setSubType(ITEM_UNLOCKED);
@@ -721,6 +733,7 @@ void CAICharNormal::ActionItemInterrupt()
 
 void CAICharNormal::ActionRangedStart()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_ActionTargetID == 0);
     DSP_DEBUG_BREAK_IF(m_PBattleSubTarget != NULL);
 
@@ -879,6 +892,7 @@ void CAICharNormal::ActionRangedStart()
 
 void CAICharNormal::ActionRangedFinish()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL);
 
 	if (m_PBattleSubTarget->isDead())
@@ -1173,6 +1187,7 @@ void CAICharNormal::ActionRangedFinish()
 
 void CAICharNormal::ActionRangedInterrupt()
 {
+	PROFILE_FUNC();
 	m_PChar->pushPacket(new CMessageBasicPacket(m_PChar, m_PChar, 0, 0, MSGBASIC_NO_RANGED_WEAPON));
 
 	apAction_t Action;
@@ -1203,6 +1218,7 @@ void CAICharNormal::ActionRangedInterrupt()
 
 void CAICharNormal::ActionMagicStart()
 {
+	PROFILE_FUNC();
     // keeping this for legacy
     // m_PSpell will eventually be refactored out
     // needed for packets
@@ -1238,6 +1254,7 @@ void CAICharNormal::ActionMagicStart()
 
 void CAICharNormal::MagicStartError()
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_ActionType != ACTION_MAGIC_START);
 
     m_ActionTargetID = 0;
@@ -1256,6 +1273,7 @@ void CAICharNormal::MagicStartError()
 
 void CAICharNormal::ActionMagicCasting()
 {
+	PROFILE_FUNC();
     STATESTATUS status = m_PMagicState->Update(m_Tick);
 
     if(status == STATESTATUS_INTERRUPT)
@@ -1282,6 +1300,7 @@ void CAICharNormal::ActionMagicCasting()
 
 void CAICharNormal::ActionMagicFinish()
 {
+	PROFILE_FUNC();
     m_PMagicState->FinishSpell();
 
     m_LastMeleeTime += (m_Tick - m_LastActionTime);
@@ -1302,6 +1321,7 @@ void CAICharNormal::ActionMagicFinish()
 
 void CAICharNormal::ActionMagicInterrupt()
 {
+	PROFILE_FUNC();
     m_PMagicState->InterruptSpell();
 
     m_LastMeleeTime += (m_Tick - m_LastActionTime);
@@ -1322,6 +1342,7 @@ void CAICharNormal::ActionMagicInterrupt()
 
 void CAICharNormal::ActionJobAbilityStart()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_ActionTargetID == 0);
     DSP_DEBUG_BREAK_IF(m_PJobAbility == NULL);
 
@@ -1457,6 +1478,7 @@ void CAICharNormal::ActionJobAbilityStart()
 
 void CAICharNormal::ActionJobAbilityFinish()
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PJobAbility == NULL);
     DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL);
 
@@ -2169,6 +2191,7 @@ void CAICharNormal::ActionJobAbilityFinish()
 
 void CAICharNormal::ActionWeaponSkillStart()
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_ActionTargetID == 0);
     DSP_DEBUG_BREAK_IF(m_PWeaponSkill == NULL);
     DSP_DEBUG_BREAK_IF(m_PBattleTarget == NULL);
@@ -2254,6 +2277,7 @@ void CAICharNormal::ActionWeaponSkillStart()
 
 void CAICharNormal::WeaponSkillStartError(uint16 error)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_ActionType != ACTION_WEAPONSKILL_START);
 
     if (error != 0)
@@ -2277,6 +2301,7 @@ void CAICharNormal::WeaponSkillStartError(uint16 error)
 
 void CAICharNormal::ActionWeaponSkillFinish()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PWeaponSkill == NULL);
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL);
 
@@ -2659,6 +2684,7 @@ void CAICharNormal::ActionWeaponSkillFinish()
 
 void CAICharNormal::ActionSleep()
 {
+	PROFILE_FUNC();
     if(m_PChar->isDead())
     {
         m_ActionType = ACTION_FALL;
@@ -2681,6 +2707,7 @@ void CAICharNormal::ActionSleep()
 
 void CAICharNormal::ActionAttack()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PBattleTarget == NULL);
 
 	//disengage if player has charmed the mob
@@ -3010,6 +3037,7 @@ void CAICharNormal::ActionAttack()
 
 void CAICharNormal::ActionRaiseMenuSelection()
 {
+	PROFILE_FUNC();
     // TODO: Moghancement Experience needs to be factored in here somewhere.
     DSP_DEBUG_BREAK_IF(m_PChar->m_hasRaise == 0 || m_PChar->m_hasRaise > 3);
 
@@ -3103,6 +3131,7 @@ void CAICharNormal::ActionRaiseMenuSelection()
 
 void CAICharNormal::TransitionBack(bool skipWait)
 {
+	PROFILE_FUNC();
 	m_PBattleSubTarget = NULL;
 	if(m_PChar->animation == ANIMATION_ATTACK)
 	{

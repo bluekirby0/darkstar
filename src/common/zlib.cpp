@@ -9,6 +9,7 @@ char*    zlib_decompress_table[2556];
 
 int32   zlib_init()
 {
+	PROFILE_FUNC();
 	FILE * fp;
 	long size, i;
 

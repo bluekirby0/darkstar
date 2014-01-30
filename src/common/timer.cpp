@@ -66,6 +66,7 @@ static void rdtsc_calibrate(){
 /// platform-abstracted tick retrieval
 static uint32 tick(void)
 {
+	PROFILE_FUNC();
 #if defined(WIN32)
 	return GetTickCount();
 #elif defined(ENABLE_RDTSC)

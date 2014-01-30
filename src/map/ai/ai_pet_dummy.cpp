@@ -72,6 +72,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 
 void CAIPetDummy::CheckCurrentAction(uint32 tick)
 {
+	PROFILE_FUNC();
 	m_Tick = tick;
 
 
@@ -112,6 +113,7 @@ void CAIPetDummy::WeatherChange(WEATHER weather, uint8 element)
 
 void CAIPetDummy::ActionAbilityStart()
 {
+	PROFILE_FUNC();
 	if(m_PPet->StatusEffectContainer->HasPreventActionEffect())
 	{
 		return;
@@ -260,7 +262,9 @@ void CAIPetDummy::ActionAbilityStart()
 	TransitionBack(true);
 }
 
-void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg){
+void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg)
+{
+	PROFILE_FUNC();
 	if(m_PMobSkill!=NULL){
 
 		apAction_t Action;
@@ -309,6 +313,7 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg){
 
 void CAIPetDummy::ActionAbilityUsing()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PMobSkill == NULL);
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL && m_PMobSkill->getValidTargets()==TARGET_ENEMY && m_PPet->getPetType()!=PETTYPE_AVATAR);
 
@@ -412,7 +417,9 @@ void CAIPetDummy::ActionAbilityUsing()
     m_PPet->loc.zone->PushPacket(m_PPet,CHAR_INRANGE,new CEntityUpdatePacket(m_PPet,ENTITY_UPDATE));
 }
 
-void CAIPetDummy::ActionAbilityFinish(){
+void CAIPetDummy::ActionAbilityFinish()
+{
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PMobSkill == NULL);
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL);
 
@@ -501,7 +508,9 @@ void CAIPetDummy::ActionAbilityFinish(){
 	m_ActionType = ACTION_ATTACK;
 }
 
-void CAIPetDummy::ActionAbilityInterrupt(){
+void CAIPetDummy::ActionAbilityInterrupt()
+{
+	PROFILE_FUNC();
 	m_LastActionTime = m_Tick;
 	//cancel the whole readying animation
 	apAction_t Action;
@@ -522,7 +531,9 @@ void CAIPetDummy::ActionAbilityInterrupt(){
     m_ActionType = ACTION_ATTACK;
 }
 
-bool CAIPetDummy::WyvernIsHealing(){
+bool CAIPetDummy::WyvernIsHealing()
+{
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PPet->getPetType() != PETTYPE_WYVERN);
 
 	bool isMasterHealing = (m_PPet->PMaster->animation == ANIMATION_HEALING);
@@ -553,6 +564,7 @@ bool CAIPetDummy::WyvernIsHealing(){
 
 void CAIPetDummy::ActionRoaming()
 {
+	PROFILE_FUNC();
 	if( m_PPet->PMaster==NULL || m_PPet->PMaster->isDead()){
 		m_ActionType = ACTION_FALL;
 		ActionFall();
@@ -612,6 +624,7 @@ void CAIPetDummy::ActionRoaming()
 
 void CAIPetDummy::ActionEngage()
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PBattleTarget == NULL);
 
 	if( m_PPet->PMaster==NULL || m_PPet->PMaster->isDead())
@@ -677,6 +690,7 @@ void CAIPetDummy::ActionEngage()
 
 void CAIPetDummy::ActionAttack()
 {
+	PROFILE_FUNC();
 	if( m_PPet->PMaster==NULL || m_PPet->PMaster->isDead() || m_PPet->isDead()){
 		m_ActionType = ACTION_FALL;
 		ActionFall();
@@ -859,6 +873,7 @@ void CAIPetDummy::ActionAttack()
 
 void CAIPetDummy::ActionSleep()
 {
+	PROFILE_FUNC();
     if (!m_PPet->StatusEffectContainer->HasPreventActionEffect())
     {
     	TransitionBack();
@@ -870,6 +885,7 @@ void CAIPetDummy::ActionSleep()
 
 void CAIPetDummy::ActionDisengage()
 {
+	PROFILE_FUNC();
 	if( m_PPet->PMaster==NULL || m_PPet->PMaster->isDead()){
 		m_ActionType = ACTION_FALL;
 		ActionFall();
@@ -892,6 +908,7 @@ void CAIPetDummy::ActionDisengage()
 
 void CAIPetDummy::ActionFall()
 {
+	PROFILE_FUNC();
 	//Charmed pets do not die when their master kicks the bucket
 	if(m_PPet->GetHPP() != 0 && m_PPet->objtype == TYPE_MOB && m_PPet->PMaster->objtype == TYPE_PC){
 		petutils::DespawnPet(m_PPet->PMaster);
@@ -912,6 +929,7 @@ void CAIPetDummy::ActionFall()
 
 void CAIPetDummy::ActionDeath()
 {
+	PROFILE_FUNC();
 	if(m_Tick-m_LastActionTime > 3000){
 		m_PPet->status = STATUS_DISAPPEAR;
         m_PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH, true);
@@ -950,6 +968,7 @@ void CAIPetDummy::ActionDeath()
 
 void CAIPetDummy::ActionMagicStart()
 {
+	PROFILE_FUNC();
 	// disabled
 	DSP_DEBUG_BREAK_IF(m_PSpell == NULL);
 	DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == NULL);
@@ -974,6 +993,7 @@ void CAIPetDummy::ActionMagicStart()
 
 void CAIPetDummy::ActionMagicCasting()
 {
+	PROFILE_FUNC();
 	m_PPathFind->LookAt(m_PMagicState->GetTarget()->loc.p);
 
 	STATESTATUS status = m_PMagicState->Update(m_Tick);
@@ -1001,6 +1021,7 @@ void CAIPetDummy::ActionMagicCasting()
 
 void CAIPetDummy::ActionMagicFinish()
 {
+	PROFILE_FUNC();
 	m_LastActionTime = m_Tick;
 	m_LastMagicTime = m_Tick;
 
@@ -1016,6 +1037,7 @@ void CAIPetDummy::ActionMagicFinish()
 
 void CAIPetDummy::ActionMagicInterrupt()
 {
+	PROFILE_FUNC();
 	m_LastActionTime = m_Tick;
 	m_LastMagicTime = m_Tick;
 
@@ -1038,6 +1060,7 @@ void CAIPetDummy::ActionMagicInterrupt()
 
 void CAIPetDummy::ActionSpawn()
 {
+	PROFILE_FUNC();
 	if( m_PPet->PMaster==NULL || m_PPet->PMaster->isDead()){
 		m_ActionType = ACTION_FALL;
 		ActionFall();
@@ -1059,6 +1082,7 @@ void CAIPetDummy::ActionSpawn()
 
 void CAIPetDummy::SendTooFarInterruptMessage(CBattleEntity* PTarg)
 {
+	PROFILE_FUNC();
 	m_ActionType = ACTION_MOBABILITY_INTERRUPT;
 	//too far away message = 78
 	m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE,new CMessageBasicPacket(PTarg, PTarg, 0, 0, 78));
@@ -1067,7 +1091,7 @@ void CAIPetDummy::SendTooFarInterruptMessage(CBattleEntity* PTarg)
 
 void CAIPetDummy::TransitionBack(bool skipWait)
 {
-
+	PROFILE_FUNC();
 	if(m_PPet->animation == ANIMATION_ATTACK)
 	{
 		m_ActionType = ACTION_ATTACK;

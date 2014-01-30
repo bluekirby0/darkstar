@@ -86,6 +86,7 @@ CCommandHandler CmdHandler;
 
 map_session_data_t* mapsession_getbyipp(uint64 ipp)
 {
+	PROFILE_FUNC();
     map_session_list_t::iterator i = map_session_list.begin();
     while (i != map_session_list.end())
     {
@@ -104,6 +105,7 @@ map_session_data_t* mapsession_getbyipp(uint64 ipp)
 
 map_session_data_t* mapsession_createsession(uint32 ip, uint16 port)
 {
+	PROFILE_FUNC();
 	map_session_data_t* map_session_data = new map_session_data_t;
 	memset(map_session_data, 0, sizeof(map_session_data_t));
 
@@ -130,6 +132,7 @@ map_session_data_t* mapsession_createsession(uint32 ip, uint16 port)
 
 int32 do_init(int32 argc, int8** argv)
 {
+	PROFILE_FUNC();
 	ShowStatus("do_init: begin server initialization...\n");
 
 	MAP_CONF_FILENAME = "./conf/map_darkstar.conf";
@@ -148,6 +151,7 @@ int32 do_init(int32 argc, int8** argv)
 	SqlHandle = Sql_Malloc();
 
 	ShowStatus("do_init: sqlhandle is allocating");
+	PROFILE_BEGIN(SqlConnTest);
 	if( Sql_Connect(SqlHandle,map_config.mysql_login,
 							  map_config.mysql_password,
 							  map_config.mysql_host,
@@ -157,6 +161,7 @@ int32 do_init(int32 argc, int8** argv)
 		exit(EXIT_FAILURE);
 	}
     Sql_Keepalive(SqlHandle);
+	PROFILE_END();
 
     // отчищаем таблицу сессий при старте сервера (временное решение, т.к. в кластере это не будет работать)
     Sql_Query(SqlHandle, "TRUNCATE TABLE accounts_sessions");
@@ -230,6 +235,7 @@ int32 do_init(int32 argc, int8** argv)
 
 void do_final(void)
 {
+	PROFILE_FUNC();
 	aFree(g_PBuff);
     aFree(PTempBuff);
 
@@ -280,6 +286,7 @@ void set_server_type()
 
 int32 do_sockets(int32 next)
 {
+	PROFILE_FUNC();
 	fd_set rfd;
 
 	struct timeval timeout;
@@ -376,6 +383,7 @@ int32 parse_console(int8* buf)
 
 int32 map_decipher_packet(int8* buff, size_t size, sockaddr_in* from, map_session_data_t* map_session_data)
 {
+	PROFILE_FUNC();
 	uint16 tmp, i;
 
 	// counting blocks whose size = 4 byte
@@ -413,6 +421,7 @@ int32 map_decipher_packet(int8* buff, size_t size, sockaddr_in* from, map_sessio
 
 int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_data_t* map_session_data)
 {
+	PROFILE_FUNC();
 	size_t size = *buffsize;
 	int32 checksumResult = -1;
 
@@ -509,6 +518,7 @@ int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_da
 
 int32 parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_data_t* map_session_data)
 {
+	PROFILE_FUNC();
 	// начало обработки входящего пакета
 
 	int8* PacketData_Begin = &buff[FFXI_HEADER_SIZE];
@@ -604,6 +614,7 @@ int32 parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_data_t*
 
 int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_data_t* map_session_data)
 {
+	PROFILE_FUNC();
 	// Модификация заголовка исходящего пакета
 	// Суть преобразований:
 	//  - отправить клиенту номер последнего полученного от него пакета
@@ -672,6 +683,7 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
 
 int32 map_close_session(uint32 tick, CTaskMgr::CTask* PTask)
 {
+	PROFILE_FUNC();
 	map_session_data_t* map_session_data = (map_session_data_t*)PTask->m_data;
 
 	if (map_session_data != NULL &&
@@ -708,6 +720,7 @@ int32 map_close_session(uint32 tick, CTaskMgr::CTask* PTask)
 
 int32 map_cleanup(uint32 tick, CTaskMgr::CTask* PTask)
 {
+	PROFILE_FUNC();
 	map_session_list_t::iterator it = map_session_list.begin();
 
 	while(it != map_session_list.end())
@@ -795,6 +808,7 @@ int32 map_cleanup(uint32 tick, CTaskMgr::CTask* PTask)
 
 void map_helpscreen(int32 flag)
 {
+	PROFILE_FUNC();
 	ShowMessage("Usage: map-server [options]\n");
 	ShowMessage("Options:\n");
 	ShowMessage(CL_WHITE"  Commands\t\t\tDescription\n" CL_RESET);
@@ -814,6 +828,7 @@ void map_helpscreen(int32 flag)
 
 void map_versionscreen(int32 flag)
 {
+	PROFILE_FUNC();
 	ShowInfo(CL_WHITE "Darkstar version %d.%02d.%02d" CL_RESET"\n",
 		DARKSTAR_MAJOR_VERSION, DARKSTAR_MINOR_VERSION, DARKSTAR_REVISION);
 	if (flag) exit(EXIT_FAILURE);
@@ -827,6 +842,7 @@ void map_versionscreen(int32 flag)
 
 int32 map_config_default()
 {
+	PROFILE_FUNC();
     map_config.uiMapIp = INADDR_ANY;
     map_config.usMapPort = 54230;
     map_config.mysql_host = "127.0.0.1";
@@ -870,6 +886,7 @@ int32 map_config_default()
 
 int32 map_config_read(const int8* cfgName)
 {
+	PROFILE_FUNC();
 	int8 line[1024], w1[1024], w2[1024];
 	FILE* fp;
 
@@ -1095,6 +1112,7 @@ int32 map_config_read(const int8* cfgName)
 
 int32 map_garbage_collect(uint32 tick, CTaskMgr::CTask* PTask)
 {
+	PROFILE_FUNC();
 	luautils::garbageCollect();
 	return 0;
 }

@@ -2643,6 +2643,7 @@ void UpdateHealth(CCharEntity* PChar)
 
 void LoadExpTable()
 {
+	PROFILE_FUNC();
 	memset(g_ExpTable,0, sizeof(g_ExpTable));
 	memset(g_ExpPerLevel,0, sizeof(g_ExpPerLevel));
 
@@ -4140,6 +4141,7 @@ uint32  AddExpBonus(CCharEntity* PChar, uint32 exp)
 
 void ResetAllTwoHours()
 {
+	PROFILE_FUNC();
     Sql_Query(SqlHandle, "UPDATE char_stats SET 2h = 0");
 }
 

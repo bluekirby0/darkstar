@@ -810,6 +810,7 @@ Usage:
 */
 void LoadCustomMods()
 {
+	PROFILE_FUNC();
 
 	// load family mods
 	const int8 QueryFamilyMods[] = "SELECT familyid, modid, value, type FROM mob_family_mods;";
