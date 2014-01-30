@@ -240,6 +240,7 @@ int main (int argc, char **argv)
 	socket_init();
 
 	do_init(argc,argv);
+	fd_set rfd;
 	PROFILE_END();
 	{// Main runtime cycle
 		int next;
@@ -248,7 +249,7 @@ int main (int argc, char **argv)
 		{
 			PROFILE_UPDATE();
 			next = CTaskMgr::getInstance()->DoTimer(gettick_nocache());
-			do_sockets(next);
+			do_sockets(&rfd,next);
 		}
 	}
 	PROFILE_BEGIN(Breakdown);

@@ -284,19 +284,20 @@ void set_server_type()
 *																		*
 ************************************************************************/
 
-int32 do_sockets(int32 next)
+int32 do_sockets(fd_set* rfd,int32 next)
 {
 	PROFILE_FUNC();
-	fd_set rfd;
+	PROFILE_BEGIN(do_sockets_initialize);
+	
 
 	struct timeval timeout;
 	int32 ret;
-	memcpy(&rfd, &readfds, sizeof(rfd));
+	memcpy(rfd, &readfds, sizeof(*rfd));
 
 	timeout.tv_sec  = next/1000;
 	timeout.tv_usec = next%1000*1000;
 
-	ret = sSelect(fd_max, &rfd, NULL, NULL, &timeout);
+	ret = sSelect(fd_max, rfd, NULL, NULL, &timeout);
 
 	if( ret == SOCKET_ERROR )
 	{
@@ -307,15 +308,15 @@ int32 do_sockets(int32 next)
 		}
 		return 0; // interrupted by a signal, just loop and try again
 	}
-
+	PROFILE_END();
 	last_tick = time(NULL);
-
-	if( sFD_ISSET(map_fd,&rfd) )
+	if( sFD_ISSET(map_fd,rfd) )
 	{
 		struct sockaddr_in from;
 		socklen_t fromlen = sizeof(from);
-
+		PROFILE_BEGIN(do_sockets_recv);
 		int32 ret = recvudp(map_fd,g_PBuff,map_config.buffer_size,0,(struct sockaddr*)&from,&fromlen);
+		PROFILE_END();
 		if( ret != -1)
 		{
 			// find player char
@@ -341,7 +342,7 @@ int32 do_sockets(int32 next)
 
 			map_session_data->last_update = time(NULL);
 			size_t size = ret;
-
+			PROFILE_BEGIN(do_sockets_recvparse);
 			if( recv_parse(g_PBuff,&size,&from,map_session_data) != -1 )
 			{
 				// если предыдущий пакет был потерян, то мы не собираем новый,
@@ -359,6 +360,7 @@ int32 do_sockets(int32 next)
 				map_session_data->server_packet_data = data;
 				map_session_data->server_packet_size = size;
 			}
+			PROFILE_END();
 		}
 	}
 	return 0;
