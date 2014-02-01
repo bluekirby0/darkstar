@@ -286,10 +286,6 @@ void set_server_type()
 
 int32 do_sockets(fd_set* rfd,int32 next)
 {
-	PROFILE_FUNC();
-	PROFILE_BEGIN(do_sockets_initialize);
-	
-
 	struct timeval timeout;
 	int32 ret;
 	memcpy(rfd, &readfds, sizeof(*rfd));
@@ -310,6 +306,7 @@ int32 do_sockets(fd_set* rfd,int32 next)
 	}
 	PROFILE_END();
 	last_tick = time(NULL);
+
 	if( sFD_ISSET(map_fd,rfd) )
 	{
 		struct sockaddr_in from;

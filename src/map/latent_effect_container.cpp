@@ -26,6 +26,8 @@
 #include "latent_effect.h"
 #include "entities/charentity.h"
 #include "entities/battleentity.h"
+#include "utils/zoneutils.h"
+#include "conquest_system.h"
 
 #include "time_server.h"
 
@@ -468,6 +470,7 @@ void CLatentEffectContainer::CheckLatentsEquip(uint8 slot)
 						CheckLatentsPartyJobs();
 					break;
 				case LATENT_PARTY_MEMBERS:
+                case LATENT_PARTY_MEMBERS_IN_ZONE:
 					{
 						if(m_POwner->PParty != NULL)
 							CheckLatentsPartyMembers(m_POwner->PParty->members.size());
@@ -568,6 +571,19 @@ void CLatentEffectContainer::CheckLatentsEquip(uint8 slot)
                     {
                         m_LatentEffectList.at(i)->Deactivate();
                     }
+                    break;
+                case LATENT_WEATHER_ELEMENT:
+                    if (zoneutils::GetZone(m_POwner->getZone())->GetWeatherElement() == m_LatentEffectList.at(i)->GetConditionsValue())
+                    {
+                        m_LatentEffectList.at(i)->Activate();
+                    }
+                    else
+                    {
+                        m_LatentEffectList.at(i)->Deactivate();
+                    }
+                    break;
+                case LATENT_NATION_CONTROL:
+                        CheckLatentsZone();
                     break;
                 default:
                     ShowWarning("Latent ID %d unhandled in CheckLatentsEquip\n", m_LatentEffectList.at(i)->GetConditionsID());
@@ -1124,23 +1140,53 @@ void CLatentEffectContainer::CheckLatentsHours()
 
 void CLatentEffectContainer::CheckLatentsPartyMembers(uint8 members)
 {
-	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
-	{
-		if(m_LatentEffectList.at(i)->GetConditionsID() == LATENT_PARTY_MEMBERS)
-		{
 
-			if(m_LatentEffectList.at(i)->GetConditionsValue() <= members )
-			{
-				m_LatentEffectList.at(i)->Activate();
-			}
-			else
-			{
-				m_LatentEffectList.at(i)->Deactivate();
-			}
-		}
-	}
+    for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
+    {
 
-	m_POwner->UpdateHealth();
+        if (m_LatentEffectList.at(i)->GetConditionsID() == LATENT_PARTY_MEMBERS)
+        {
+
+            if (m_LatentEffectList.at(i)->GetConditionsValue() <= members)
+            {
+                m_LatentEffectList.at(i)->Activate();
+            }
+            else
+            {
+                m_LatentEffectList.at(i)->Deactivate();
+            }
+        }
+
+        if (m_LatentEffectList.at(i)->GetConditionsID() == LATENT_PARTY_MEMBERS_IN_ZONE)
+        {
+            int inZone = 0;
+
+            if (m_LatentEffectList.at(i)->GetConditionsValue() <= members )
+            {
+                for (uint8 m = 0; m < members; ++m)
+                {
+                    CCharEntity* PMember = (CCharEntity*)m_POwner->PParty->members.at(m);
+                    if (PMember->getZone() == m_POwner->getZone())
+                    {
+                        inZone++;
+                    }
+                }
+
+                if (inZone == m_LatentEffectList.at(i)->GetConditionsValue())
+                    m_LatentEffectList.at(i)->Activate();
+                else
+                    m_LatentEffectList.at(i)->Deactivate();
+            }
+            else
+            {
+                if (m_LatentEffectList.at(i)->IsActivated())
+				    m_LatentEffectList.at(i)->Deactivate();
+			}
+        }
+
+    }
+
+    m_POwner->UpdateHealth();
 }
 
 void CLatentEffectContainer::CheckLatentsPartyJobs()
@@ -1401,30 +1447,80 @@ void CLatentEffectContainer::CheckLatentsZone()
 {
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
-		switch(m_LatentEffectList.at(i)->GetConditionsID())
-		{
-			case LATENT_ZONE:
-				if( m_LatentEffectList.at(i)->GetConditionsValue() == m_POwner->getZone())
-				{
-					m_LatentEffectList.at(i)->Activate();
-				}
-				else
-				{
-					m_LatentEffectList.at(i)->Deactivate();
-				}
-				break;
-			case LATENT_IN_DYNAMIS:
-				if (m_POwner->isInDynamis())
-				{
-					m_LatentEffectList.at(i)->Activate();
-				}
-				else
-				{
-					m_LatentEffectList.at(i)->Deactivate();
-				}
-				break;
+        switch (m_LatentEffectList.at(i)->GetConditionsID())
+        {
+        case LATENT_ZONE:
+            if (m_LatentEffectList.at(i)->GetConditionsValue() == m_POwner->getZone())
+            {
+                m_LatentEffectList.at(i)->Activate();
+            }
+            else
+            {
+                m_LatentEffectList.at(i)->Deactivate();
+            }
+            break;
+        case LATENT_IN_DYNAMIS:
+            if (m_POwner->isInDynamis())
+            {
+                m_LatentEffectList.at(i)->Activate();
+            }
+            else
+            {
+                m_LatentEffectList.at(i)->Deactivate();
+            }
+            break;
+        case LATENT_WEATHER_ELEMENT:
+            if (zoneutils::GetZone(m_POwner->getZone())->GetWeatherElement() == m_LatentEffectList.at(i)->GetConditionsValue())
+            {
+                m_LatentEffectList.at(i)->Activate();
+            }
+            else
+            {
+                m_LatentEffectList.at(i)->Deactivate();
+            }
+            break;
+        case LATENT_NATION_CONTROL:
+        {
+            bool ActivateLatent = false;
+
+            REGIONTYPE region = m_POwner->loc.zone->GetRegionID();
+
+            bool hasSignet = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET);
+            bool hasSanction = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION);
+            bool hasSigil = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL);
+
+            //under own nation's control
+            if (m_LatentEffectList.at(i)->GetConditionsValue() == 0)
+            {
+                if (region < 28)
+                {
+                    if (conquest::GetRegionOwner(region) == m_POwner->profile.nation && (hasSignet || hasSigil || hasSigil))
+                        ActivateLatent = true;
+                }
+            }
+
+            //outside of own nation's control
+            if (m_LatentEffectList.at(i)->GetConditionsValue() == 1)
+            {
+                if (region < 28)
+                {
+
+                    if (m_POwner->profile.nation != conquest::GetRegionOwner(region) && (hasSignet || hasSanction || hasSigil))
+                        ActivateLatent = true;
+                }
+
+            }
+
+            if (ActivateLatent == true)
+                m_LatentEffectList.at(i)->Activate();
+            else
+                m_LatentEffectList.at(i)->Deactivate();
+
+        }
+        break;
 			default:
 				break;
 		}
 	}
+    m_POwner->UpdateHealth();
 }

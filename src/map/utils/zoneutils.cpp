@@ -212,7 +212,7 @@ void LoadNPCList()
     const int8* Query =
         "SELECT \
           zoneid,\
-		  npcid,\
+          npcid,\
           name,\
           pos_rot,\
           pos_x,\
@@ -237,7 +237,7 @@ void LoadNPCList()
 	{
 		while(Sql_NextRow(SqlHandle) == SQL_SUCCESS)
 		{
-			uint16 ZoneID = (uint16)Sql_GetUIntData(SqlHandle, 0);
+        	uint16 ZoneID = (uint16)Sql_GetUIntData(SqlHandle, 0);
 			CNpcEntity* PNpc = new CNpcEntity;
             PNpc->targid = (uint16)Sql_GetUIntData(SqlHandle,1);
             PNpc->id = (uint32)PNpc->targid  + (ZoneID << 12) + 0x1000000;
@@ -264,8 +264,8 @@ void LoadNPCList()
 			PNpc->name_prefix = (uint8)Sql_GetIntData(SqlHandle,16);
 
 			memcpy(&PNpc->look,Sql_GetData(SqlHandle,15),20);
+
 			GetZone(ZoneID)->InsertNPC(PNpc);
-				
             luautils::OnNpcSpawn(PNpc);
 		}
 	}
@@ -301,7 +301,7 @@ void LoadMOBList()
 	{
 		while(Sql_NextRow(SqlHandle) == SQL_SUCCESS)
 		{
-			uint16 ZoneID = (uint16)Sql_GetUIntData(SqlHandle, 0);
+        	uint16 ZoneID = (uint16)Sql_GetUIntData(SqlHandle, 0);
 			CMobEntity* PMob = new CMobEntity;
 
 			PMob->name.insert(0,Sql_GetData(SqlHandle,1));
@@ -416,7 +416,7 @@ void LoadMOBList()
             // must be here first to define mobmods
 			mobutils::InitializeMob(PMob, GetZone(ZoneID));
 
-			GetZone(ZoneID)->InsertMOB(PMob);
+            GetZone(ZoneID)->InsertMOB(PMob);
 
             luautils::OnMobInitialize(PMob);
 
@@ -427,7 +427,7 @@ void LoadMOBList()
 
 	// attach pets to mobs
 	const int8* PetQuery =
-		"SELECT mob_groups.zoneid, mob_mobid, pet_offset \
+		"SELECT zoneid, mob_mobid, pet_offset \
 		FROM mob_pets \
 		LEFT JOIN mob_spawn_points ON mob_pets.mob_mobid = mob_spawn_points.mobid \
 		LEFT JOIN mob_groups ON mob_spawn_points.groupid = mob_groups.groupid;";
@@ -438,7 +438,7 @@ void LoadMOBList()
 	{
 		while(Sql_NextRow(SqlHandle) == SQL_SUCCESS)
 		{
-			uint16 ZoneID = (uint16)Sql_GetUIntData(SqlHandle, 0);
+        	uint16 ZoneID = (uint16)Sql_GetUIntData(SqlHandle, 0);
 			uint32 masterid = (uint32)Sql_GetUIntData(SqlHandle,1);
 			uint32 petid = masterid + (uint32)Sql_GetUIntData(SqlHandle,2);
 
@@ -447,7 +447,7 @@ void LoadMOBList()
 
 			if(PMaster == NULL)
 			{
-				ShowError("zoneutils::loadMOBList PMaster is null. masterid: %d. Make sure x,y,z are not zeros and that all entities are in the database!\n", masterid);
+				ShowError("zoneutils::loadMOBList PMaster is null. masterid: %d. Make sure x,y,z are not zeros, and that all entities are entered in the database!\n", masterid);
 			}
 			else if(PPet == NULL)
 			{
@@ -494,14 +494,20 @@ void LoadZoneList()
 	LoadMOBList();
 	for (uint16 ZoneID = 0; ZoneID < MAX_ZONEID; ZoneID++)
 	{
-        //CZone* PZone = new CZone((ZONEID)ZoneID, GetCurrentRegion(ZoneID), GetCurrentContinent(ZoneID));
-		CZone* PZone = GetZone(ZoneID);
+        CZone* PZone = new CZone((ZONEID)ZoneID, GetCurrentRegion(ZoneID), GetCurrentContinent(ZoneID));
+        g_PZoneList[ZoneID] = PZone;
+    }
+
+	LoadNPCList();
+	LoadMOBList();
+
+    for (uint16 ZoneID = 0; ZoneID < MAX_ZONEID; ZoneID++)
+    {
+        CZone* PZone = GetZone(ZoneID);
 		PZone->ZoneServer(-1);
 		
 		if (PZone->GetIP() != 0)
-		{
 			luautils::OnZoneInitialise(PZone->GetID());
-		}
 	}
     UpdateWeather();
 }

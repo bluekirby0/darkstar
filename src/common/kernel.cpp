@@ -241,7 +241,6 @@ int main (int argc, char **argv)
 
 	do_init(argc,argv);
 	fd_set rfd;
-	PROFILE_END();
 	{// Main runtime cycle
 		int next;
 

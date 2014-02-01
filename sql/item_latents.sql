@@ -662,15 +662,32 @@ INSERT INTO `item_latents` VALUES(17952, 366, 2, 16, 2);
 INSERT INTO `item_latents` VALUES(17952, 366, 2, 16, 3);
 INSERT INTO `item_latents` VALUES(17952, 366, 2, 16, 4);
 INSERT INTO `item_latents` VALUES(17952, 366, 2, 16, 5);
-INSERT INTO `item_latents` VALUES(17662, 366, 2, 16, 2);
-INSERT INTO `item_latents` VALUES(17662, 366, 2, 16, 3);
-INSERT INTO `item_latents` VALUES(17662, 366, 2, 16, 4);
-INSERT INTO `item_latents` VALUES(17662, 366, 2, 16, 5);
-INSERT INTO `item_latents` VALUES(17720, 366, 1, 16, 1);
-INSERT INTO `item_latents` VALUES(17720, 366, 1, 16, 2);
-INSERT INTO `item_latents` VALUES(17720, 366, 1, 16, 3);
-INSERT INTO `item_latents` VALUES(17720, 366, 1, 16, 4);
-INSERT INTO `item_latents` VALUES(17720, 366, 1, 16, 5);
+
+-- -------------------------------------------------------
+-- Company Sword
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(17662, 366, 2, 15, 2); -- DMG 46~54, increases by 2 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17662, 366, 2, 15, 3); -- DMG 46~54, increases by 2 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17662, 366, 2, 15, 4); -- DMG 46~54, increases by 2 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17662, 366, 2, 15, 5); -- DMG 46~54, increases by 2 for every person in party (excl. wearer)
+
+-- -------------------------------------------------------
+-- Company Fleuret
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(17720, 366, 1, 15, 2); -- DMG 36~41, increases by 1 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17720, 366, 1, 15, 3); -- DMG 36~41, increases by 1 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17720, 366, 1, 15, 4); -- DMG 36~41, increases by 1 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17720, 366, 1, 15, 5); -- DMG 36~41, increases by 1 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17720, 366, 1, 15, 6); -- DMG 36~41, increases by 1 for every person in party (excl. wearer)
+
+-- -------------------------------------------------------
+-- Mensur Epee
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(17662, 366, -2, 15, 2); -- DMG 47~39, decreases by 2 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17662, 366, -2, 15, 3); -- DMG 47~39, decreases by 2 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17662, 366, -2, 15, 4); -- DMG 47~39, decreases by 2 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17662, 366, -2, 15, 5); -- DMG 47~39, decreases by 2 for every person in party (excl. wearer)
+INSERT INTO `item_latents` VALUES(17662, 366, -2, 15, 6); -- DMG 47~39, decreases by 2 for every person in party (excl. wearer)
 
 -- -------------------------------------------------------
 -- Garuda's Sickle
@@ -688,54 +705,106 @@ INSERT INTO `item_latents` VALUES(17192, 165, 3, 21, 10); -- Increases Critical 
 INSERT INTO `item_latents` VALUES(18021, 366, 5, 21, 11); -- DMG: 33
 
 
-INSERT INTO `item_latents` VALUES(18771, 23, 1, 16, 2);
-INSERT INTO `item_latents` VALUES(18771, 23, 1, 16, 3);
-INSERT INTO `item_latents` VALUES(18771, 23, 1, 16, 4);
-INSERT INTO `item_latents` VALUES(18771, 23, 1, 16, 5);
-INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 2);
-INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 3);
-INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 4);
-INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 5);
-INSERT INTO `item_latents` VALUES(17766, 10, 2, 16, 2);
-INSERT INTO `item_latents` VALUES(17766, 10, 2, 16, 3);
-INSERT INTO `item_latents` VALUES(17766, 10, 2, 16, 4);
-INSERT INTO `item_latents` VALUES(17766, 10, 2, 16, 5);
-INSERT INTO `item_latents` VALUES(19161, 8, 1, 16, 2);
-INSERT INTO `item_latents` VALUES(19161, 8, 1, 16, 3);
-INSERT INTO `item_latents` VALUES(19161, 8, 1, 16, 4);
-INSERT INTO `item_latents` VALUES(19161, 8, 1, 16, 5);
-INSERT INTO `item_latents` VALUES(17970, 9, 1, 16, 2);
-INSERT INTO `item_latents` VALUES(17970, 23, 2, 16, 2);
-INSERT INTO `item_latents` VALUES(17970, 9, 1, 16, 3);
-INSERT INTO `item_latents` VALUES(17970, 23, 2, 16, 3);
-INSERT INTO `item_latents` VALUES(17970, 9, 1, 16, 4);
-INSERT INTO `item_latents` VALUES(17970, 23, 2, 16, 4);
-INSERT INTO `item_latents` VALUES(17970, 9, 1, 16, 5);
-INSERT INTO `item_latents` VALUES(17970, 23, 2, 16, 5);
-INSERT INTO `item_latents` VALUES(18508, 8, 1, 16, 2);
-INSERT INTO `item_latents` VALUES(18508, 25, 2, 16, 2);
-INSERT INTO `item_latents` VALUES(18508, 8, 1, 16, 3);
-INSERT INTO `item_latents` VALUES(18508, 25, 2, 16, 3);
-INSERT INTO `item_latents` VALUES(18508, 8, 1, 16, 4);
-INSERT INTO `item_latents` VALUES(18508, 25, 2, 16, 4);
-INSERT INTO `item_latents` VALUES(18508, 8, 1, 16, 5);
-INSERT INTO `item_latents` VALUES(18508, 25, 2, 16, 5);
-INSERT INTO `item_latents` VALUES(18958, 8, 1, 16, 2);
-INSERT INTO `item_latents` VALUES(18958, 8, 1, 16, 3);
-INSERT INTO `item_latents` VALUES(18958, 8, 1, 16, 4);
-INSERT INTO `item_latents` VALUES(18958, 8, 1, 16, 5);
-INSERT INTO `item_latents` VALUES(19306, 8, 1, 16, 2);
-INSERT INTO `item_latents` VALUES(19306, 23, 2, 16, 2);
-INSERT INTO `item_latents` VALUES(19306, 8, 1, 16, 3);
-INSERT INTO `item_latents` VALUES(19306, 23, 2, 16, 3);
-INSERT INTO `item_latents` VALUES(19306, 8, 1, 16, 4);
-INSERT INTO `item_latents` VALUES(19306, 23, 2, 16, 4);
-INSERT INTO `item_latents` VALUES(19306, 8, 1, 16, 5);
-INSERT INTO `item_latents` VALUES(19306, 23, 2, 16, 5);
-INSERT INTO `item_latents` VALUES(19279, 9, 1, 16, 2);
-INSERT INTO `item_latents` VALUES(19279, 9, 1, 16, 3);
-INSERT INTO `item_latents` VALUES(19279, 9, 1, 16, 4);
-INSERT INTO `item_latents` VALUES(19279, 9, 1, 16, 5);
+-- -------------------------------------------------------
+-- Lyft Sainti
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(18771, 23, 1, 16, 3); -- ATT +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18771, 23, 1, 16, 4); -- ATT +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18771, 23, 1, 16, 5); -- ATT +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18771, 23, 1, 16, 6); -- ATT +1~4, party size 3+. Effect strengthens with more members
+
+-- -------------------------------------------------------
+-- Lyft Jambiya
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 3); -- DEX +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 4); -- DEX +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 5); -- DEX +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 6); -- DEX +1~4, party size 3+. Effect strengthens with more members
+
+-- -------------------------------------------------------
+-- Lyft Scimitar
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(17766, 10, 2, 16, 3); -- VIT +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(17766, 10, 2, 16, 4); -- VIT +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(17766, 10, 2, 16, 5); -- VIT +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(17766, 10, 2, 16, 6); -- VIT +1~4, party size 3+. Effect strengthens with more members
+
+-- -------------------------------------------------------
+-- Lyft Claymore
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(19161, 8, 1, 16, 3); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19161, 8, 1, 16, 4); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19161, 8, 1, 16, 5); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19161, 8, 1, 16, 6); -- STR +1~4, party size 3+. Effect strengthens with more members
+
+-- -------------------------------------------------------
+-- Lyft Tabar
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(17970, 9, 1, 16, 3); -- DEX +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(17970, 9, 1, 16, 4); -- DEX +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(17970, 9, 1, 16, 5); -- DEX +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(17970, 9, 1, 16, 6); -- DEX +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(17970, 23, 2, 16, 3); -- ATT +2~8, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(17970, 23, 2, 16, 4); -- ATT +2~8, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(17970, 23, 2, 16, 5); -- ATT +2~8, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(17970, 23, 2, 16, 6); -- ATT +2~8, party size 3+. Effect strengthens with more members
+
+-- -------------------------------------------------------
+-- Lyft Voulge
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(18508, 8, 1, 16, 3); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18508, 8, 1, 16, 4); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18508, 8, 1, 16, 5); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18508, 8, 1, 16, 6); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18508, 25, 2, 16, 3); -- ACC +2~8, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18508, 25, 2, 16, 4); -- ACC +2~8, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18508, 25, 2, 16, 5); -- ACC +2~8, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18508, 25, 2, 16, 6); -- ACC +2~8, party size 3+. Effect strengthens with more members
+
+-- -------------------------------------------------------
+-- Lyft Scythe
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(18958, 8, 1, 16, 3); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18958, 8, 1, 16, 4); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18958, 8, 1, 16, 5); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(18958, 8, 1, 16, 6); -- STR +1~4, party size 3+. Effect strengthens with more members
+
+-- -------------------------------------------------------
+-- Lyft Lance
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(19306, 8, 1, 16, 3); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19306, 8, 1, 16, 4); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19306, 8, 1, 16, 5); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19306, 8, 1, 16, 6); -- STR +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19306, 23, 2, 16, 3); -- ATT +2~8, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19306, 23, 2, 16, 4); -- ATT +2~8, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19306, 23, 2, 16, 5); -- ATT +2~8, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19306, 23, 2, 16, 6); -- ATT +2~8, party size 3+. Effect strengthens with more members
+
+-- -------------------------------------------------------
+-- Musanto
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(19279, 9, 1, 16, 3); -- DEX +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19279, 9, 1, 16, 4); -- DEX +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19279, 9, 1, 16, 5); -- DEX +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19279, 9, 1, 16, 6); -- DEX +1~4, party size 3+. Effect strengthens with more members
+
+-- -------------------------------------------------------
+-- Lyft Crossbow
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(19233, 13, 1, 16, 3); -- MND +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19233, 13, 1, 16, 4); -- MND +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19233, 13, 1, 16, 5); -- MND +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19233, 13, 1, 16, 6); -- MND +1~4, party size 3+. Effect strengthens with more members
+
+-- -------------------------------------------------------
+-- Lyft Hexagun
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(19234, 11, 1, 16, 3); -- AGI +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19234, 11, 1, 16, 4); -- AGI +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19234, 11, 1, 16, 5); -- AGI +1~4, party size 3+. Effect strengthens with more members
+INSERT INTO `item_latents` VALUES(19234, 11, 1, 16, 6); -- AGI +1~4, party size 3+. Effect strengthens with more members
+
 INSERT INTO `item_latents` VALUES(14062, 346, 0, 9, 8);
 INSERT INTO `item_latents` VALUES(16154, 346, 2, 9, 13);
 INSERT INTO `item_latents` VALUES(14401, 346, 2, 9, 7);
@@ -1192,12 +1261,12 @@ INSERT INTO `item_latents` VALUES(16306, 25, 20, 13, 4); -- accuracy+20 while un
 -- -------------------------------------------------------
 -- Colossus's Earring         
 -- -------------------------------------------------------
--- NEED latentID# INSERT INTO `item_latents` VALUES(16058, 161, -1, ??, 0); -- physical damage -2% during light weather (has -1% normally)
+INSERT INTO `item_latents` VALUES(16058, 161, -1, 53, 7); -- physical damage -2% during light weather (has -1% normally)
 
 -- -------------------------------------------------------
 -- Aesir Ear Pendant        
 -- -------------------------------------------------------
--- NEED modID# & latentID# INSERT INTO `item_latents` VALUES(16057, ??, 6, ??, 0); -- conserve tp+6 during dark weather
+-- NEED modID# INSERT INTO `item_latents` VALUES(16057, ??, 6, ??, 0); -- conserve tp+6 during dark weather
 
 -- -------------------------------------------------------
 -- Fatality Belt        
@@ -1397,6 +1466,11 @@ INSERT INTO `item_latents` VALUES(18483, 288, 1, 37, 0); -- Occasionally Attacks
 -- Sirius Axe
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES(17952, 160, 2, 25, 2); -- DMG increases by 2 per member
+INSERT INTO `item_latents` VALUES(17952, 160, 2, 25, 3); -- DMG increases by 2 per member
+INSERT INTO `item_latents` VALUES(17952, 160, 2, 25, 4); -- DMG increases by 2 per member
+INSERT INTO `item_latents` VALUES(17952, 160, 2, 25, 5); -- DMG increases by 2 per member
+INSERT INTO `item_latents` VALUES(17952, 160, 2, 25, 6); -- DMG increases by 2 per member
+
 -- -------------------------------------------------------
 -- Medicine Ring  
 -- -------------------------------------------------------
@@ -1485,3 +1559,98 @@ INSERT INTO `item_latents` VALUES(15114, 384, 4, 26, 1); -- Haste +%4 during nig
 INSERT INTO `item_latents` VALUES(15144, 9, 7, 26, 1); -- DEX +7 during nighttime
 -- Ninja Kyahan
 INSERT INTO `item_latents` VALUES(14101, 169, 25, 26, 1); -- %25 during nighttime
+
+
+-- -------------------------------------------------------
+-- Windurstian Kukri / Federation Kukri
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(17978, 23, 5, 43, 1); -- ATT +5 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(17979, 23, 7, 43, 1); -- ATT +7 in areas outside own nation's control
+
+-- -------------------------------------------------------
+-- Royal Knight's Army Lance +1/+2
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(18072, 23, 8, 43, 1); -- ATT +8 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(18073, 23, 9, 43, 1); -- ATT +9 in areas outside own nation's control
+
+
+-- -------------------------------------------------------
+-- Grand Temple Knight's Army Collar
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(13140, 1, 7, 43, 1);  -- DEF +7 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(13140, 23, 5, 43, 1); -- ATT +5 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(13140, 25, 5, 43, 1); -- ACC +5 in areas outside own nation's control
+
+
+-- -------------------------------------------------------
+-- Junior Musketeer's Tuck +1/+2
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(17666, 24, 4, 43, 1); -- RATT +4 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(17666, 26, 4, 43, 1); -- RACC +4 in areas outside own nation's control
+
+INSERT INTO `item_latents` VALUES(17667, 24, 5, 43, 1); -- RATT +5 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(17667, 26, 5, 43, 1); -- RACC +5 in areas outside own nation's control
+
+
+-- -------------------------------------------------------
+-- Musketeer Gun +1/+2
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(17269, 24, 8, 43, 1); -- RATT +8 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(17270, 24, 9, 43, 1); -- RATT +9 in areas outside own nation's control
+
+
+-- -------------------------------------------------------
+-- Windurstian Scarf
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(13142, 1, 7, 43, 1); -- DEF +7 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(13142, 68, 7, 43, 1); -- EVA +7 in areas outside own nation's control
+
+
+-- -------------------------------------------------------
+-- San d'Orian Halberd / Kingdom Halberd
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(18070, 25, 3, 43, 1); -- ACC +3 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(18071, 25, 4, 43, 1); -- ACC +4 in areas outside own nation's control
+
+
+-- -------------------------------------------------------
+-- Combat Caster's Boomerang +1/+2
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(18132, 25, 4, 43, 1); -- ACC +4 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(18132, 26, 4, 43, 1); -- RACC +4 in areas outside own nation's control
+
+INSERT INTO `item_latents` VALUES(18133, 25, 5, 43, 1); -- ACC +5 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(18133, 26, 5, 43, 1); -- RACC +5 in areas outside own nation's control
+
+
+-- -------------------------------------------------------
+-- San d'Orian Dagger / Kingdom Dagger
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(17972, 11, 1, 43, 1); -- AGI +1 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(17973, 11, 2, 43, 1); -- AGI +2 in areas outside own nation's control
+
+
+-- -------------------------------------------------------
+-- Grand Temple Knight's Bangles
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(14014, 11, 2, 43, 1); -- AGI +2 in areas outside own nation's control
+
+
+-- -------------------------------------------------------
+-- Master Caster's Mitts
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(14016, 11, 2, 43, 1); -- AGI +2 in areas outside own nation's control
+
+
+-- -------------------------------------------------------
+-- Tactician Magician's Hooks +1/+2
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(17501, 14, 3, 43, 1); -- CHR +3 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES(17502, 14, 4, 43, 1); -- CHR +4 in areas outside own nation's control
+
+
+
+
+
+
+
