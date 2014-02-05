@@ -37,6 +37,7 @@ CRegion::CRegion(uint32 RegionID, bool isCircle) :
     m_Count(0),
 	m_RegionID(RegionID), circle(isCircle)
 {
+	PROFILE_FUNC();
 	if (m_RegionID == 0)
 	{
 		ShowWarning(CL_YELLOW"Region ID cannot be zero\n" CL_RESET);	
@@ -51,6 +52,7 @@ CRegion::CRegion(uint32 RegionID, bool isCircle) :
 
 uint32 CRegion::GetRegionID()
 {
+	PROFILE_FUNC();
 	return m_RegionID;
 }
 
@@ -62,6 +64,7 @@ uint32 CRegion::GetRegionID()
 
 int16 CRegion::GetCount()
 {
+	PROFILE_FUNC();
     return m_Count;
 }
 
@@ -73,6 +76,7 @@ int16 CRegion::GetCount()
     
 int16 CRegion::AddCount(int16 count)
 {
+	PROFILE_FUNC();
     m_Count += count;
     return m_Count;
 }
@@ -85,6 +89,7 @@ int16 CRegion::AddCount(int16 count)
     
 int16 CRegion::DelCount(int16 count)
 {
+	PROFILE_FUNC();
     m_Count -= count;
     return m_Count;
 }
@@ -97,6 +102,7 @@ int16 CRegion::DelCount(int16 count)
 
 void CRegion::SetULCorner(float x, float y, float z)
 {
+	PROFILE_FUNC();
 	x1 = x;
 	y1 = y;
 	z1 = z;
@@ -110,6 +116,7 @@ void CRegion::SetULCorner(float x, float y, float z)
 
 void CRegion::SetLRCorner(float x, float y, float z)
 {
+	PROFILE_FUNC();
 	x2 = x;
 	y2 = y;
 	z2 = z;
@@ -123,6 +130,7 @@ void CRegion::SetLRCorner(float x, float y, float z)
 
 bool CRegion::isPointInside(position_t pos)
 {
+	PROFILE_FUNC();
 	if(circle == true)
 	{
 		// Get the distance between their X coordinate and ours.

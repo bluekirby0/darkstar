@@ -32,6 +32,7 @@
 
 CItemContainer::CItemContainer(uint16 LocationID)
 {
+	PROFILE_FUNC();
 	m_id = LocationID;
 
     SortingPacket   = 0;
@@ -46,6 +47,7 @@ CItemContainer::CItemContainer(uint16 LocationID)
 
 CItemContainer::~CItemContainer()
 {
+	PROFILE_FUNC();
 	for (uint8 SlotID = 0; SlotID <= m_size; ++SlotID)
 	{
         delete m_ItemList[SlotID];
@@ -54,16 +56,19 @@ CItemContainer::~CItemContainer()
 
 uint16 CItemContainer::GetID()
 {
+	PROFILE_FUNC();
 	return m_id;
 }
 
 uint8 CItemContainer::GetSize()
 {
+	PROFILE_FUNC();
 	return m_size;
 }
 
 uint8 CItemContainer::GetFreeSlotsCount()
 {
+	PROFILE_FUNC();
     return m_size - m_count;
 }
 
@@ -75,11 +80,13 @@ uint8 CItemContainer::GetFreeSlotsCount()
 
 uint16 CItemContainer::GetBuff()
 {
+	PROFILE_FUNC();
     return m_buff;
 }
 
 uint8 CItemContainer::AddBuff(int8 buff)
 {
+	PROFILE_FUNC();
     m_buff += buff;
     return SetSize(dsp_min(m_buff, 80)); // ограничение в 80 ячеек для персонажа
 }
@@ -94,6 +101,7 @@ uint8 CItemContainer::AddBuff(int8 buff)
 
 uint8 CItemContainer::SetSize(uint8 size) 
 {
+	PROFILE_FUNC();
 	if (size <= MAX_CONTAINER_SIZE) 
 	{
 		if (size >= m_count)
@@ -116,6 +124,7 @@ uint8 CItemContainer::SetSize(uint8 size)
 
 uint8 CItemContainer::AddSize(int8 size)
 {
+	PROFILE_FUNC();
     uint8 newsize = m_size + size;
 
     if (newsize <= MAX_CONTAINER_SIZE) 
@@ -138,6 +147,7 @@ uint8 CItemContainer::AddSize(int8 size)
 
 uint8 CItemContainer::InsertItem(CItem* PItem)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PItem == NULL);
 
 	for (uint8 SlotID = 1; SlotID <= m_size; ++SlotID) 
@@ -167,6 +177,7 @@ uint8 CItemContainer::InsertItem(CItem* PItem)
 
 uint8 CItemContainer::InsertItem(CItem* PItem, uint8 SlotID)
 {
+	PROFILE_FUNC();
 	if (SlotID <= m_size)
 	{
 		if (PItem != NULL)
@@ -195,6 +206,7 @@ uint8 CItemContainer::InsertItem(CItem* PItem, uint8 SlotID)
 
 CItem* CItemContainer::GetItem(uint8 SlotID)
 {
+	PROFILE_FUNC();
 	if (SlotID <= m_size)
 	{
 		return m_ItemList[SlotID];
@@ -210,6 +222,7 @@ CItem* CItemContainer::GetItem(uint8 SlotID)
 
 uint8 CItemContainer::SearchItem(uint16 ItemID)
 {
+	PROFILE_FUNC();
 	for (uint8 SlotID = 0; SlotID <= m_size; ++SlotID) 
 	{
 		if ((m_ItemList[SlotID] != NULL) && 
@@ -229,6 +242,7 @@ uint8 CItemContainer::SearchItem(uint16 ItemID)
 
 uint8 CItemContainer::SearchItemWithSpace(uint16 ItemID, uint32 quantity)
 {
+	PROFILE_FUNC();
 	for (uint8 SlotID = 0; SlotID <= m_size; ++SlotID) 
 	{
 		if ((m_ItemList[SlotID] != NULL) && 

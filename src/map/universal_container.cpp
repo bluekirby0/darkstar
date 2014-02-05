@@ -36,6 +36,7 @@
 
 CUContainer::CUContainer()
 {
+	PROFILE_FUNC();
 	Clean();
 }
 
@@ -47,6 +48,7 @@ CUContainer::CUContainer()
 
 void CUContainer::Clean()
 {
+	PROFILE_FUNC();
     if (m_ContainerType == UCONTAINER_DELIVERYBOX)
     {
         for (uint8 i = 0; i < UCONTAINER_SIZE; ++i)
@@ -71,6 +73,7 @@ void CUContainer::Clean()
 
 uint16 CUContainer::GetTarget()
 {
+	PROFILE_FUNC();
     return m_target;
 }
 
@@ -82,6 +85,7 @@ uint16 CUContainer::GetTarget()
 	
 void CUContainer::SetTarget(uint16 Target)
 {
+	PROFILE_FUNC();
     m_target = Target;
 }
 
@@ -93,6 +97,7 @@ void CUContainer::SetTarget(uint16 Target)
 
 UCONTAINERTYPE CUContainer::GetType()
 {
+	PROFILE_FUNC();
 	return m_ContainerType;
 }
 
@@ -104,6 +109,7 @@ UCONTAINERTYPE CUContainer::GetType()
 
 void CUContainer::SetType(UCONTAINERTYPE Type)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_ContainerType != UCONTAINER_EMPTY);
 
 	m_ContainerType = Type;
@@ -117,6 +123,7 @@ void CUContainer::SetType(UCONTAINERTYPE Type)
 
 void CUContainer::SetLock()
 {
+	PROFILE_FUNC();
     m_lock = true;
 }
 
@@ -128,6 +135,7 @@ void CUContainer::SetLock()
 
 bool CUContainer::IsLocked()
 {
+	PROFILE_FUNC();
 	return m_lock;
 }
 
@@ -139,6 +147,7 @@ bool CUContainer::IsLocked()
 
 bool CUContainer::IsContainerEmpty()
 {
+	PROFILE_FUNC();
 	return (m_ContainerType == UCONTAINER_EMPTY);
 }
 
@@ -150,6 +159,7 @@ bool CUContainer::IsContainerEmpty()
 
 bool CUContainer::IsSlotEmpty(uint8 slotID)
 {
+	PROFILE_FUNC();
     if (slotID < UCONTAINER_SIZE)
 	{
         return m_PItem[slotID] == NULL;
@@ -165,6 +175,7 @@ bool CUContainer::IsSlotEmpty(uint8 slotID)
 
 bool CUContainer::SetItem(uint8 slotID, CItem* PItem)
 {
+	PROFILE_FUNC();
 	if (slotID < UCONTAINER_SIZE && !m_lock)
 	{
         if (PItem != NULL && m_PItem[slotID] == NULL) m_count++;
@@ -184,6 +195,7 @@ bool CUContainer::SetItem(uint8 slotID, CItem* PItem)
 
 uint8 CUContainer::GetItemsCount()
 {
+	PROFILE_FUNC();
     return m_count;
 }
 
@@ -195,6 +207,7 @@ uint8 CUContainer::GetItemsCount()
 
 CItem* CUContainer::GetItem(uint8 slotID)
 {
+	PROFILE_FUNC();
 	if (slotID < UCONTAINER_SIZE)
 	{
 		return m_PItem[slotID];

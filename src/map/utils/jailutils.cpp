@@ -44,7 +44,8 @@ namespace jailutils
     ************************************************************************/
 
     bool InPrison(CCharEntity* PChar)
-    {
+	{
+		PROFILE_FUNC();
         if(!(PChar->nameflags.flags & FLAG_GM) && PChar->getZone() == ZONE_MORDION_GAOL)
         {
             return true;
@@ -59,7 +60,8 @@ namespace jailutils
     ************************************************************************/
 
     void Add(CCharEntity* PChar)
-    {
+	{
+		PROFILE_FUNC();
         delete PChar->PBattleAI;
         PChar->PBattleAI = new CAICharPrisoner(PChar);
 
@@ -73,7 +75,8 @@ namespace jailutils
     ************************************************************************/
 
     void Del(CCharEntity* PChar)
-    {
+	{
+		PROFILE_FUNC();
         delete PChar->PBattleAI;
         PChar->PBattleAI = new CAICharNormal(PChar);
 

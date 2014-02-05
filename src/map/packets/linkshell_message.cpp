@@ -29,6 +29,7 @@
 
 CLinkshellMessagePacket::CLinkshellMessagePacket(CLinkshell* PLinkshell)
 {
+	PROFILE_FUNC();
     this->type = 0xCC;
 	this->size = 0x58;
 

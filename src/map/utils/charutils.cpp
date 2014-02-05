@@ -104,6 +104,7 @@ namespace charutils
 
 void CalculateStats(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	// Объявление переменных, нужных для рассчета.
 
 	float raceStat  = 0;			// конечное число HP для уровня на основе расы.
@@ -311,6 +312,7 @@ void CalculateStats(CCharEntity* PChar)
 
 void LoadChar(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	uint8 meritPoints = 0;
 	uint16 limitPoints = 0;
 
@@ -777,6 +779,7 @@ void LoadChar(CCharEntity* PChar)
 
 void LoadInventory(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "SELECT "
           "itemid,"         // 0
@@ -931,6 +934,7 @@ void LoadInventory(CCharEntity* PChar)
 
 void SendQuestMissionLog(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	// в нижележащем цикле загружаются все квесты, текущие и выполненные
 	// в одном пакете с текущими квестами Aht Urhgan отправляется информация о текущих миссиях
 	// Treasures of Aht Urhgan
@@ -984,6 +988,7 @@ void SendQuestMissionLog(CCharEntity* PChar)
 
 void SendKeyItems(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     for (uint8 table = 0; table < MAX_KEYS_TABLE; table++)
     {
         PChar->pushPacket(new CKeyItemsPacket(PChar,(KEYS_TABLE)table));
@@ -998,6 +1003,7 @@ void SendKeyItems(CCharEntity* PChar)
 
 void SendInventory(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	for(uint8 LocationID = 0; LocationID < MAX_CONTAINER_ID; ++LocationID)
 	{
 		uint8 size = PChar->getStorage(LocationID)->GetSize();
@@ -1049,6 +1055,7 @@ void SendInventory(CCharEntity* PChar)
 
 uint8 AddItem(CCharEntity* PChar, uint8 LocationID, uint16 ItemID, uint32 quantity, bool silence)
 {
+	PROFILE_FUNC();
     if (PChar->getStorage(LocationID)->GetFreeSlotsCount() == 0 || quantity == 0)
     {
         return ERROR_SLOTID;
@@ -1073,6 +1080,7 @@ uint8 AddItem(CCharEntity* PChar, uint8 LocationID, uint16 ItemID, uint32 quanti
 
 uint8 AddItem(CCharEntity* PChar, uint8 LocationID, CItem* PItem, bool silence)
 {
+	PROFILE_FUNC();
     if (PItem->isType(ITEM_CURRENCY))
     {
         UpdateItem(PChar, LocationID, 0, PItem->getQuantity());
@@ -1160,6 +1168,7 @@ uint8 AddItem(CCharEntity* PChar, uint8 LocationID, CItem* PItem, bool silence)
 
 bool HasItem(CCharEntity* PChar, uint16 ItemID)
 {
+	PROFILE_FUNC();
     for (uint8 LocID = 0; LocID < MAX_CONTAINER_ID; ++LocID)
 	{
 		if (PChar->getStorage(LocID)->SearchItem(ItemID) != ERROR_SLOTID)
@@ -1172,6 +1181,7 @@ bool HasItem(CCharEntity* PChar, uint16 ItemID)
 
 void UpdateSubJob(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     charutils::BuildingCharSkillsTable(PChar);
     charutils::CalculateStats(PChar);
     charutils::CheckValidEquipment(PChar);
@@ -1206,6 +1216,7 @@ void UpdateSubJob(CCharEntity* PChar)
 
 uint8 MoveItem(CCharEntity* PChar, uint8 LocationID, uint8 SlotID, uint8 NewSlotID)
 {
+	PROFILE_FUNC();
     CItemContainer* PItemContainer = PChar->getStorage(LocationID);
 
     if (PItemContainer->GetFreeSlotsCount() != 0)
@@ -1249,6 +1260,7 @@ uint8 MoveItem(CCharEntity* PChar, uint8 LocationID, uint8 SlotID, uint8 NewSlot
 
 uint32 UpdateItem(CCharEntity* PChar, uint8 LocationID, uint8 slotID, int32 quantity)
 {
+	PROFILE_FUNC();
 	CItem* PItem = PChar->getStorage(LocationID)->GetItem(slotID);
 
 	if(PItem == NULL)
@@ -1303,6 +1315,7 @@ uint32 UpdateItem(CCharEntity* PChar, uint8 LocationID, uint8 slotID, int32 quan
 
 bool CanTrade(CCharEntity* PChar, CCharEntity* PTarget)
 {
+	PROFILE_FUNC();
     if (PTarget->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() < PChar->UContainer->GetItemsCount())
     {
         return false;
@@ -1330,6 +1343,7 @@ bool CanTrade(CCharEntity* PChar, CCharEntity* PTarget)
 
 void DoTrade(CCharEntity* PChar, CCharEntity* PTarget)
 {
+	PROFILE_FUNC();
     for (uint8 slotid = 0; slotid <= 8; ++slotid)
     {
         CItem* PItem = PChar->UContainer->GetItem(slotid);
@@ -1356,6 +1370,7 @@ void DoTrade(CCharEntity* PChar, CCharEntity* PTarget)
 
 void UnequipItem(CCharEntity* PChar, uint8 equipSlotID)
 {
+	PROFILE_FUNC();
 	CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(PChar->equip[equipSlotID]);
 
 	if((PItem != NULL) && PItem->isType(ITEM_ARMOR))
@@ -1477,6 +1492,7 @@ void UnequipItem(CCharEntity* PChar, uint8 equipSlotID)
 
 void RemoveSub(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     CItemArmor* PItem = (CItemArmor*)PChar->getStorage(LOC_INVENTORY)->GetItem(PChar->equip[SLOT_SUB]);
 
     if (PItem != NULL && PItem->isType(ITEM_ARMOR))
@@ -1493,6 +1509,7 @@ void RemoveSub(CCharEntity* PChar)
 
 bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID)
 {
+	PROFILE_FUNC();
 	CItemArmor* PItem = (CItemArmor*)PChar->getStorage(LOC_INVENTORY)->GetItem(slotID);
 
 	if (PItem == NULL)
@@ -1750,6 +1767,7 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID)
 
 void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID)
 {
+	PROFILE_FUNC();
 	if (slotID == 0)
 	{
         CItemArmor* PSubItem = (CItemArmor*)PChar->getStorage(LOC_INVENTORY)->GetItem(PChar->equip[SLOT_SUB]);
@@ -1840,6 +1858,7 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID)
 
 void CheckValidEquipment(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     CItemArmor* PItem  = NULL;
 
     for(uint8 slotID = 0; slotID < 16; ++slotID)
@@ -1879,6 +1898,7 @@ void CheckValidEquipment(CCharEntity* PChar)
 
 void RemoveAllEquipment(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     CItemArmor* PItem  = NULL;
 
     for(uint8 slotID = 0; slotID < 16; ++slotID)
@@ -1910,6 +1930,7 @@ void RemoveAllEquipment(CCharEntity* PChar)
 
 void CheckEquipLogic(CCharEntity* PChar, SCRIPTTYPE ScriptType, uint32 param)
 {
+	PROFILE_FUNC();
 	if (!(PChar->m_EquipFlag & ScriptType))
 		return;
 
@@ -1935,6 +1956,7 @@ void CheckEquipLogic(CCharEntity* PChar, SCRIPTTYPE ScriptType, uint32 param)
 
 void BuildingCharWeaponSkills(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	memset(& PChar->m_WeaponSkills, 0, sizeof(PChar->m_WeaponSkills));
 
 	JOBTYPE curMainJob = PChar->GetMJob();
@@ -2003,6 +2025,7 @@ void BuildingCharWeaponSkills(CCharEntity* PChar)
 }
 
 void BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 PetID){
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PPet==NULL || PChar==NULL);
 
 	memset(& PChar->m_PetCommands, 0, sizeof(PChar->m_PetCommands));
@@ -2041,6 +2064,7 @@ void BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 Pe
 
 void BuildingCharAbilityTable(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	std::vector<CAbility*> AbilitiesList;
 
 	memset(& PChar->m_Abilities, 0, sizeof(PChar->m_Abilities));
@@ -2105,6 +2129,7 @@ void BuildingCharAbilityTable(CCharEntity* PChar)
 
 void BuildingCharSkillsTable(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	uint16 meritIndex = 8;		// h2h merit index starts at 8
 
 	for (int32 i = 0; i < 48; ++i)
@@ -2179,6 +2204,7 @@ void BuildingCharSkillsTable(CCharEntity* PChar)
 
 void BuildingCharTraitsTable(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     for (uint8 i = 0; i < PChar->TraitList.size(); ++i)
     {
         CTrait* PTrait = PChar->TraitList.at(i);
@@ -2306,6 +2332,7 @@ void BuildingCharTraitsTable(CCharEntity* PChar)
 
 void TrySkillUP(CCharEntity* PChar, SKILLTYPE SkillID, uint8 lvl)
 {
+	PROFILE_FUNC();
 
     // This usually happens after a crash
     DSP_DEBUG_BREAK_IF(SkillID >= MAX_SKILLTYPE);   // выход за пределы допустимых умений
@@ -2396,6 +2423,7 @@ void TrySkillUP(CCharEntity* PChar, SKILLTYPE SkillID, uint8 lvl)
 
 void CheckWeaponSkill(CCharEntity* PChar, uint8 skill)
 {
+	PROFILE_FUNC();
 	if (PChar->m_Weapons[SLOT_MAIN]->getSkillType() != skill)
 	{
 		return;
@@ -2427,26 +2455,31 @@ void CheckWeaponSkill(CCharEntity* PChar, uint8 skill)
 
 int32 hasKeyItem(CCharEntity* PChar, uint16 KeyItemID)
 {
+	PROFILE_FUNC();
 	return hasBit(KeyItemID, PChar->keys.keysList, sizeof(PChar->keys.keysList));
 }
 
 int32 seenKeyItem(CCharEntity* PChar, uint16 KeyItemID)
 {
+	PROFILE_FUNC();
 	return hasBit(KeyItemID, PChar->keys.seenList, sizeof(PChar->keys.seenList));
 }
 
 int32 unseenKeyItem(CCharEntity* PChar, uint16 KeyItemID)
 {
+	PROFILE_FUNC();
 	return delBit(KeyItemID, PChar->keys.seenList, sizeof(PChar->keys.seenList));
 }
 
 int32 addKeyItem(CCharEntity* PChar, uint16 KeyItemID)
 {
+	PROFILE_FUNC();
 	return addBit(KeyItemID, PChar->keys.keysList, sizeof(PChar->keys.keysList));
 }
 
 int32 delKeyItem(CCharEntity* PChar, uint16 KeyItemID)
 {
+	PROFILE_FUNC();
 	return delBit(KeyItemID, PChar->keys.keysList, sizeof(PChar->keys.keysList));
 }
 
@@ -2458,16 +2491,19 @@ int32 delKeyItem(CCharEntity* PChar, uint16 KeyItemID)
 
 int32 hasSpell(CCharEntity* PChar, uint16 SpellID)
 {
+	PROFILE_FUNC();
 	return hasBit(SpellID, PChar->m_SpellList, sizeof(PChar->m_SpellList));
 }
 
 int32 addSpell(CCharEntity* PChar, uint16 SpellID)
 {
+	PROFILE_FUNC();
 	return addBit(SpellID, PChar->m_SpellList, sizeof(PChar->m_SpellList));
 }
 
 int32 delSpell(CCharEntity* PChar, uint16 SpellID)
 {
+	PROFILE_FUNC();
 	return delBit(SpellID, PChar->m_SpellList, sizeof(PChar->m_SpellList));
 }
 
@@ -2479,16 +2515,19 @@ int32 delSpell(CCharEntity* PChar, uint16 SpellID)
 
 int32 hasLearnedAbility(CCharEntity* PChar, uint16 AbilityID)
 {
+	PROFILE_FUNC();
 	return hasBit(AbilityID, PChar->m_LearnedAbilities, sizeof(PChar->m_LearnedAbilities));
 }
 
 int32 addLearnedAbility(CCharEntity* PChar, uint16 AbilityID)
 {
+	PROFILE_FUNC();
 	return addBit(AbilityID, PChar->m_LearnedAbilities, sizeof(PChar->m_LearnedAbilities));
 }
 
 int32 delLearnedAbility(CCharEntity* PChar, uint16 AbilityID)
 {
+	PROFILE_FUNC();
 	return delBit(AbilityID, PChar->m_LearnedAbilities, sizeof(PChar->m_LearnedAbilities));
 }
 
@@ -2500,21 +2539,25 @@ int32 delLearnedAbility(CCharEntity* PChar, uint16 AbilityID)
 
 int32 hasTitle(CCharEntity* PChar, uint16 Title)
 {
+	PROFILE_FUNC();
 	return hasBit(Title, PChar->m_TitleList, sizeof(PChar->m_TitleList));
 }
 
 int32 addTitle(CCharEntity* PChar, uint16 Title)
 {
+	PROFILE_FUNC();
 	return addBit(Title, PChar->m_TitleList, sizeof(PChar->m_TitleList));
 }
 
 int32 delTitle(CCharEntity* PChar, uint16 Title)
 {
+	PROFILE_FUNC();
 	return delBit(Title, PChar->m_TitleList, sizeof(PChar->m_TitleList));
 }
 
 void setTitle(CCharEntity* PChar, uint16 Title)
 {
+	PROFILE_FUNC();
     PChar->profile.title = Title;
     PChar->pushPacket(new CCharStatsPacket(PChar));
 
@@ -2530,16 +2573,19 @@ void setTitle(CCharEntity* PChar, uint16 Title)
 
 int32 hasAbility(CCharEntity* PChar, uint16 AbilityID)
 {
+	PROFILE_FUNC();
 	return hasBit(AbilityID, PChar->m_Abilities, sizeof(PChar->m_Abilities));
 }
 
 int32 addAbility(CCharEntity* PChar, uint16 AbilityID)
 {
+	PROFILE_FUNC();
 	return addBit(AbilityID, PChar->m_Abilities, sizeof(PChar->m_Abilities));
 }
 
 int32 delAbility(CCharEntity* PChar, uint16 AbilityID)
 {
+	PROFILE_FUNC();
 	return delBit(AbilityID, PChar->m_Abilities, sizeof(PChar->m_Abilities));
 }
 
@@ -2551,16 +2597,19 @@ int32 delAbility(CCharEntity* PChar, uint16 AbilityID)
 
 int32 hasWeaponSkill(CCharEntity* PChar, uint16 WeaponSkillID)
 {
+	PROFILE_FUNC();
 	return hasBit(WeaponSkillID, PChar->m_WeaponSkills, sizeof(PChar->m_WeaponSkills));
 }
 
 int32 addWeaponSkill(CCharEntity* PChar, uint16 WeaponSkillID)
 {
+	PROFILE_FUNC();
 	return addBit(WeaponSkillID, PChar->m_WeaponSkills, sizeof(PChar->m_WeaponSkills));
 }
 
 int32 delWeaponSkill(CCharEntity* PChar, uint16 WeaponSkillID)
 {
+	PROFILE_FUNC();
 	return delBit(WeaponSkillID, PChar->m_WeaponSkills, sizeof(PChar->m_WeaponSkills));
 }
 
@@ -2572,16 +2621,19 @@ int32 delWeaponSkill(CCharEntity* PChar, uint16 WeaponSkillID)
 
 int32 hasTrait(CCharEntity* PChar, uint8 TraitID)
 {
+	PROFILE_FUNC();
 	return hasBit(TraitID, PChar->m_TraitList, sizeof(PChar->m_TraitList));
 }
 
 int32 addTrait(CCharEntity* PChar, uint8 TraitID)
 {
+	PROFILE_FUNC();
 	return addBit(TraitID, PChar->m_TraitList, sizeof(PChar->m_TraitList));
 }
 
 int32 delTrait(CCharEntity* PChar, uint8 TraitID)
 {
+	PROFILE_FUNC();
 	return delBit(TraitID, PChar->m_TraitList, sizeof(PChar->m_TraitList));
 }
 
@@ -2592,16 +2644,19 @@ int32 delTrait(CCharEntity* PChar, uint8 TraitID)
 *************************************************************************/
 int32 hasPetAbility(CCharEntity* PChar, uint16 AbilityID)
 {
+	PROFILE_FUNC();
 	return hasBit(AbilityID, PChar->m_PetCommands, sizeof(PChar->m_PetCommands));
 }
 
 int32 addPetAbility(CCharEntity* PChar, uint16 AbilityID)
 {
+	PROFILE_FUNC();
 	return addBit(AbilityID, PChar->m_PetCommands, sizeof(PChar->m_PetCommands));
 }
 
 int32 delPetAbility(CCharEntity* PChar, uint16 AbilityID)
 {
+	PROFILE_FUNC();
 	return delBit(AbilityID, PChar->m_PetCommands, sizeof(PChar->m_PetCommands));
 }
 
@@ -2613,6 +2668,7 @@ int32 delPetAbility(CCharEntity* PChar, uint16 AbilityID)
 
 void UpdateHealth(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PChar->objtype != TYPE_PC);
 
     if (PChar->status == STATUS_NORMAL) PChar->status = STATUS_UPDATE;
@@ -2689,6 +2745,7 @@ void LoadExpTable()
 
 uint32 GetRealExp(uint8 charlvl, uint8 moblvl)
 {
+	PROFILE_FUNC();
 	int32 levelDif =  moblvl - charlvl + 34;
 
 	if ((charlvl > 0) && (charlvl < 100))
@@ -2706,6 +2763,7 @@ uint32 GetRealExp(uint8 charlvl, uint8 moblvl)
 
 uint32 GetExpNEXTLevel(uint8 charlvl)
 {
+	PROFILE_FUNC();
 	if ((charlvl > 0) && (charlvl < 100))
 	{
 		return g_ExpPerLevel[charlvl];
@@ -2723,6 +2781,7 @@ uint32 GetExpNEXTLevel(uint8 charlvl)
 
 void DistributeGil(CCharEntity* PChar, CMobEntity* PMob)
 {
+	PROFILE_FUNC();
     //work out the amount of gil to give (guessed; replace with testing)
     uint32 gil = PMob->GetRandomGil();
 
@@ -2770,6 +2829,7 @@ void DistributeGil(CCharEntity* PChar, CMobEntity* PMob)
 
 void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
 {
+	PROFILE_FUNC();
     uint8 pcinzone = 0, minlevel = 0, maxlevel = PChar->GetMLevel();
     uint32 baseexp = 0, exp = 0, dedication = 0;
     float permonstercap, monsterbonus = 1.0f;
@@ -3167,6 +3227,7 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
 ************************************************************************/
 void DelExperiencePoints(CCharEntity* PChar, float retainPercent)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(retainPercent > 1.0f || retainPercent < 0.0f);
 	DSP_DEBUG_BREAK_IF(map_config.exp_loss_level > 99 || map_config.exp_loss_level < 1);
 
@@ -3243,6 +3304,7 @@ void DelExperiencePoints(CCharEntity* PChar, float retainPercent)
  */
 uint8 GetHighestTreasureHunter(CCharEntity* PChar, CMobEntity* PMob)
 {
+	PROFILE_FUNC();
 	bool thf_in_party = true;
 	uint8 highestTH = PMob->m_THLvl;
 	if (map_config.thf_in_party_for_drops == 1) {
@@ -3288,6 +3350,7 @@ uint8 GetHighestTreasureHunter(CCharEntity* PChar, CMobEntity* PMob)
 
 void AddExperiencePoints(bool expFromRaise, CCharEntity* PChar, CBaseEntity* PMob, uint32 exp, uint32 baseexp, bool isexpchain)
 {
+	PROFILE_FUNC();
 	if (PChar->isDead())
 		return;
 	
@@ -3471,6 +3534,7 @@ void AddExperiencePoints(bool expFromRaise, CCharEntity* PChar, CBaseEntity* PMo
 
 void SetLevelRestriction(CCharEntity* PChar, uint8 lvl)
 {
+	PROFILE_FUNC();
 
 }
 
@@ -3483,6 +3547,7 @@ void SetLevelRestriction(CCharEntity* PChar, uint8 lvl)
 
 void SaveCharUnlockedWeapons(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =  "UPDATE chars SET unlocked_weapons = '%s' WHERE charid = %u";
 
 	int8 points[MAX_UNLOCKABLE_WEAPONS*2+1];
@@ -3507,6 +3572,7 @@ void SaveCharUnlockedWeapons(CCharEntity* PChar)
 
 void LoadCharUnlockedWeapons(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	memcpy(PChar->unlockedWeapons, nameSpaceUnlockableWeapons::g_pWeaponUnlockable, sizeof(PChar->unlockedWeapons));
 
     const int8* Query = "SELECT unlocked_weapons FROM chars WHERE charid = %u";
@@ -3540,6 +3606,7 @@ void LoadCharUnlockedWeapons(CCharEntity* PChar)
 
 void SaveCharPosition(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "UPDATE chars "
         "SET "
@@ -3571,6 +3638,7 @@ void SaveCharPosition(CCharEntity* PChar)
 
 void SaveQuestsList(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "UPDATE chars "
         "SET "
@@ -3593,6 +3661,7 @@ void SaveQuestsList(CCharEntity* PChar)
 
 void SaveFame(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "UPDATE char_profile "
         "SET "
@@ -3621,6 +3690,7 @@ void SaveFame(CCharEntity* PChar)
 
 void SaveMissionsList(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "UPDATE chars "
         "LEFT JOIN char_profile USING(charid) "
@@ -3652,6 +3722,7 @@ void SaveMissionsList(CCharEntity* PChar)
 
 void SaveCharInventoryCapacity(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "UPDATE char_storage "
         "SET "
@@ -3681,6 +3752,7 @@ void SaveCharInventoryCapacity(CCharEntity* PChar)
 
 void SaveKeyItems(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* fmtQuery = "UPDATE chars SET keyitems = '%s' WHERE charid = %u;";
 
 	int8 keyitems[sizeof(PChar->keys)*2+1];
@@ -3697,6 +3769,7 @@ void SaveKeyItems(CCharEntity* PChar)
 
 void SaveSpells(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "UPDATE chars SET "
           "spells = '%s' "
@@ -3719,6 +3792,7 @@ void SaveSpells(CCharEntity* PChar)
 
 void SaveLearnedAbilities(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "UPDATE chars SET "
           "abilities = '%s' "
@@ -3740,6 +3814,7 @@ void SaveLearnedAbilities(CCharEntity* PChar)
 
 void SaveTitles(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "UPDATE chars "
         "LEFT JOIN char_stats USING(charid) "
@@ -3765,6 +3840,7 @@ void SaveTitles(CCharEntity* PChar)
 
 void SaveZonesVisited(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* fmtQuery = "UPDATE chars SET zones = '%s' WHERE charid = %u;";
 
 	int8 zones[sizeof(PChar->m_ZonesList)*2+1];
@@ -3781,6 +3857,7 @@ void SaveZonesVisited(CCharEntity* PChar)
 
 void SaveCharEquip(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query = "UPDATE char_equip \
 						 SET main  = %u, sub   = %u, ranged = %u, ammo = %u, head  = %u, body = %u, \
 							 hands = %u, legs  = %u, feet   = %u, neck = %u, waist = %u, ear1 = %u, \
@@ -3833,6 +3910,7 @@ void SaveCharEquip(CCharEntity* PChar)
 
 void SaveCharStats(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query = "UPDATE char_stats \
 				  		 SET hp = %u, mp = %u, nameflags = %u, mhflag = %u, mjob = %u, sjob = %u \
 						 WHERE charid = %u;";
@@ -3856,6 +3934,7 @@ void SaveCharStats(CCharEntity* PChar)
 
 void SaveCharGMLevel(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query = "UPDATE %s SET %s %u WHERE charid = %u;";
 
 	Sql_Query(SqlHandle,Query,"chars","gmlevel =",PChar->m_GMlevel,PChar->id);
@@ -3870,6 +3949,7 @@ void SaveCharGMLevel(CCharEntity* PChar)
 
 void SaveCharNation(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "UPDATE chars "
         "SET nation = %u "
@@ -3889,6 +3969,7 @@ void SaveCharNation(CCharEntity* PChar)
 
 void SaveCharJob(CCharEntity* PChar, JOBTYPE job)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(job == JOB_NON || job >= MAX_JOBTYPE);
 
     const int8* fmtQuery;
@@ -3929,6 +4010,7 @@ void SaveCharJob(CCharEntity* PChar, JOBTYPE job)
 
 void SaveCharExp(CCharEntity* PChar, JOBTYPE job)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(job == JOB_NON || job >= MAX_JOBTYPE);
 
 	const int8* Query;
@@ -3973,6 +4055,7 @@ void SaveCharExp(CCharEntity* PChar, JOBTYPE job)
 
 void SaveCharSkills(CCharEntity* PChar, uint8 SkillID)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(SkillID >= MAX_SKILLTYPE);
 
 	const int8* Query =
@@ -4001,6 +4084,7 @@ void SaveCharSkills(CCharEntity* PChar, uint8 SkillID)
 
 void SaveCharPoints(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query = "UPDATE char_points \
 				  		SET sandoria_cp = %u, bastok_cp = %u, windurst_cp = %u, sandoria_supply = %u, bastok_supply = %u, windurst_supply = %u, \
                             beastman_seal = %u, kindred_seal = %u, kindred_crest = %u, high_kindred_crest = %u, sacred_kindred_crest = %u, \
@@ -4111,6 +4195,7 @@ void SaveCharPoints(CCharEntity* PChar)
 
 uint32  AddExpBonus(CCharEntity* PChar, uint32 exp)
 {
+	PROFILE_FUNC();
     int32 bonus = 0;
     if (PChar->getMod(MOD_DEDICATION))
     {
@@ -4146,6 +4231,7 @@ void ResetAllTwoHours()
 }
 
 bool hasMogLockerAccess(CCharEntity* PChar) {
+	PROFILE_FUNC();
 	int8 fmtQuery[] = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' ";
 	int32 ret = Sql_Query(SqlHandle,fmtQuery, PChar->id, "mog-locker-expiry-timestamp");
 
@@ -4168,6 +4254,7 @@ bool hasMogLockerAccess(CCharEntity* PChar) {
 
 uint8 AvatarPerpetuationReduction(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	uint8 reduction = PChar->getMod(MOD_PERPETUATION_REDUCTION);
 
 	static const MODIFIER strong[8] = {
@@ -4241,6 +4328,7 @@ uint8 AvatarPerpetuationReduction(CCharEntity* PChar)
 
 void loadCharWsPoints(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	int8 fmtQuery[] = "SELECT itemindex, points "
 					 "FROM char_weapon_skill_points "
 					 "WHERE charid = %u "
@@ -4271,6 +4359,7 @@ void loadCharWsPoints(CCharEntity* PChar)
 
 void saveCharWsPoints(CCharEntity* PChar, uint16 indexid, int32 points)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(indexid > MAX_UNLOCKABLE_WEAPONS);
 	if (points == 0)
 	{
@@ -4291,6 +4380,7 @@ void saveCharWsPoints(CCharEntity* PChar, uint16 indexid, int32 points)
 
 void SaveDeathTime(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* fmtQuery = "UPDATE char_stats SET death = %u WHERE charid = %u LIMIT 1;";
 	Sql_Query(SqlHandle, fmtQuery, (uint32)time(NULL), PChar->id);
 }
@@ -4303,6 +4393,7 @@ void SaveDeathTime(CCharEntity* PChar)
 
 void CheckUnarmedWeapon(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	CItem* PSubslot = PChar->getStorage(LOC_INVENTORY)->GetItem(PChar->equip[SLOT_SUB]);
 
 	// Main or sub job provides H2H skill, and sub slot is empty.
@@ -4326,6 +4417,7 @@ void CheckUnarmedWeapon(CCharEntity* PChar)
 
 void OpenSendBox(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     PChar->UContainer->Clean();
     PChar->UContainer->SetType(UCONTAINER_DELIVERYBOX);
 
@@ -4373,6 +4465,7 @@ void OpenSendBox(CCharEntity* PChar)
 
 void RecoverFailedSendBox(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* fmtQuery = "SELECT itemid, quantity \
                             FROM delivery_box \
 							WHERE senderid = %u \
@@ -4411,6 +4504,7 @@ void RecoverFailedSendBox(CCharEntity* PChar)
 
 bool CheckAbilityAddtype(CCharEntity* PChar, CAbility* PAbility)
 {
+	PROFILE_FUNC();
     if (PAbility->getAddType() & ADDTYPE_MERIT)
     {
         if (!(PChar->PMeritPoints->GetMerit((MERIT_TYPE)PAbility->getMeritModID())->count > 0))
@@ -4451,6 +4545,7 @@ bool CheckAbilityAddtype(CCharEntity* PChar, CAbility* PAbility)
 
 void RemoveStratagems(CCharEntity* PChar, CSpell* PSpell)
 {
+	PROFILE_FUNC();
     if (PSpell->getSpellGroup() == SPELLGROUP_WHITE)
     {
         //rapture to be deleted in applicable scripts
@@ -4481,6 +4576,7 @@ void RemoveStratagems(CCharEntity* PChar, CSpell* PSpell)
 
 void RemoveAllEquipMods(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     for(uint8 slotID = 0; slotID < 16; ++slotID)
     {
         if (PChar->equip[slotID] != 0)
@@ -4501,6 +4597,7 @@ void RemoveAllEquipMods(CCharEntity* PChar)
 
 void ApplyAllEquipMods(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     for(uint8 slotID = 0; slotID < 16; ++slotID)
     {
         if (PChar->equip[slotID] != 0)

@@ -24,7 +24,8 @@
 #include "downloading_data.h"
 
 CDownloadingDataPacket::CDownloadingDataPacket() 
-{	
+{
+	PROFILE_FUNC();
 	this->type = 0x4F;
 	this->size = 0x04;
 }

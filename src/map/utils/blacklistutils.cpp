@@ -32,6 +32,7 @@ namespace blacklistutils
 {
 	bool IsBlacklisted(uint32 ownerId, uint32 targetId)
 	{
+		PROFILE_FUNC();
 		const int8* sql = "SELECT * FROM char_blacklist WHERE charid_owner = %u AND charid_target = %u;";
 		int32 ret = Sql_Query(SqlHandle, sql, ownerId, targetId);
 
@@ -40,6 +41,7 @@ namespace blacklistutils
 
 	bool AddBlacklisted(uint32 ownerId, uint32 targetId)
 	{
+		PROFILE_FUNC();
 		if (IsBlacklisted(ownerId, targetId))
 			return false;
 
@@ -49,6 +51,7 @@ namespace blacklistutils
 
 	bool DeleteBlacklisted(uint32 ownerId, uint32 targetId)
 	{
+		PROFILE_FUNC();
 		if (!IsBlacklisted(ownerId, targetId))
 			return false;
 
@@ -58,6 +61,7 @@ namespace blacklistutils
 
 	void SendBlacklist(CCharEntity* PChar)
 	{
+		PROFILE_FUNC();
 		std::vector< std::pair< uint32, string_t > > blacklist;
 
 		// Obtain this users blacklist info..

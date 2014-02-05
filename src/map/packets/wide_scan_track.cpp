@@ -31,6 +31,7 @@
 
 CWideScanTrackPacket::CWideScanTrackPacket(CBaseEntity * PEntity) 
 {
+	PROFILE_FUNC();
 	this->type = 0xF5;
 	this->size = 0x0C;
 

@@ -29,6 +29,7 @@
 
 CMobEntity::CMobEntity()
 {
+	PROFILE_FUNC();
 	objtype = TYPE_MOB;
 
 	m_DropID = 0;
@@ -100,6 +101,7 @@ CMobEntity::CMobEntity()
 
 CMobEntity::~CMobEntity()
 {
+	PROFILE_FUNC();
     delete PEnmityContainer;
 	delete SpellContainer;
 }
@@ -112,16 +114,19 @@ CMobEntity::~CMobEntity()
 
 uint32 CMobEntity::GetDespawnTimer()
 {
+	PROFILE_FUNC();
 	return m_DespawnTimer;
 }
 
 void CMobEntity::SetDespawnTimer(uint32 duration)
 {
+	PROFILE_FUNC();
 	m_DespawnTimer = (duration > 0 ? (duration * 1000) + gettick() : duration);
 }
 
 uint32 CMobEntity::GetRandomGil()
 {
+	PROFILE_FUNC();
 
     int16 min = getMobMod(MOBMOD_GIL_MIN);
     int16 max = getMobMod(MOBMOD_GIL_MAX);
@@ -183,6 +188,7 @@ uint32 CMobEntity::GetRandomGil()
 
 bool CMobEntity::CanDropGil()
 {
+	PROFILE_FUNC();
     // smaller than 0 means drop no gil
     if(getMobMod(MOBMOD_GIL_MAX) < 0) return false;
 
@@ -196,17 +202,20 @@ bool CMobEntity::CanDropGil()
 
 bool CMobEntity::CanRoamHome()
 {
+	PROFILE_FUNC();
     if(speed == 0 && !(m_roamFlags & ROAMFLAG_WORM)) return false;
     return getMobMod(MOBMOD_NO_DESPAWN);
 }
 
 bool CMobEntity::CanRoam()
 {
+	PROFILE_FUNC();
     return !(m_roamFlags & ROAMFLAG_EVENT) && PMaster == NULL && (speed > 0 || (m_roamFlags & ROAMFLAG_WORM));
 }
 
 bool CMobEntity::CanLink(position_t* pos, int16 superLink)
 {
+	PROFILE_FUNC();
     // handle super linking
     if(superLink && getMobMod(MOBMOD_SUPERLINK) == superLink)
     {
@@ -237,6 +246,7 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
 
 bool CMobEntity::CanDeaggro()
 {
+	PROFILE_FUNC();
 	return !(m_Type & MOBTYPE_NOTORIOUS || m_Type & MOBTYPE_BATTLEFIELD);
 }
 
@@ -248,11 +258,13 @@ bool CMobEntity::CanDeaggro()
 
 bool CMobEntity::hasRageMode()
 {
+	PROFILE_FUNC();
 	return m_RageMode;
 }
 
 void CMobEntity::addRageMode()
 {
+	PROFILE_FUNC();
     if (!m_RageMode)
     {
 	    stats.AGI *= 10;
@@ -268,6 +280,7 @@ void CMobEntity::addRageMode()
 
 void CMobEntity::delRageMode()
 {
+	PROFILE_FUNC();
     if (m_RageMode)
     {
         stats.AGI /= 10;
@@ -283,16 +296,19 @@ void CMobEntity::delRageMode()
 
 bool CMobEntity::IsFarFromHome()
 {
+	PROFILE_FUNC();
     return distance(loc.p, m_SpawnPoint) > m_maxRoamDistance;
 }
 
 bool CMobEntity::CanBeNeutral()
 {
+	PROFILE_FUNC();
     return !(m_Type & MOBTYPE_NOTORIOUS);
 }
 
 bool CMobEntity::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 {
+	PROFILE_FUNC();
     if(PTarget->isDead() || m_Behaviour == BEHAVIOUR_NONE || PTarget->animation == ANIMATION_CHOCOBO) return false;
 
     float verticalDistance = abs(loc.p.y - PTarget->loc.p.y);
@@ -362,6 +378,7 @@ bool CMobEntity::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 
 void CMobEntity::ChangeMJob(uint16 job)
 {
+	PROFILE_FUNC();
     this->SetMJob(job);
 
     // give him a spell list based on job
@@ -404,6 +421,7 @@ void CMobEntity::ChangeMJob(uint16 job)
 
 uint8 CMobEntity::TPUseChance()
 {
+	PROFILE_FUNC();
     if(health.tp < 100) return 0;
 
     if(health.tp == 300 || (GetHPP() <= 25 && health.tp >= 100))
@@ -422,6 +440,7 @@ uint8 CMobEntity::TPUseChance()
 
 void CMobEntity::SetMainSkin(uint32 mobid)
 {
+	PROFILE_FUNC();
 	if(m_NewSkin)
 	{
 		const int8* Query = "SELECT modelid \
@@ -443,6 +462,7 @@ void CMobEntity::SetMainSkin(uint32 mobid)
 
 void CMobEntity::SetNewSkin(uint8 skinid)
 {
+	PROFILE_FUNC();
 	const int8* Query = "SELECT skin_model FROM mob_change_skin WHERE skinid = %u";
 
 	int32 ret = Sql_Query(SqlHandle, Query, skinid);
@@ -457,11 +477,13 @@ void CMobEntity::SetNewSkin(uint8 skinid)
 
 uint32 CMobEntity::GetSkinID()
 {
+	PROFILE_FUNC();
 	return m_SkinID;
 }
 
 void CMobEntity::setMobMod(uint16 type, int16 value)
 {
+	PROFILE_FUNC();
     if (type < MAX_MOBMODIFIER)
     {
         m_mobModStat[type] = value;
@@ -474,6 +496,7 @@ void CMobEntity::setMobMod(uint16 type, int16 value)
 
 int16 CMobEntity::getMobMod(uint16 type)
 {
+	PROFILE_FUNC();
     if (type < MAX_MOBMODIFIER)
     {
         return m_mobModStat[type];
@@ -487,6 +510,7 @@ int16 CMobEntity::getMobMod(uint16 type)
 
 void CMobEntity::addMobMod(uint16 type, int16 value)
 {
+	PROFILE_FUNC();
     if (type < MAX_MOBMODIFIER)
     {
         m_mobModStat[type] += value;
@@ -499,6 +523,7 @@ void CMobEntity::addMobMod(uint16 type, int16 value)
 
 void CMobEntity::defaultMobMod(uint16 type, int16 value)
 {
+	PROFILE_FUNC();
     if (type < MAX_MOBMODIFIER)
     {
         if(m_mobModStat[type] == 0)
@@ -514,6 +539,7 @@ void CMobEntity::defaultMobMod(uint16 type, int16 value)
 
 void CMobEntity::resetMobMod(uint16 type)
 {
+	PROFILE_FUNC();
     if (type < MAX_MOBMODIFIER)
     {
         m_mobModStat[type] = m_mobModStatSave[type];
@@ -526,21 +552,25 @@ void CMobEntity::resetMobMod(uint16 type)
 
 int32 CMobEntity::getBigMobMod(uint16 type)
 {
+	PROFILE_FUNC();
     return getMobMod(type) * 1000;
 }
 
 void CMobEntity::saveMobModifiers()
 {
+	PROFILE_FUNC();
     memcpy(m_mobModStatSave, m_mobModStat, sizeof(m_mobModStat));
 }
 
 void CMobEntity::restoreMobModifiers()
 {
+	PROFILE_FUNC();
     memcpy(m_mobModStat, m_mobModStatSave, sizeof(m_mobModStatSave));
 }
 
 void CMobEntity::HideModel(bool hide)
 {
+	PROFILE_FUNC();
     if(hide)
     {
         // I got this from ambush antlion
@@ -555,5 +585,6 @@ void CMobEntity::HideModel(bool hide)
 
 bool CMobEntity::IsModelHidden()
 {
+	PROFILE_FUNC();
     return m_unknown == 0;
 }

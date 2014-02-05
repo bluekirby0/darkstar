@@ -36,6 +36,7 @@
 
 CTrait::CTrait(uint8 id)
 {
+	PROFILE_FUNC();
 	m_id = id;
 	
 	m_level  = 0; 
@@ -46,6 +47,7 @@ CTrait::CTrait(uint8 id)
 
 uint8 CTrait::getID()
 {
+	PROFILE_FUNC();
 	return m_id;
 }
 
@@ -57,11 +59,13 @@ uint8 CTrait::getID()
 
 uint8 CTrait::getJob()
 {
+	PROFILE_FUNC();
 	return m_job;
 }
 
 void CTrait::setJob(int8 job)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(job > MAX_JOBTYPE);
 
 	m_job = job;
@@ -75,11 +79,13 @@ void CTrait::setJob(int8 job)
 
 uint8 CTrait::getLevel()
 {
+	PROFILE_FUNC();
 	return m_level;
 }
 
 void CTrait::setLevel(uint8 level)
 {
+	PROFILE_FUNC();
 	m_level = level;
 }
 
@@ -91,11 +97,13 @@ void CTrait::setLevel(uint8 level)
 
 uint16 CTrait::getMod()
 {
+	PROFILE_FUNC();
     return m_mod;
 }
 
 void CTrait::setMod(uint16 mod)
 {
+	PROFILE_FUNC();
     m_mod = mod;
 }
 
@@ -107,11 +115,13 @@ void CTrait::setMod(uint16 mod)
 
 int16 CTrait::getValue()
 {
+	PROFILE_FUNC();
     return m_value;
 }
 
 void CTrait::setValue(int16 value)
 {
+	PROFILE_FUNC();
     m_value = value;
 }
 
@@ -123,11 +133,13 @@ void CTrait::setValue(int16 value)
 
 uint8 CTrait::getRank()
 {
+	PROFILE_FUNC();
     return m_rank;
 }
 
 void CTrait::setRank(uint8 rank)
 {
+	PROFILE_FUNC();
     m_rank = rank;
 }
 /************************************************************************
@@ -203,7 +215,8 @@ namespace traits
     ************************************************************************/
 
     TraitList_t* GetTraits(uint8 JobID)
-    {
+	{
+		PROFILE_FUNC();
         DSP_DEBUG_BREAK_IF(JobID >= sizeof(PTraitsList));
 
 	    return &PTraitsList[JobID];
@@ -216,7 +229,8 @@ namespace traits
     ************************************************************************/
 
     void FreeTraitsList()
-    {
+	{
+		PROFILE_FUNC();
 	    // список освобождается операционной системой автоматически при завершении работы сервера
     }
 };

@@ -36,6 +36,7 @@
 
 CInventorySizePacket::CInventorySizePacket(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	this->type = 0x1C;
 	this->size = 0x1A;
 

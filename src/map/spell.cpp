@@ -31,6 +31,7 @@
 
 CSpell::CSpell(uint16 id)
 {
+	PROFILE_FUNC();
 	m_ID = id;
 
     m_radius          = 0;
@@ -55,97 +56,116 @@ CSpell::CSpell(uint16 id)
 
 void CSpell::resetMessage()
 {
+	PROFILE_FUNC();
     setMessage(getDefaultMessage());
 }
 
 void CSpell::setTotalTargets(uint16 total)
 {
+	PROFILE_FUNC();
     m_totalTargets = total;
 }
 
 uint16 CSpell::getTotalTargets()
 {
+	PROFILE_FUNC();
     return m_totalTargets;
 }
 
 void CSpell::setID(uint16 id)
 {
+	PROFILE_FUNC();
 	m_ID = id;
 }
 
 uint16 CSpell::getID()
 {
+	PROFILE_FUNC();
     return m_ID;
 }
 
 uint8 CSpell::getJob(JOBTYPE JobID)
 {
+	PROFILE_FUNC();
 	return (m_job[JobID] == CANNOT_USE_SPELL ? 255 : m_job[JobID]);
 }
 
 void CSpell::setJob(int8* jobs)
 {
+	PROFILE_FUNC();
 	memcpy(&m_job[1], jobs, 22);
 }
 
 uint32 CSpell::getCastTime()
 {
+	PROFILE_FUNC();
 	return m_castTime;
 }
 
 void CSpell::setCastTime(uint32 CastTime)
 {
+	PROFILE_FUNC();
 	m_castTime = CastTime;
 }
 
 uint32 CSpell::getRecastTime()
 {
+	PROFILE_FUNC();
 	return m_recastTime;
 }
 
 void CSpell::setRecastTime(uint32 RecastTime)
 {
+	PROFILE_FUNC();
 	m_recastTime = RecastTime;
 }
 
 const int8* CSpell::getName()
 {
+	PROFILE_FUNC();
 	return m_name.c_str();
 }
 
 void CSpell::setName(int8* name)
 {
+	PROFILE_FUNC();
 	m_name.clear();
 	m_name.insert(0,name);
 }
 
 SPELLGROUP CSpell::getSpellGroup()
 {
+	PROFILE_FUNC();
 	return m_spellGroup;
 }
 
 void CSpell::setSpellGroup(SPELLGROUP SpellGroup)
 {
+	PROFILE_FUNC();
 	m_spellGroup = SpellGroup;
 }
 
 uint8 CSpell::getSkillType()
 {
+	PROFILE_FUNC();
     return m_skillType;
 }
 
 void CSpell::setSkillType(uint8 SkillType)
 {
+	PROFILE_FUNC();
     m_skillType = SkillType;
 }
 
 bool CSpell::isBuff()
 {
+	PROFILE_FUNC();
     return (getValidTarget() & TARGET_SELF) && !(getValidTarget() & TARGET_ENEMY);
 }
 
 bool CSpell::tookEffect()
 {
+	PROFILE_FUNC();
     if(m_message == 75 || m_message == 284 || m_message == 283 || m_message == 85){
         return false;
     }
@@ -154,127 +174,152 @@ bool CSpell::tookEffect()
 
 bool CSpell::hasMPCost()
 {
+	PROFILE_FUNC();
     return m_spellGroup != SPELLGROUP_SONG && m_spellGroup != SPELLGROUP_NINJUTSU;
 }
 
 bool CSpell::isHeal()
 {
+	PROFILE_FUNC();
     return (getValidTarget() & TARGET_SELF) && getSkillType() == SKILL_HEA || m_ID == 549 || m_ID == 578 || m_ID == 581 || m_ID == 593;
 }
 
 bool CSpell::isNa()
 {
+	PROFILE_FUNC();
     return m_ID >= 14 && m_ID <= 20;
 }
 
 bool CSpell::canHitShadow()
 {
+	PROFILE_FUNC();
     return m_ID != 244 && canTargetEnemy();
 }
 
 bool CSpell::dealsDamage()
 {
+	PROFILE_FUNC();
     //damage or drain hp
     return m_message==2 || m_message==227;
 }
 
 uint8 CSpell::getRadius()
 {
+	PROFILE_FUNC();
     return m_radius;
 }
 
 uint16 CSpell::getZoneMisc()
 {
+	PROFILE_FUNC();
     return m_zoneMisc;
 }
 
 void CSpell::setZoneMisc(uint16 Misc)
 {
+	PROFILE_FUNC();
     m_zoneMisc = Misc;
 }
 
 uint16 CSpell::getAnimationID()
 {
+	PROFILE_FUNC();
 	return m_animation;
 }
 
 void CSpell::setAnimationID(uint16 AnimationID)
 {
+	PROFILE_FUNC();
 	m_animation = AnimationID;
 }
 
 uint16 CSpell::getAnimationTime()
 {
+	PROFILE_FUNC();
     return m_animationTime;
 }
 
 void CSpell::setAnimationTime(uint16 AnimationTime)
 {
+	PROFILE_FUNC();
     m_animationTime = AnimationTime;
 }
 
 uint16 CSpell::getMPCost()
 {
+	PROFILE_FUNC();
 	return m_mpCost;
 }
 
 void CSpell::setMPCost(uint16 MP)
 {
+	PROFILE_FUNC();
 	m_mpCost = MP;
 }
 
 bool CSpell::canTargetEnemy()
 {
+	PROFILE_FUNC();
     return (getValidTarget() & TARGET_ENEMY) && !(getValidTarget() & TARGET_SELF);
 }
 
 uint8 CSpell::getAOE()
 {
+	PROFILE_FUNC();
 	return m_AOE;
 }
 
 void CSpell::setAOE(uint8 AOE)
 {
+	PROFILE_FUNC();
 	m_AOE = AOE;
 }
 
 uint16 CSpell::getBase()
 {
+	PROFILE_FUNC();
 	return m_base;
 }
 
 void CSpell::setBase(uint16 base)
 {
+	PROFILE_FUNC();
 	m_base = base;
 }
 
 uint8 CSpell::getValidTarget()
 {
+	PROFILE_FUNC();
 	return m_ValidTarget;
 }
 
 void CSpell::setValidTarget(uint8 ValidTarget)
 {
+	PROFILE_FUNC();
 	m_ValidTarget = ValidTarget;
 }
 
 float CSpell::getMultiplier()
 {
+	PROFILE_FUNC();
 	return m_multiplier;
 }
 
 void CSpell::setMultiplier(float multiplier)
 {
+	PROFILE_FUNC();
 	m_multiplier = multiplier;
 }
 
 uint16 CSpell::getMessage()
 {
+	PROFILE_FUNC();
     return m_message;
 }
 
 uint16 CSpell::getAoEMessage()
 {
+	PROFILE_FUNC();
     switch(m_message){
         case 93: // vanishes
             return 273;
@@ -297,91 +342,109 @@ uint16 CSpell::getAoEMessage()
 
 void CSpell::setMessage(uint16 message)
 {
+	PROFILE_FUNC();
     m_message = message;
 }
 
 uint16 CSpell::getDefaultMessage()
 {
+	PROFILE_FUNC();
     return m_DefaultMessage;
 }
 
 void CSpell::setDefaultMessage(uint16 message)
 {
+	PROFILE_FUNC();
     m_DefaultMessage = message;
 }
 
 uint16 CSpell::getMagicBurstMessage()
 {
+	PROFILE_FUNC();
     return m_MagicBurstMessage;
 }
 
 void CSpell::setMagicBurstMessage(uint16 message)
 {
+	PROFILE_FUNC();
     m_MagicBurstMessage = message;
 }
 
 uint16 CSpell::getElement()
 {
+	PROFILE_FUNC();
 	return m_element;
 }
 
 void CSpell::setElement(uint16 element)
 {
+	PROFILE_FUNC();
 	m_element = element;
 }
 
 void CSpell::setCE(uint16 ce)
 {
+	PROFILE_FUNC();
 	m_CE = ce;
 }
 
 uint16 CSpell::getCE()
 {
+	PROFILE_FUNC();
 	return m_CE;
 }
 
 void CSpell::setRadius(uint8 radius)
 {
+	PROFILE_FUNC();
     m_radius = radius;
 }
 
 void CSpell::setVE(uint16 ve)
 {
+	PROFILE_FUNC();
 	m_VE = ve;
 }
 
 uint16 CSpell::getVE()
 {
+	PROFILE_FUNC();
 	return m_VE;
 }
 
 void CSpell::setModifiedRecast(uint32 mrec)
 {
+	PROFILE_FUNC();
 	m_modifiedRecastTime = mrec;
 }
 
 uint32 CSpell::getModifiedRecast()
 {
+	PROFILE_FUNC();
 	return m_modifiedRecastTime;
 }
 
 uint8 CSpell::getRequirements()
 {
+	PROFILE_FUNC();
 	return m_requirements;
 }
 
 void CSpell::setRequirements(uint8 requirements)
 {
+	PROFILE_FUNC();
 	m_requirements = requirements;
 }
 
 uint16 CSpell::getMeritId()
 {
+	PROFILE_FUNC();
 	return m_meritId;
 }
 
 void CSpell::setMeritId(uint16 meritId)
 {
+	PROFILE_FUNC();
 	m_meritId = meritId;
 }
 
@@ -528,6 +591,7 @@ namespace spell
     }
 
 	CSpell* GetSpellByMonsterSkillId(uint16 SkillID) {
+		PROFILE_FUNC();
 		std::map<uint16,uint16>::iterator it = PMobSkillToBlueSpell->find(SkillID);
 		if (it == PMobSkillToBlueSpell->end()) {
 			return NULL;
@@ -549,7 +613,8 @@ namespace spell
     ************************************************************************/
 
     CSpell* GetSpell(uint16 SpellID)
-    {
+	{
+		PROFILE_FUNC();
 	    if (SpellID < MAX_SPELL_ID)
 	    {
 		    return PSpellList[SpellID];
@@ -565,7 +630,8 @@ namespace spell
     ************************************************************************/
 
     bool CanUseSpell(CBattleEntity* PCaster, uint16 SpellID)
-    {
+	{
+		PROFILE_FUNC();
         bool usable = false;
         CSpell* spell = GetSpell(SpellID);
 	    if (spell != NULL)
@@ -654,6 +720,7 @@ namespace spell
 	// but they are on an odd job (e.g. PLDs getting -ga3)
 	bool CanUseSpellWith(uint16 spellId, JOBTYPE job, uint8 level)
 	{
+		PROFILE_FUNC();
 		if (GetSpell(spellId) != NULL)
 	    {
 		    uint8 jobMLevel = PSpellList[spellId]->getJob(job);
@@ -664,7 +731,8 @@ namespace spell
 	}
 
     float GetSpellRadius(CSpell* spell, CBattleEntity* entity)
-    {
+	{
+		PROFILE_FUNC();
         float total = spell->getRadius();
 
         // brd gets bonus radius from string skill

@@ -30,6 +30,7 @@ CTaskMgr* CTaskMgr::_instance = NULL;
 
 CTaskMgr* CTaskMgr::getInstance()
 {
+	PROFILE_FUNC();
 	if( _instance == NULL )
 	{
 		_instance = new CTaskMgr();
@@ -45,17 +46,20 @@ CTaskMgr::CTask *CTaskMgr::AddTask(std::string InitName, size_t InitTick, void *
 
 CTaskMgr::CTask *CTaskMgr::AddTask(CTask *PTask)
 {
+	PROFILE_FUNC();
 	m_TaskList.push(PTask);
 	return PTask;
 }
 
 void CTaskMgr::RemoveTask(std::string TaskName)
 {
+	PROFILE_FUNC();
 	//empty method
 }
 
 uint32 CTaskMgr::DoTimer(uint32 tick)
 {
+	PROFILE_FUNC();
 	int32 diff = 1000; 
 
 	while( !m_TaskList.empty() )

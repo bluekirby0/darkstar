@@ -46,6 +46,7 @@
 
 CTreasurePool::CTreasurePool(TREASUREPOOLTYPE PoolType)
 {
+	PROFILE_FUNC();
     m_Tick  = 0;
     m_count = 0;
 	m_TreasurePoolType = PoolType;
@@ -66,6 +67,7 @@ CTreasurePool::CTreasurePool(TREASUREPOOLTYPE PoolType)
 
 TREASUREPOOLTYPE CTreasurePool::GetPoolType()
 {
+	PROFILE_FUNC();
 	return m_TreasurePoolType;
 }
 
@@ -77,6 +79,7 @@ TREASUREPOOLTYPE CTreasurePool::GetPoolType()
 
 void CTreasurePool::AddMember(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PChar == NULL);
 	DSP_DEBUG_BREAK_IF(PChar->PTreasurePool != this);
 
@@ -100,6 +103,7 @@ void CTreasurePool::AddMember(CCharEntity* PChar)
 
 void CTreasurePool::DelMember(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PChar == NULL);
 	DSP_DEBUG_BREAK_IF(PChar->PTreasurePool != this);
 
@@ -140,7 +144,8 @@ void CTreasurePool::DelMember(CCharEntity* PChar)
 ************************************************************************/
 
 uint8 CTreasurePool::AddItem(uint16 ItemID, CMobEntity* PMob)
-{	
+{
+	PROFILE_FUNC();
 	uint8  SlotID;
 	uint8  FreeSlotID;
 	uint32 oldest = -1;
@@ -192,7 +197,8 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CMobEntity* PMob)
 ************************************************************************/
 
 uint8 CTreasurePool::AddItemFromChest(uint16 ItemID, CBaseEntity* PNpc)
-{	
+{
+	PROFILE_FUNC();
 	uint8  SlotID;
 	uint8  FreeSlotID;
 	uint32 oldest = -1;
@@ -246,6 +252,7 @@ uint8 CTreasurePool::AddItemFromChest(uint16 ItemID, CBaseEntity* PNpc)
 
 void CTreasurePool::UpdatePool(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PChar == NULL);
 	DSP_DEBUG_BREAK_IF(PChar->PTreasurePool != this);
 
@@ -266,6 +273,7 @@ void CTreasurePool::UpdatePool(CCharEntity* PChar)
 
 void CTreasurePool::LotItem(CCharEntity* PChar, uint8 SlotID, uint16 Lot)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PChar == NULL);
 	DSP_DEBUG_BREAK_IF(PChar->PTreasurePool != this);
 
@@ -312,7 +320,8 @@ void CTreasurePool::LotItem(CCharEntity* PChar, uint8 SlotID, uint16 Lot)
 ************************************************************************/
 
 void CTreasurePool::CheckItems(uint32 tick) 
-{	
+{
+	PROFILE_FUNC();
     if (m_count != 0)
     {
         if ((tick - m_Tick > TREASURE_CHECKTIME))
@@ -334,6 +343,7 @@ void CTreasurePool::CheckItems(uint32 tick)
 
 void CTreasurePool::CheckTreasureItem(uint32 tick, uint8 SlotID) 
 {
+	PROFILE_FUNC();
 	if (m_PoolItems[SlotID].ID == 0) return;
     
     if ((tick - m_PoolItems[SlotID].TimeStamp) > TREASURE_LIVETIME ||
@@ -445,6 +455,7 @@ void CTreasurePool::CheckTreasureItem(uint32 tick, uint8 SlotID)
 
 void CTreasurePool::TreasureWon(CCharEntity* winner, uint8 SlotID) 
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(winner == NULL);
 	DSP_DEBUG_BREAK_IF(winner->PTreasurePool != this);
     DSP_DEBUG_BREAK_IF(m_PoolItems[SlotID].ID == 0);
@@ -469,6 +480,7 @@ void CTreasurePool::TreasureWon(CCharEntity* winner, uint8 SlotID)
 
 void CTreasurePool::TreasureError(CCharEntity* winner, uint8 SlotID)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(winner == NULL);
 	DSP_DEBUG_BREAK_IF(winner->PTreasurePool != this);
     DSP_DEBUG_BREAK_IF(m_PoolItems[SlotID].ID == 0);
@@ -493,6 +505,7 @@ void CTreasurePool::TreasureError(CCharEntity* winner, uint8 SlotID)
 
 void CTreasurePool::TreasureLost(uint8 SlotID) 
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PoolItems[SlotID].ID == 0);
 
     m_PoolItems[SlotID].TimeStamp = 0;

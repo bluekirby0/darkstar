@@ -35,6 +35,7 @@
 
 CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type)
 {
+	PROFILE_FUNC();
 	this->type = 0x0E;
 	this->size = 0x1C;
 

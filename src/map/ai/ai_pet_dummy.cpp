@@ -56,6 +56,7 @@
 
 CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 {
+	PROFILE_FUNC();
 	m_PPet = PPet;
 	m_queueSic = false;
     m_PTargetFind = new CTargetFind(PPet);
@@ -108,6 +109,7 @@ void CAIPetDummy::CheckCurrentAction(uint32 tick)
 
 void CAIPetDummy::WeatherChange(WEATHER weather, uint8 element)
 {
+	PROFILE_FUNC();
 
 }
 

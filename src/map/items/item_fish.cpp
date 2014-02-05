@@ -31,6 +31,7 @@
 
 CItemFish::CItemFish(const CItem &PItem) : CItem(PItem)
 {
+	PROFILE_FUNC();
 	m_min       = 0;
     m_max       = 0;
     m_watertype = 0;
@@ -41,4 +42,5 @@ CItemFish::CItemFish(const CItem &PItem) : CItem(PItem)
 
 CItemFish::~CItemFish()
 {
+	PROFILE_FUNC();
 }

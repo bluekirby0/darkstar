@@ -28,6 +28,7 @@
 
 CBaseEntity::CBaseEntity()
 {
+	PROFILE_FUNC();
 	m_TargID = 0;
 	namevis = 1;
 
@@ -47,6 +48,7 @@ CBaseEntity::CBaseEntity()
 
 CBaseEntity::~CBaseEntity()
 {
+	PROFILE_FUNC();
 	if(PBattleAI != NULL)
 	{
 	    delete PBattleAI;
@@ -55,36 +57,43 @@ CBaseEntity::~CBaseEntity()
 
 const int8* CBaseEntity::GetName()
 {
+	PROFILE_FUNC();
 	return name.c_str();
 }
 
 uint16 CBaseEntity::getZone()
 {
+	PROFILE_FUNC();
     return loc.zone != NULL ? loc.zone->GetID() : loc.destination;
 }
 
 float CBaseEntity::GetXPos()
 {
+	PROFILE_FUNC();
 	return loc.p.x;
 }
 
 float CBaseEntity::GetYPos()
 {
+	PROFILE_FUNC();
 	return loc.p.y;
 }
 
 float CBaseEntity::GetZPos()
 {
+	PROFILE_FUNC();
 	return loc.p.z;
 }
 
 uint8 CBaseEntity::GetRotPos()
 {
+	PROFILE_FUNC();
 	return loc.p.rotation;
 }
 
 void CBaseEntity::HideName(bool hide)
 {
+	PROFILE_FUNC();
 	if(hide)
 	{
 		// I totally guessed this number
@@ -98,5 +107,6 @@ void CBaseEntity::HideName(bool hide)
 
 bool CBaseEntity::IsNameHidden()
 {
+	PROFILE_FUNC();
 	return namevis == 0x08;
 }

@@ -16,6 +16,7 @@
 
 void* aMalloc_(size_t size, const char *file, int line, const char *func)
 {
+	PROFILE_FUNC();
 	void *ret = MALLOC(size, file, line, func);
 	// ShowMessage("%s:%d: in func %s: aMalloc %d\n",file,line,func,size);
 	if (ret == NULL){
@@ -27,6 +28,7 @@ void* aMalloc_(size_t size, const char *file, int line, const char *func)
 }
 void* aMallocA_(size_t size, const char *file, int line, const char *func)
 {
+	PROFILE_FUNC();
 	void *ret = MALLOCA(size, file, line, func);
 	// ShowMessage("%s:%d: in func %s: aMallocA %d\n",file,line,func,size);
 	if (ret == NULL){
@@ -38,6 +40,7 @@ void* aMallocA_(size_t size, const char *file, int line, const char *func)
 }
 void* aCalloc_(size_t num, size_t size, const char *file, int line, const char *func)
 {
+	PROFILE_FUNC();
 	void *ret = CALLOC(num, size, file, line, func);
 	// ShowMessage("%s:%d: in func %s: aCalloc %d %d\n",file,line,func,num,size);
 	if (ret == NULL){
@@ -48,6 +51,7 @@ void* aCalloc_(size_t num, size_t size, const char *file, int line, const char *
 }
 void* aCallocA_(size_t num, size_t size, const char *file, int line, const char *func)
 {
+	PROFILE_FUNC();
 	void *ret = CALLOCA(num, size, file, line, func);
 	// ShowMessage("%s:%d: in func %s: aCallocA %d %d\n",file,line,func,num,size);
 	if (ret == NULL){
@@ -58,6 +62,7 @@ void* aCallocA_(size_t num, size_t size, const char *file, int line, const char 
 }
 void* aRealloc_(void *p, size_t size, const char *file, int line, const char *func)
 {
+	PROFILE_FUNC();
 	void *ret = REALLOC(p, size, file, line, func);
 	// ShowMessage("%s:%d: in func %s: aRealloc %p %d\n",file,line,func,p,size);
 	if (ret == NULL){
@@ -68,6 +73,7 @@ void* aRealloc_(void *p, size_t size, const char *file, int line, const char *fu
 }
 char* aStrdup_(const char *p, const char *file, int line, const char *func)
 {
+	PROFILE_FUNC();
 	char *ret = STRDUP(p, file, line, func);
 	// ShowMessage("%s:%d: in func %s: aStrdup %p\n",file,line,func,p);
 	if (ret == NULL){
@@ -78,6 +84,7 @@ char* aStrdup_(const char *p, const char *file, int line, const char *func)
 }
 void aFree_(void *p, const char *file, int line, const char *func)
 {
+	PROFILE_FUNC();
 	// ShowMessage("%s:%d: in func %s: aFree %p\n",file,line,func,p);
 	if (p)
 		FREE(p, file, line, func);
@@ -89,18 +96,21 @@ void aFree_(void *p, const char *file, int line, const char *func)
 
 void* _bcallocA(size_t size, size_t cnt)
 {
+	PROFILE_FUNC();
 	void *ret = MALLOCA(size * cnt);
 	if (ret) memset(ret, 0, size * cnt);
 	return ret;
 }
 void* _bcalloc(size_t size, size_t cnt)
 {
+	PROFILE_FUNC();
 	void *ret = MALLOC(size * cnt);
 	if (ret) memset(ret, 0, size * cnt);
 	return ret;
 }
 char* _bstrdup(const char *chr)
 {
+	PROFILE_FUNC();
 	int len = strlen(chr);
 	char *ret = (char*)MALLOC(len + 1);
 	if (ret) memcpy(ret, chr, len + 1);
@@ -194,6 +204,7 @@ static size_t        memmgr_usage_bytes;
 
 static unsigned short size2hash( size_t size )
 {
+	PROFILE_FUNC();
 	if( size <= BLOCK_DATA_SIZE1 ) {
 		return (unsigned short)(size + BLOCK_ALIGNMENT1 - 1) / BLOCK_ALIGNMENT1;
 	} else if( size <= BLOCK_DATA_SIZE ){
@@ -206,6 +217,7 @@ static unsigned short size2hash( size_t size )
 
 static size_t hash2size( unsigned short hash )
 {
+	PROFILE_FUNC();
 	if( hash <= BLOCK_DATA_COUNT1) {
 		return hash * BLOCK_ALIGNMENT1;
 	} else {
@@ -215,6 +227,7 @@ static size_t hash2size( unsigned short hash )
 
 void* _mmalloc(size_t size, const char *file, int line, const char *func )
 {
+	PROFILE_FUNC();
 	struct block *block;
 	short size_hash = size2hash( size );
 	struct unit_head *head;
@@ -320,6 +333,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 
 void* _mcalloc(size_t num, size_t size, const char *file, int line, const char *func )
 {
+	PROFILE_FUNC();
 	void *p = _mmalloc(num * size,file,line,func);
 	memset(p,0,num * size);
 	return p;
@@ -327,6 +341,7 @@ void* _mcalloc(size_t num, size_t size, const char *file, int line, const char *
 
 void* _mrealloc(void *memblock, size_t size, const char *file, int line, const char *func )
 {
+	PROFILE_FUNC();
 	size_t old_size;
 	if(memblock == NULL) {
 		return _mmalloc(size,file,line,func);
@@ -352,6 +367,7 @@ void* _mrealloc(void *memblock, size_t size, const char *file, int line, const c
 
 char* _mstrdup(const char *p, const char *file, int line, const char *func )
 {
+	PROFILE_FUNC();
 	if(p == NULL) {
 		return NULL;
 	} else {
@@ -364,6 +380,7 @@ char* _mstrdup(const char *p, const char *file, int line, const char *func )
 
 void _mfree(void *ptr, const char *file, int line, const char *func )
 {
+	PROFILE_FUNC();
 	struct unit_head *head;
 
 	if (ptr == NULL)
@@ -436,6 +453,7 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 /* ブロックを確保する */
 static struct block* block_malloc(unsigned short hash)
 {
+	PROFILE_FUNC();
 	int i;
 	struct block *p;
 	if(hash_unfill[0] != NULL) {
@@ -492,6 +510,7 @@ static struct block* block_malloc(unsigned short hash)
 
 static void block_free(struct block* p)
 {
+	PROFILE_FUNC();
 	if( p->unfill_prev ) {
 		if( p->unfill_prev == &block_head) {
 			hash_unfill[ p->unit_hash ] = p->unfill_next;
@@ -510,6 +529,7 @@ static void block_free(struct block* p)
 
 size_t memmgr_usage (void)
 {
+	PROFILE_FUNC();
 	return memmgr_usage_bytes / 1024;
 }
 
@@ -519,6 +539,7 @@ static FILE *log_fp;
 
 static void memmgr_log (char *buf)
 {
+	PROFILE_FUNC();
 	if( !log_fp )
 	{
 		time_t raw;
@@ -549,6 +570,7 @@ static void memmgr_log (char *buf)
 
 bool memmgr_verify(void* ptr)
 {
+	PROFILE_FUNC();
 	struct block* block = block_first;
 	struct unit_head_large* large = unit_head_large_first;
 
@@ -596,6 +618,7 @@ bool memmgr_verify(void* ptr)
 
 static void memmgr_final (void)
 {
+	PROFILE_FUNC();
 	struct block *block = block_first;
 	struct unit_head_large *large = unit_head_large_first;
 
@@ -657,6 +680,7 @@ static void memmgr_final (void)
 
 static void memmgr_init (void)
 {
+	PROFILE_FUNC();
 #ifdef LOG_MEMMGR
 	#define SERVER_NAME "DSP"
 	sprintf(memmer_logfile, "log/%s.leaks", SERVER_NAME);
@@ -675,6 +699,7 @@ static void memmgr_init (void)
 
 bool malloc_verify(void* ptr)
 {
+	PROFILE_FUNC();
 #ifdef USE_MEMMGR
 	return memmgr_verify(ptr);
 #else
@@ -684,6 +709,7 @@ bool malloc_verify(void* ptr)
 
 size_t malloc_usage (void)
 {
+	PROFILE_FUNC();
 #ifdef USE_MEMMGR
 	return memmgr_usage ();
 #else
@@ -693,6 +719,7 @@ size_t malloc_usage (void)
 
 void malloc_final (void)
 {
+	PROFILE_FUNC();
 #ifdef USE_MEMMGR
 	memmgr_final ();
 #endif
@@ -701,6 +728,7 @@ void malloc_final (void)
 
 void malloc_init (void)
 {
+	PROFILE_FUNC();
 #ifdef USE_MEMMGR
 	memmgr_init ();
 #endif

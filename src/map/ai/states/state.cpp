@@ -9,6 +9,7 @@
 
 CState::CState(CBattleEntity* PEntity, CTargetFind* PTargetFind)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PEntity == NULL);
 	DSP_DEBUG_BREAK_IF(PTargetFind == NULL);
 	m_PEntity = PEntity;
@@ -23,11 +24,13 @@ CState::CState(CBattleEntity* PEntity, CTargetFind* PTargetFind)
 
 CState::~CState()
 {
+	PROFILE_FUNC();
 
 }
 
 void CState::PushMessage(MSGBASIC_ID msgID, int32 param, int32 value)
 {
+	PROFILE_FUNC();
 
 	CBattleEntity* PTarget = m_PTarget;
 	// always need an entity sent
@@ -41,6 +44,7 @@ void CState::PushMessage(MSGBASIC_ID msgID, int32 param, int32 value)
 
 void CState::PushError(MSGBASIC_ID msgID, int32 param, int32 value)
 {
+	PROFILE_FUNC();
 	if(m_PEntity->objtype == TYPE_PC)
 	{
 		CCharEntity* PChar = (CCharEntity*)m_PEntity;
@@ -59,6 +63,7 @@ void CState::PushError(MSGBASIC_ID msgID, int32 param, int32 value)
 
 STATESTATUS CState::Update(uint32 tick)
 {
+	PROFILE_FUNC();
 	if(m_PEntity->isDead())
 	{
 		return STATESTATUS_ERROR;
@@ -69,6 +74,7 @@ STATESTATUS CState::Update(uint32 tick)
 
 bool CState::CheckValidTarget(CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
 	if(PTarget == NULL)
 	{
 		return false;
@@ -106,23 +112,27 @@ bool CState::CheckValidTarget(CBattleEntity* PTarget)
 
 void CState::Clear()
 {
+	PROFILE_FUNC();
 	m_flags = 0;
 	m_PTarget = NULL;
 }
 
 CBattleEntity* CState::GetTarget()
 {
+	PROFILE_FUNC();
 	return m_PTarget;
 }
 
 bool CState::HasMoved()
 {
+	PROFILE_FUNC();
 	return floorf(m_startPosition.x * 10 + 0.5) / 10 != floorf(m_PEntity->loc.p.x * 10 + 0.5) / 10 ||
 	floorf(m_startPosition.z * 10 + 0.5) / 10 != floorf(m_PEntity->loc.p.z * 10 + 0.5) / 10;
 }
 
 bool CState::IsOnCoolDown(uint32 tick)
 {
+	PROFILE_FUNC();
 	if(tick - m_lastCoolTime < m_coolTime)
 	{
 		PushError(MSGBASIC_WAIT_LONGER);
@@ -134,16 +144,19 @@ bool CState::IsOnCoolDown(uint32 tick)
 
 void CState::SetLastCoolTime(uint32 tick)
 {
+	PROFILE_FUNC();
 	m_lastCoolTime = tick;
 }
 
 void CState::SetCoolDown(uint32 coolDown)
 {
+	PROFILE_FUNC();
 	m_coolTime = coolDown;
 }
 
 void CState::SetHiPCLvl(CBattleEntity* PTarget, uint8 lvl)
 {
+	PROFILE_FUNC();
     if(PTarget->objtype == TYPE_MOB)
     {
         CMobEntity* Monster = (CMobEntity*)PTarget;

@@ -28,6 +28,7 @@
 
 CPathFind::CPathFind(CBaseEntity* PTarget)
 {
+	PROFILE_FUNC();
   m_PTarget = PTarget;
   m_pathFlags = 0;
   Clear();
@@ -35,12 +36,14 @@ CPathFind::CPathFind(CBaseEntity* PTarget)
 
 CPathFind::~CPathFind()
 {
+	PROFILE_FUNC();
   m_PTarget = NULL;
   Clear();
 }
 
 bool CPathFind::RoamAround(position_t point, uint8 roamFlags)
 {
+	PROFILE_FUNC();
   Clear();
 
   m_roamFlags = roamFlags;
@@ -94,6 +97,7 @@ bool CPathFind::RoamAround(position_t point, uint8 roamFlags)
 
 bool CPathFind::PathTo(position_t point, uint8 pathFlags)
 {
+	PROFILE_FUNC();
 
   Clear();
 
@@ -133,6 +137,7 @@ bool CPathFind::PathTo(position_t point, uint8 pathFlags)
 
 bool CPathFind::PathAround(position_t point, float distance, uint8 pathFlags)
 {
+	PROFILE_FUNC();
 
   position_t* lastPoint = &point;
 
@@ -146,6 +151,7 @@ bool CPathFind::PathAround(position_t point, float distance, uint8 pathFlags)
 
 bool CPathFind::PathThrough(position_t* points, uint8 totalPoints, uint8 pathFlags)
 {
+	PROFILE_FUNC();
 
   Clear();
 
@@ -158,6 +164,7 @@ bool CPathFind::PathThrough(position_t* points, uint8 totalPoints, uint8 pathFla
 
 bool CPathFind::WarpTo(position_t point, float maxDistance)
 {
+	PROFILE_FUNC();
   Clear();
 
   position_t newPoint = nearPosition(point, maxDistance, M_PI);
@@ -174,16 +181,19 @@ bool CPathFind::WarpTo(position_t point, float maxDistance)
 
 bool CPathFind::isNavMeshEnabled()
 {
+	PROFILE_FUNC();
   return m_PTarget->loc.zone && m_PTarget->loc.zone->m_navMesh != NULL;
 }
 
 void CPathFind::LimitDistance(float maxLength)
 {
+	PROFILE_FUNC();
   m_maxDistance = maxLength;
 }
 
 void CPathFind::StopWithin(float within)
 {
+	PROFILE_FUNC();
   if(!IsFollowingPath()) return;
   // TODO: cut up path
 
@@ -226,6 +236,7 @@ void CPathFind::StopWithin(float within)
 
 void CPathFind::FollowPath()
 {
+	PROFILE_FUNC();
   if(!IsFollowingPath()) return;
 
   m_onPoint = false;
@@ -258,6 +269,7 @@ void CPathFind::FollowPath()
 
 void CPathFind::StepTo(position_t* pos, bool run)
 {
+	PROFILE_FUNC();
 
   float speed = GetRealSpeed();
 
@@ -314,6 +326,7 @@ void CPathFind::StepTo(position_t* pos, bool run)
 
 bool CPathFind::FindPath(position_t* start, position_t* end)
 {
+	PROFILE_FUNC();
 
   m_pathLength = m_PTarget->loc.zone->m_navMesh->findPath(*start, *end, m_points, MAX_PATH_POINTS);
 
@@ -328,6 +341,7 @@ bool CPathFind::FindPath(position_t* start, position_t* end)
 
 bool CPathFind::FindRandomPath(position_t* start, float maxRadius)
 {
+	PROFILE_FUNC();
 
   m_pathLength = m_PTarget->loc.zone->m_navMesh->findRandomPath(*start, maxRadius, m_points, MAX_PATH_POINTS);
 
@@ -343,6 +357,7 @@ bool CPathFind::FindRandomPath(position_t* start, float maxRadius)
 
 bool CPathFind::FindClosestPath(position_t* start, position_t* end)
 {
+	PROFILE_FUNC();
 
   m_pathLength = m_PTarget->loc.zone->m_navMesh->findPath(*start, *end, m_points, MAX_PATH_POINTS);
 
@@ -364,6 +379,7 @@ bool CPathFind::FindClosestPath(position_t* start, position_t* end)
 
 void CPathFind::LookAt(position_t point)
 {
+	PROFILE_FUNC();
   // don't look if i'm at that point
   if(!AtPoint(&point)){
     m_PTarget->loc.p.rotation = getangle(m_PTarget->loc.p, point);
@@ -372,11 +388,13 @@ void CPathFind::LookAt(position_t point)
 
 bool CPathFind::OnPoint()
 {
+	PROFILE_FUNC();
   return m_onPoint;
 }
 
 float CPathFind::GetRealSpeed()
 {
+	PROFILE_FUNC();
   uint8 baseSpeed = m_PTarget->speed;
 
   if(m_PTarget->objtype != TYPE_NPC)
@@ -394,16 +412,19 @@ float CPathFind::GetRealSpeed()
 
 bool CPathFind::IsFollowingPath()
 {
+	PROFILE_FUNC();
   return m_pathLength > 0;
 }
 
 bool CPathFind::AtPoint(position_t* pos)
 {
+	PROFILE_FUNC();
   return m_PTarget->loc.p.x == pos->x && m_PTarget->loc.p.z == pos->z;
 }
 
 bool CPathFind::InWater()
 {
+	PROFILE_FUNC();
   if(isNavMeshEnabled())
   {
     return m_PTarget->loc.zone->m_navMesh->inWater(m_PTarget->loc.p);
@@ -414,6 +435,7 @@ bool CPathFind::InWater()
 
 void CPathFind::Clear()
 {
+	PROFILE_FUNC();
   m_pathFlags = 0;
   m_roamFlags = 0;
 
@@ -427,6 +449,7 @@ void CPathFind::Clear()
 
 void CPathFind::AddPoints(position_t* points, uint8 totalPoints, bool reverse)
 {
+	PROFILE_FUNC();
 
   m_pathLength = totalPoints;
 

@@ -32,6 +32,7 @@
 
 CPartyDefinePacket::CPartyDefinePacket(CParty* PParty) 
 {
+	PROFILE_FUNC();
 	this->type = 0xC8;
 	this->size = 0x7C;
 

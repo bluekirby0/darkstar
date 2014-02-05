@@ -28,16 +28,19 @@
 
 CNavMesh::CNavMesh()
 {
+	PROFILE_FUNC();
   m_navMesh = NULL;
 }
 
 CNavMesh::~CNavMesh()
 {
+	PROFILE_FUNC();
   delete m_navMesh;
 }
 
 bool CNavMesh::load(char* path)
 {
+	PROFILE_FUNC();
   this->path = path;
   this->unload();
 
@@ -117,6 +120,7 @@ bool CNavMesh::load(char* path)
 
 void CNavMesh::outputError(uint32 status)
 {
+	PROFILE_FUNC();
 
   if(status & DT_WRONG_MAGIC)
   {
@@ -146,6 +150,7 @@ void CNavMesh::outputError(uint32 status)
 
 void CNavMesh::unload()
 {
+	PROFILE_FUNC();
   if(m_navMesh != NULL){
     delete m_navMesh;
   }
@@ -153,6 +158,7 @@ void CNavMesh::unload()
 
 int16 CNavMesh::findPath(position_t start, position_t end, position_t* path, uint16 pathSize)
 {
+	PROFILE_FUNC();
 
   dtStatus status;
 
@@ -263,6 +269,7 @@ int16 CNavMesh::findPath(position_t start, position_t end, position_t* path, uin
 
 int16 CNavMesh::findRandomPath(position_t start, float maxRadius, position_t* path, uint16 pathSize)
 {
+	PROFILE_FUNC();
 
   dtStatus status;
   int16 length = 0;
@@ -316,12 +323,14 @@ int16 CNavMesh::findRandomPath(position_t start, float maxRadius, position_t* pa
 
 bool CNavMesh::inWater(position_t point)
 {
+	PROFILE_FUNC();
   // TODO:
   return false;
 }
 
 bool CNavMesh::test(uint16 zoneId)
 {
+	PROFILE_FUNC();
   position_t path[30];
   int8 size = 30;
   position_t start;

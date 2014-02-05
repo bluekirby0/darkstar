@@ -31,6 +31,7 @@ namespace puppetutils
 
 void LoadAutomaton(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* Query =
         "SELECT unlocked_attachments, name, equipped_attachments FROM "
             "char_pet LEFT JOIN pet_name ON automatonid = id "
@@ -72,6 +73,7 @@ void LoadAutomaton(CCharEntity* PChar)
 
 void SaveAutomaton(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     if (PChar->PAutomaton)
     {
         const int8* Query =
@@ -116,6 +118,7 @@ void SaveAutomaton(CCharEntity* PChar)
 
 bool UnlockAttachment(CCharEntity* PChar, CItem* PItem)
 {
+	PROFILE_FUNC();
 	uint16 id = PItem->getID();
 
 	if (!PItem->isType(ITEM_PUPPET))
@@ -158,6 +161,7 @@ bool UnlockAttachment(CCharEntity* PChar, CItem* PItem)
 
 bool HasAttachment(CCharEntity* PChar, CItem* PItem)
 {
+	PROFILE_FUNC();
 	uint16 id = PItem->getID();
 
 	if (!PItem->isType(ITEM_PUPPET))
@@ -183,6 +187,7 @@ bool HasAttachment(CCharEntity* PChar, CItem* PItem)
 
 void setAttachment(CCharEntity* PChar, uint8 slotId, uint8 attachment)
 {
+	PROFILE_FUNC();
     if (attachment != 0)
     {
         for (int i = 0; i < 12; i++)
@@ -252,6 +257,7 @@ void setAttachment(CCharEntity* PChar, uint8 slotId, uint8 attachment)
 
 void setFrame(CCharEntity* PChar, uint8 frame)
 {
+	PROFILE_FUNC();
     uint8 tempElementMax[8];
 
     for (int i = 0; i < 8; i++)
@@ -311,6 +317,7 @@ void setFrame(CCharEntity* PChar, uint8 frame)
 
 void setHead(CCharEntity* PChar, uint8 head)
 {
+	PROFILE_FUNC();
     uint8 tempElementMax[8];
 
     for (int i = 0; i < 8; i++)
@@ -368,6 +375,7 @@ void setHead(CCharEntity* PChar, uint8 head)
 
 uint16 getSkillCap(CCharEntity* PChar, SKILLTYPE skill)
 {
+	PROFILE_FUNC();
     int8 rank = 0;
     if (skill < SKILL_AME || skill > SKILL_AMA)
         return 0;
@@ -425,6 +433,7 @@ uint16 getSkillCap(CCharEntity* PChar, SKILLTYPE skill)
 
 void LoadAutomatonStats(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     switch (PChar->PAutomaton->getFrame())
     {
         case FRAME_HARLEQUIN:

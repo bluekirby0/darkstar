@@ -31,6 +31,7 @@
 ************************************************************************/
 CAttackRound::CAttackRound(CBattleEntity* attacker)
 {
+	PROFILE_FUNC();
 	m_attacker = attacker;
 	m_doubleAttackOccured = false;
 	m_tripleAttackOccured = false;
@@ -79,6 +80,7 @@ CAttackRound::CAttackRound(CBattleEntity* attacker)
 ************************************************************************/
 CAttackRound::~CAttackRound()
 {
+	PROFILE_FUNC();
 
 }
 
@@ -89,6 +91,7 @@ CAttackRound::~CAttackRound()
 ************************************************************************/
 uint8 CAttackRound::GetAttackSwingCount()
 {
+	PROFILE_FUNC();
 	return m_attackSwings.size();
 }
 
@@ -99,6 +102,7 @@ uint8 CAttackRound::GetAttackSwingCount()
 ************************************************************************/
 CAttack* CAttackRound::GetAttack(uint8 index)
 {
+	PROFILE_FUNC();
 	return m_attackSwings.at(index);
 }
 
@@ -109,6 +113,7 @@ CAttack* CAttackRound::GetAttack(uint8 index)
 ************************************************************************/
 CAttack* CAttackRound::GetCurrentAttack()
 {
+	PROFILE_FUNC();
 	return m_attackSwings.at(0);
 }
 
@@ -119,6 +124,7 @@ CAttack* CAttackRound::GetCurrentAttack()
 ************************************************************************/
 void CAttackRound::SetSATA(bool value)
 {
+	PROFILE_FUNC();
 	m_sataOccured = value; 
 }
 
@@ -129,6 +135,7 @@ void CAttackRound::SetSATA(bool value)
 ************************************************************************/
 bool CAttackRound::GetSATAOccured()
 {
+	PROFILE_FUNC();
 	return m_sataOccured; 
 }
 
@@ -139,6 +146,7 @@ bool CAttackRound::GetSATAOccured()
 ************************************************************************/
 void CAttackRound::SetZanshinOccured(bool value)
 {
+	PROFILE_FUNC();
 	m_zanshinOccured = value; 
 }
 
@@ -149,6 +157,7 @@ void CAttackRound::SetZanshinOccured(bool value)
 ************************************************************************/
 bool CAttackRound::GetZanshinOccured()
 {
+	PROFILE_FUNC();
 	return m_zanshinOccured; 
 }
 
@@ -159,6 +168,7 @@ bool CAttackRound::GetZanshinOccured()
 ************************************************************************/
 CBattleEntity*	CAttackRound::GetTAEntity()
 {
+	PROFILE_FUNC();
 	return m_taEntity;
 }
 
@@ -169,6 +179,7 @@ CBattleEntity*	CAttackRound::GetTAEntity()
 ************************************************************************/
 void CAttackRound::SetMissOccured(bool value)
 {
+	PROFILE_FUNC();
 	m_missOccured = value;
 
 	if (value == true)
@@ -184,6 +195,7 @@ void CAttackRound::SetMissOccured(bool value)
 ************************************************************************/
 bool CAttackRound::GetMissOccured()
 {
+	PROFILE_FUNC();
 	return m_sataOccured; 
 }
 
@@ -194,6 +206,7 @@ bool CAttackRound::GetMissOccured()
 ************************************************************************/
 bool CAttackRound::IsH2H()
 {
+	PROFILE_FUNC();
 	return m_attacker->m_Weapons[SLOT_MAIN]->getDmgType() == DAMAGE_HTH ? true : false;
 }
 
@@ -204,6 +217,7 @@ bool CAttackRound::IsH2H()
 ************************************************************************/
 void CAttackRound::AddAttackSwing(PHYSICAL_ATTACK_TYPE type, PHYSICAL_ATTACK_DIRECTION direction, uint8 count)
 {
+	PROFILE_FUNC();
 	if (m_attackSwings.size() < MAX_ATTACKS)
 	{
 		for (uint8 i = 0; i < count; ++i)
@@ -226,6 +240,7 @@ void CAttackRound::AddAttackSwing(PHYSICAL_ATTACK_TYPE type, PHYSICAL_ATTACK_DIR
 ************************************************************************/
 void CAttackRound::DeleteAttackSwing()
 {
+	PROFILE_FUNC();
 	CAttack* attack = m_attackSwings.at(0);
 	m_attackSwings.erase(m_attackSwings.begin());
 	delete attack;
@@ -238,6 +253,7 @@ void CAttackRound::DeleteAttackSwing()
 ************************************************************************/
 void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION direction)
 {
+	PROFILE_FUNC();
     uint8 num = 1;
 
 	// Checking the players weapon hit count
@@ -300,6 +316,7 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
 ************************************************************************/
 void CAttackRound::CreateKickAttacks()
 {
+	PROFILE_FUNC();
 	if (m_attacker->objtype == TYPE_PC)
 	{
 		// kick attack mod (All jobs)
@@ -335,6 +352,7 @@ void CAttackRound::CreateKickAttacks()
 ************************************************************************/
 void CAttackRound::CreateZanshinAttacks()
 {
+	PROFILE_FUNC();
 	// Zanshin effects from gear, food or buffs do not require the job trait to be enabled.
 	if (m_attacker->objtype == TYPE_PC &&
 		!m_zanshinOccured && 

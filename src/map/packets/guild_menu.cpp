@@ -29,6 +29,7 @@
 
 CGuildMenuPacket::CGuildMenuPacket(GUILDSTATUS status, uint8 open, uint8 close, uint8 holiday)
 {
+	PROFILE_FUNC();
 	this->type = 0x86;
 	this->size = 0x06;
 

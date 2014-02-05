@@ -28,6 +28,7 @@
 
 CLatentEffect::CLatentEffect(LATENT conditionsId, uint16 conditionsValue, uint8 slot, uint16 modValue, int16 modPower)
 {
+	PROFILE_FUNC();
     m_ConditionsID      = conditionsId;
     m_ConditionsValue   = conditionsValue;
     m_SlotID            = slot;
@@ -38,70 +39,84 @@ CLatentEffect::CLatentEffect(LATENT conditionsId, uint16 conditionsValue, uint8 
 
 CLatentEffect::~CLatentEffect()
 {
+	PROFILE_FUNC();
 }
 
 LATENT CLatentEffect::GetConditionsID()
 {
+	PROFILE_FUNC();
     return m_ConditionsID;
 }
 
 uint16 CLatentEffect::GetConditionsValue()
 {
+	PROFILE_FUNC();
     return m_ConditionsValue;
 }
 
 uint8 CLatentEffect::GetSlot()
 {
+	PROFILE_FUNC();
     return m_SlotID;
 }
 
 uint16 CLatentEffect::GetModValue()
 {
+	PROFILE_FUNC();
     return m_ModValue;
 }
 
 int16 CLatentEffect::GetModPower()
 {
+	PROFILE_FUNC();
     return m_ModPower;
 }
 
 bool CLatentEffect::IsActivated()
 {
+	PROFILE_FUNC();
     return m_Activated;
 }
 
 CBattleEntity* CLatentEffect::GetOwner()
 {
+	PROFILE_FUNC();
     return m_POwner;
 }
 
 void CLatentEffect::SetConditionsId(LATENT id)
 {
+	PROFILE_FUNC();
     m_ConditionsID = id;
 }
 
 void CLatentEffect::SetConditionsValue(uint16 value)
 {
+	PROFILE_FUNC();
     m_ConditionsValue = value;
 }
 
 void CLatentEffect::SetSlot(uint8 slot)
 {
+	PROFILE_FUNC();
     m_SlotID = slot;
 }
 
 void CLatentEffect::SetModValue(uint16 value)
 {
+	PROFILE_FUNC();
     m_ModValue = value;
 }
 
 void CLatentEffect::SetModPower(int16 power)
 {
+	PROFILE_FUNC();
     m_ModPower = power;
 }
 
 void CLatentEffect::Activate()
 {
+	PROFILE_FUNC();
     if( !IsActivated() )
     {
         //additional effect/dmg latents add mod to weapon, not player
@@ -124,6 +139,7 @@ void CLatentEffect::Activate()
 
 void CLatentEffect::Deactivate()
 {
+	PROFILE_FUNC();
     if( IsActivated() )
     {
         //remove the modifier from weapon, not player
@@ -166,5 +182,6 @@ void CLatentEffect::Deactivate()
 
 void CLatentEffect::SetOwner(CBattleEntity* Owner)
 {
+	PROFILE_FUNC();
     m_POwner = Owner;
 }

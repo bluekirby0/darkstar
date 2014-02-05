@@ -151,6 +151,7 @@ namespace grade
 
 uint8 GetJobGrade(JOBTYPE job, uint8 stat)
 {
+	PROFILE_FUNC();
 	//DSP_DEBUG_BREAK_IF(job >= MAX_JOBTYPE || stat > 8);	// выход за пределы массива
 
 	return JobGrades[job][stat];
@@ -164,6 +165,7 @@ uint8 GetJobGrade(JOBTYPE job, uint8 stat)
 
 uint8 GetRaceGrades(uint8 race, uint8 stat)
 {
+	PROFILE_FUNC();
 	//DSP_DEBUG_BREAK_IF(race > 4 || stat > 8);	// выход за пределы массива
 
 	return RaceGrades[race][stat];
@@ -177,6 +179,7 @@ uint8 GetRaceGrades(uint8 race, uint8 stat)
 
 float GetHPScale(uint8 rank, uint8 scale)
 {
+	PROFILE_FUNC();
 	//DSP_DEBUG_BREAK_IF(rank > 7 || scale > 4);	// выход за пределы массива
 
 	return HPScale[rank][scale];
@@ -190,6 +193,7 @@ float GetHPScale(uint8 rank, uint8 scale)
 
 float GetMPScale(uint8 rank, uint8 scale)
 {
+	PROFILE_FUNC();
 	//DSP_DEBUG_BREAK_IF(rank > 7 || scale > 3);	// выход за пределы массива
 
 	return MPScale[rank][scale];
@@ -203,6 +207,7 @@ float GetMPScale(uint8 rank, uint8 scale)
 
 float GetStatScale(uint8 rank, uint8 scale)
 {
+	PROFILE_FUNC();
 	//DSP_DEBUG_BREAK_IF(rank > 7 || scale > 3);	// выход за пределы массива
 
 	return StatScale[rank][scale];

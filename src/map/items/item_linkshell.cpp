@@ -28,6 +28,7 @@
 
 CItemLinkshell::CItemLinkshell(uint16 id) : CItem(id)
 {
+	PROFILE_FUNC();
 	setType(ITEM_LINKSHELL);
 
     m_LinkshellID = 0;
@@ -37,34 +38,41 @@ CItemLinkshell::CItemLinkshell(uint16 id) : CItem(id)
 
 CItemLinkshell::~CItemLinkshell()
 {
+	PROFILE_FUNC();
 }
 
 uint32 CItemLinkshell::GetLSID()
 {
+	PROFILE_FUNC();
     return m_LinkshellID;
 }
 
 void CItemLinkshell::SetLSID(uint32 lsid)
 {
+	PROFILE_FUNC();
     m_LinkshellID = lsid;
 }
 
 LSTYPE CItemLinkshell::GetLSType()
 {
+	PROFILE_FUNC();
     return (LSTYPE)(getID() - 0x200);
 }
 
 lscolor_t CItemLinkshell::GetLSColor()
 {
+	PROFILE_FUNC();
 	return m_LSColor;
 }
 
 uint16 CItemLinkshell::GetLSRawColor()
 {
+	PROFILE_FUNC();
     return RBUFW(&m_LSColor,0);
 }
 
 void CItemLinkshell::SetLSColor(uint16 color)
 {
+	PROFILE_FUNC();
 	WBUFW(&m_LSColor,0) = color;
 }

@@ -34,6 +34,7 @@
 
 CInventoryItemPacket::CInventoryItemPacket(CItem* PItem, uint8 LocationID, uint8 SlotID) 
 {
+	PROFILE_FUNC();
 	this->type = 0x20;
 	this->size = 0x16;
 

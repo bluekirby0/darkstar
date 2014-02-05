@@ -42,6 +42,7 @@ CTransportHandler* CTransportHandler::_instance = NULL;
 
 CTransportHandler* CTransportHandler::getInstance() 
 {
+	PROFILE_FUNC();
 	if(_instance == NULL) {
 		_instance = new CTransportHandler();
 	}
@@ -56,6 +57,7 @@ CTransportHandler* CTransportHandler::getInstance()
 
 CTransportHandler::CTransportHandler() 
 {
+	PROFILE_FUNC();
     InitializeTransport();
 	InitializeElevators();
 }
@@ -68,6 +70,7 @@ CTransportHandler::CTransportHandler()
 
 void CTransportHandler::InitializeTransport()
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(TransportList.size() != 0);
 
     const int8* fmtQuery = "SELECT id, transport, door, dock_x, dock_y, dock_z, dock_rot, boundary, zone, anim_arrive, anim_depart, time_offset, time_interval, time_waiting, time_anim_arrive, time_anim_depart  FROM transport;";
@@ -134,6 +137,7 @@ void CTransportHandler::InitializeTransport()
 
 void CTransportHandler::InitializeElevators()
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(ElevatorList.size() != 0);
 
 	const int8* fmtQuery = "SELECT id, elevator, lowerDoor, upperDoor, status, regime FROM elevators ;";
@@ -177,6 +181,7 @@ void CTransportHandler::InitializeElevators()
 
 void CTransportHandler::TransportTimer() 
 {
+	PROFILE_FUNC();
 	uint32 VanaTime = CVanaTime::getInstance()->getDate();
 
     // в портовых зонах необходимо написать макросы на случай, если персонаж вышел из игры в корабле. 
@@ -323,6 +328,7 @@ void CTransportHandler::TransportTimer()
 
 void CTransportHandler::startElevator(int32 elevatorID)
 {
+	PROFILE_FUNC();
     for(uint32 i = 0; i < ElevatorList.size(); ++i) 
 	{		
 	    Elevator_t * elevator = &ElevatorList.at(i);
@@ -343,6 +349,7 @@ void CTransportHandler::startElevator(int32 elevatorID)
 
 void CTransportHandler::startElevator(Elevator_t * elevator)
 {
+	PROFILE_FUNC();
 	elevator->Elevator->animation ^= 1; 
 	
 	elevator->Elevator->name[8] = 8;
@@ -392,6 +399,7 @@ void CTransportHandler::startElevator(Elevator_t * elevator)
 
 void CTransportHandler::arriveElevator(Elevator_t * elevator)
 {
+	PROFILE_FUNC();
 	if (elevator->id == ELEVATOR_DAVOI_ELVTR)
 	{
 		elevator->interval = elevator->interval;

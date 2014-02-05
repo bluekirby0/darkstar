@@ -26,6 +26,7 @@
 
 CMobSkill::CMobSkill(uint16 id)
 {
+	PROFILE_FUNC();
 	m_ID = id;
 	m_FamilyID= 0;
 	m_AnimID = 0;
@@ -43,26 +44,31 @@ CMobSkill::CMobSkill(uint16 id)
 
 bool CMobSkill::hasMissMsg()
 {
+	PROFILE_FUNC();
   return m_Message == 158 || m_Message == 188 || m_Message == 31 || m_Message == 30;
 }
 
 bool CMobSkill::isAoE()
 {
+	PROFILE_FUNC();
   return m_Aoe > 0 && m_Aoe < 4;
 }
 
 bool CMobSkill::isConal()
 {
+	PROFILE_FUNC();
   return m_Aoe == 4;
 }
 
 bool CMobSkill::isSingle()
 {
+	PROFILE_FUNC();
   return m_Aoe == 0;
 }
 
 bool CMobSkill::isTwoHour()
 {
+	PROFILE_FUNC();
   // id zero means it was put on mob skill list
   // flag means this skill is a real two hour
   return m_ID == 0 || m_Flag & SKILLFLAG_TWO_HOUR;
@@ -70,113 +76,135 @@ bool CMobSkill::isTwoHour()
 
 void CMobSkill::setID(uint16 id)
 {
+	PROFILE_FUNC();
 	m_ID = id;
 }
 
 void CMobSkill::resetMsg()
 {
+	PROFILE_FUNC();
   m_Message = 185;
 }
 
 void CMobSkill::setMsg(uint16 msg)
 {
+	PROFILE_FUNC();
 	m_Message = msg;
 }
 
 void CMobSkill::setTotalTargets(uint16 targets)
 {
+	PROFILE_FUNC();
     m_TotalTargets = targets;
 }
 
 void CMobSkill::setfamilyID(uint16 familyID)
 {
+	PROFILE_FUNC();
 	m_FamilyID = familyID;
 }
 
 void CMobSkill::setAnimationID(uint16 animID)
 {
+	PROFILE_FUNC();
 	m_AnimID = animID;
 }
 
 const int8* CMobSkill::getName()
 {
+	PROFILE_FUNC();
 	return m_name.c_str();
 }
 
 void CMobSkill::setName(int8* name)
 {
+	PROFILE_FUNC();
 	m_name.clear();
 	m_name.insert(0,name);
 }
 
 void CMobSkill::setAoe(uint8 aoe)
 {
+	PROFILE_FUNC();
 	m_Aoe = aoe;
 }
 
 void CMobSkill::setDistance(float distance)
 {
+	PROFILE_FUNC();
 	m_Distance = distance;
 }
 
 void CMobSkill::setFlag(uint8 flag)
 {
+	PROFILE_FUNC();
 	m_Flag = flag;
 }
 
 void CMobSkill::setTP(float tp)
 {
+	PROFILE_FUNC();
 	m_TP = tp;
 }
 
 void CMobSkill::setAnimationTime(uint16 AnimationTime)
 {
+	PROFILE_FUNC();
     m_AnimationTime = AnimationTime;
 }
 
 void CMobSkill::setActivationTime(uint16 ActivationTime)
 {
+	PROFILE_FUNC();
     m_ActivationTime = ActivationTime;
 }
 
 void CMobSkill::setValidTargets(uint16 targ)
 {
+	PROFILE_FUNC();
     m_ValidTarget = targ;
 }
 
 
 uint16 CMobSkill::getID()
 {
+	PROFILE_FUNC();
 	return m_ID;
 }
 
 uint16 CMobSkill::getfamilyID()
 {
+	PROFILE_FUNC();
 	return m_FamilyID;
 }
 
 uint16 CMobSkill::getAnimationID()
 {
+	PROFILE_FUNC();
 	return m_AnimID;
 }
 
 float CMobSkill::getTP()
 {
+	PROFILE_FUNC();
 	return m_TP;
 }
 
 uint16 CMobSkill::getTotalTargets()
 {
+	PROFILE_FUNC();
     return m_TotalTargets;
 }
 
 uint16 CMobSkill::getMsg()
 {
+	PROFILE_FUNC();
 	return m_Message;
 }
 
 uint16 CMobSkill::getMsgForAction()
 {
+	PROFILE_FUNC();
   uint16 id = getID();
     uint16 messageid = 256 + id;
     uint8 flag = getFlag();
@@ -210,6 +238,7 @@ uint16 CMobSkill::getMsgForAction()
 
 uint16 CMobSkill::getAoEMsg()
 {
+	PROFILE_FUNC();
 
     switch(m_Message){
         case 185:
@@ -253,21 +282,25 @@ uint16 CMobSkill::getAoEMsg()
 
 uint8 CMobSkill::getFlag()
 {
+	PROFILE_FUNC();
 	return m_Flag;
 }
 
 uint8 CMobSkill::getAoe()
 {
+	PROFILE_FUNC();
 	return m_Aoe;
 }
 
 float CMobSkill::getDistance()
 {
+	PROFILE_FUNC();
 	return m_Distance;
 }
 
 float CMobSkill::getRadius()
 {
+	PROFILE_FUNC();
   if(m_Aoe == 2)
   {
     // centered around target, usually 8'
@@ -279,50 +312,60 @@ float CMobSkill::getRadius()
 
 int16 CMobSkill::getParam()
 {
+	PROFILE_FUNC();
   return m_Param;
 }
 
 uint8 CMobSkill::getKnockback()
 {
+	PROFILE_FUNC();
     return m_knockback;
 }
 
 bool CMobSkill::isDamageMsg()
 {
+	PROFILE_FUNC();
   return m_Message == 110 || m_Message == 185 || m_Message == 197 || m_Message == 264 || m_Message == 187 || m_Message == 225 || m_Message == 226;
 }
 
 void CMobSkill::setParam(int16 value)
 {
+	PROFILE_FUNC();
   m_Param = value;
 }
 
 void CMobSkill::setKnockback(uint8 knockback)
 {
+	PROFILE_FUNC();
     m_knockback = knockback;
 }
 
 uint16 CMobSkill::getValidTargets()
 {
+	PROFILE_FUNC();
 	return m_ValidTarget;
 }
 
 uint16 CMobSkill::getAnimationTime()
 {
+	PROFILE_FUNC();
     return m_AnimationTime;
 }
 
 uint16 CMobSkill::getActivationTime()
 {
+	PROFILE_FUNC();
     return m_ActivationTime;
 }
 
 uint8 CMobSkill::getSkillchain()
 {
+	PROFILE_FUNC();
     return m_skillchain;
 }
 
 void CMobSkill::setSkillchain(uint8 skillchain)
 {
+	PROFILE_FUNC();
     m_skillchain = skillchain;
 }

@@ -29,6 +29,7 @@
 
 CReleasePacket::CReleasePacket(CCharEntity * PChar, RELEASE_TYPE releaseType) 
 {
+	PROFILE_FUNC();
 	this->type = 0x52;
 	this->size = 0x04;
 	

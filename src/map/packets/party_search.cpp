@@ -30,6 +30,7 @@
 
 CPartySearchPacket::CPartySearchPacket(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	this->type = 0xE1;
 	this->size = 0x04; 
 	

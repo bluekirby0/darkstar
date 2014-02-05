@@ -141,6 +141,7 @@ int32 init()
 
 int32 free()
 {
+	PROFILE_FUNC();
 	ShowStatus(CL_WHITE"luautils::free" CL_RESET":lua free...");
 	lua_close(LuaHandle);
 	ShowMessage("\t - " CL_GREEN"[OK]" CL_RESET"\n");
@@ -149,6 +150,7 @@ int32 free()
 
 int32 garbageCollect()
 {
+	PROFILE_FUNC();
 
     int32 top = lua_gettop( LuaHandle );
     ShowDebug(CL_CYAN"[Lua] Garbage Collected. Current State Top: %d\n" CL_RESET, top);
@@ -166,6 +168,7 @@ int32 garbageCollect()
 
 int32 print(lua_State* LuaHandle)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(LuaHandle,-1) && lua_isstring(LuaHandle,-1) )
 	{
 		ShowScript("%s\n",lua_tostring(LuaHandle,-1));
@@ -181,6 +184,7 @@ int32 print(lua_State* LuaHandle)
 
 int32 SendEntityVisualPacket(lua_State* L)
 {
+	PROFILE_FUNC();
     if((!lua_isnil(L,1) && lua_isnumber(L,1)) &&
        (!lua_isnil(L,2) && lua_isnumber(L,2)) &&
 	   (!lua_isnil(L,3) && lua_isnumber(L,3)) &&
@@ -213,6 +217,7 @@ int32 SendEntityVisualPacket(lua_State* L)
 
 int32 GetNPCByID(lua_State* L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,-1) && lua_isnumber(L,-1) )
 	{
 		uint32 npcid = (uint32)lua_tointeger(L, -1);
@@ -245,6 +250,7 @@ int32 GetNPCByID(lua_State* L)
 
 int32 GetMobByID(lua_State* L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,-1) && lua_isnumber(L,-1) )
 	{
 		uint32 mobid = (uint32)lua_tointeger(L, -1);
@@ -277,6 +283,7 @@ int32 GetMobByID(lua_State* L)
 
 int32 GetMobIDByJob(lua_State *L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(lua_isnil(L,1) || !lua_isnumber(L,1) || lua_isnil(L,2) || !lua_isnumber(L,2) || lua_isnil(L,3) || !lua_isnumber(L,3));
 
 	uint32 id_min = (uint32)lua_tointeger(L,1);
@@ -309,6 +316,7 @@ int32 GetMobIDByJob(lua_State *L)
 
 int32 WeekUpdateConquest(lua_State* L)
 {
+	PROFILE_FUNC();
     conquest::UpdateConquestGM();
 
     return 0;
@@ -322,6 +330,7 @@ int32 WeekUpdateConquest(lua_State* L)
 
 int32 GetRegionOwner(lua_State* L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(lua_isnil(L,1) || !lua_isnumber(L,1));
 
     lua_pushinteger(L, conquest::GetRegionOwner((REGIONTYPE)lua_tointeger(L,1)));
@@ -336,6 +345,7 @@ int32 GetRegionOwner(lua_State* L)
 
 int32 SetRegionalConquestOverseers()
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -383,6 +393,7 @@ int32 SetRegionalConquestOverseers()
 
 int32 VanadielTOTD(lua_State* L)
 {
+	PROFILE_FUNC();
 	lua_pushinteger(L, CVanaTime::getInstance()->GetCurrentTOTD());
 	return 1;
 }
@@ -395,6 +406,7 @@ int32 VanadielTOTD(lua_State* L)
 
 int32 VanadielYear(lua_State* L)
 {
+	PROFILE_FUNC();
 	lua_pushinteger(L, CVanaTime::getInstance()->getYear());
 	return 1;
 }
@@ -408,6 +420,7 @@ int32 VanadielYear(lua_State* L)
 
 int32 VanadielMonth(lua_State* L)
 {
+	PROFILE_FUNC();
 	lua_pushinteger(L, CVanaTime::getInstance()->getMonth());
 	return 1;
 }
@@ -420,6 +433,7 @@ int32 VanadielMonth(lua_State* L)
 
 int32 VanadielDayOfTheYear(lua_State* L)
 {
+	PROFILE_FUNC();
 	int32 day;
 	int32 month;
 
@@ -438,6 +452,7 @@ int32 VanadielDayOfTheYear(lua_State* L)
 
 int32 VanadielDayOfTheMonth(lua_State* L)
 {
+	PROFILE_FUNC();
 	lua_pushinteger(L, CVanaTime::getInstance()->getDayOfTheMonth());
 	return 1;
 }
@@ -450,6 +465,7 @@ int32 VanadielDayOfTheMonth(lua_State* L)
 
 int32 VanadielHour(lua_State* L)
 {
+	PROFILE_FUNC();
 	lua_pushinteger(L, CVanaTime::getInstance()->getHour());
 	return 1;
 }
@@ -462,6 +478,7 @@ int32 VanadielHour(lua_State* L)
 
 int32 VanadielMinute(lua_State* L)
 {
+	PROFILE_FUNC();
 	lua_pushinteger(L, CVanaTime::getInstance()->getMinute());
 	return 1;
 }
@@ -474,6 +491,7 @@ int32 VanadielMinute(lua_State* L)
 
 int32 VanadielDayElement(lua_State* L)
 {
+	PROFILE_FUNC();
 	lua_pushinteger(L, CVanaTime::getInstance()->getWeekday());
 	return 1;
 }
@@ -486,6 +504,7 @@ int32 VanadielDayElement(lua_State* L)
 
 int32 VanadielMoonPhase(lua_State* L)
 {
+	PROFILE_FUNC();
 	lua_pushinteger(L, CVanaTime::getInstance()->getMoonPhase());
 	return 1;
 }
@@ -493,6 +512,7 @@ int32 VanadielMoonPhase(lua_State* L)
 
 int32 SetVanadielTimeOffset(lua_State* L)
 {
+	PROFILE_FUNC();
     if( !lua_isnil(L,1) && lua_isnumber(L,1) )
     {
         int32 offset = (int32)lua_tointeger(L,1);
@@ -514,6 +534,7 @@ int32 SetVanadielTimeOffset(lua_State* L)
 
 int32 VanadielMoonDirection(lua_State* L)
 {
+	PROFILE_FUNC();
 	lua_pushinteger(L, CVanaTime::getInstance()->getMoonDirection());
 	return 1;
 }
@@ -527,6 +548,7 @@ int32 VanadielMoonDirection(lua_State* L)
 	
 int32 IsMoonNew(lua_State* L)
 {
+	PROFILE_FUNC();
 		// New moon occurs when:
 		// Waning (decreasing) from 10% to 0%,
 		// Waxing (increasing) from 0% to 5%.
@@ -565,6 +587,7 @@ int32 IsMoonNew(lua_State* L)
 
 int32 IsMoonFull(lua_State* L)
 {
+	PROFILE_FUNC();
 	// Full moon occurs when:
 	// Waxing (increasing) from 90% to 100%,
 	// Waning (decending) from 100% to 95%.
@@ -601,6 +624,7 @@ int32 IsMoonFull(lua_State* L)
 ************************************************************************/
 int32 SpawnMob(lua_State* L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,1) && lua_isnumber(L,1) )
 	{
 		uint32 mobid = (uint32)lua_tointeger(L,1);
@@ -658,6 +682,7 @@ int32 SpawnMob(lua_State* L)
 
 int32 DespawnMob(lua_State* L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,1) && lua_isnumber(L,1) )
 	{
 		uint32 mobid = (uint32)lua_tointeger(L, 1);
@@ -690,6 +715,7 @@ int32 DespawnMob(lua_State* L)
 
 int32 setMobPos(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,1) && lua_isnumber(L,1) )
 	{
 		uint32 mobid = (uint32)lua_tointeger(L,1);
@@ -734,6 +760,7 @@ int32 setMobPos(lua_State *L)
 
 int32 GetPlayerByName(lua_State* L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,-1) && lua_isstring(L,-1))
 	{
 		int8* name = (int8*)lua_tolstring(L,-1,NULL);
@@ -764,6 +791,7 @@ int32 GetPlayerByName(lua_State* L)
 
 int32 GetMobAction(lua_State* L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(lua_isnil(L,-1) || !lua_isnumber(L,-1));
 
     uint32 mobid = (uint32)lua_tointeger(L,-1);
@@ -788,6 +816,7 @@ int32 GetMobAction(lua_State* L)
 
 int32 GetTextIDVariable(uint16 ZoneID, const char* variable)
 {
+	PROFILE_FUNC();
     lua_pushnil(LuaHandle);
     lua_setglobal(LuaHandle, variable);
 
@@ -925,6 +954,7 @@ int32 OnZoneInitialise(uint16 ZoneID)
 
 int32 OnGameIn(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -978,6 +1008,7 @@ int32 OnGameIn(CCharEntity* PChar)
 
 int32 OnZoneIn(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -1040,6 +1071,7 @@ int32 OnZoneIn(CCharEntity* PChar)
 
 int32 OnRegionEnter(CCharEntity* PChar, CRegion* PRegion)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -1095,6 +1127,7 @@ int32 OnRegionEnter(CCharEntity* PChar, CRegion* PRegion)
 
 int32 OnRegionLeave(CCharEntity* PChar, CRegion* PRegion)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -1151,6 +1184,7 @@ int32 OnRegionLeave(CCharEntity* PChar, CRegion* PRegion)
 
 int32 OnTrigger(CCharEntity* PChar, CBaseEntity* PNpc)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
 
@@ -1227,6 +1261,7 @@ int32 OnTrigger(CCharEntity* PChar, CBaseEntity* PNpc)
 
 int32 OnEventUpdate(CCharEntity* PChar, uint16 eventID, uint32 result)
 {
+	PROFILE_FUNC();
     int32 oldtop = lua_gettop(LuaHandle);
 
     lua_pushnil(LuaHandle);
@@ -1287,6 +1322,7 @@ int32 OnEventUpdate(CCharEntity* PChar, uint16 eventID, uint32 result)
 
 int32 OnEventFinish(CCharEntity* PChar, uint16 eventID, uint32 result)
 {
+	PROFILE_FUNC();
     int32 oldtop = lua_gettop(LuaHandle);
 
     lua_pushnil(LuaHandle);
@@ -1352,6 +1388,7 @@ int32 OnEventFinish(CCharEntity* PChar, uint16 eventID, uint32 result)
 
 int32 OnTrade(CCharEntity* PChar, CBaseEntity* PNpc)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -1406,6 +1443,7 @@ int32 OnTrade(CCharEntity* PChar, CBaseEntity* PNpc)
 
 int32 OnNpcSpawn(CBaseEntity* PNpc)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PNpc == NULL);
 
     int8 File[255];
@@ -1450,6 +1488,7 @@ int32 OnNpcSpawn(CBaseEntity* PNpc)
 
 int32 OnNpcPath(CBaseEntity* PNpc)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PNpc == NULL);
 
     int8 File[255];
@@ -1494,6 +1533,7 @@ int32 OnNpcPath(CBaseEntity* PNpc)
 
 int32 OnAdditionalEffect(CBattleEntity* PAttacker, CBattleEntity* PDefender, CItemWeapon* PItem, apAction_t* Action, uint32 damage)
 {
+	PROFILE_FUNC();
     int8 File[255];
     memset(File,0,sizeof(File));
 	int32 oldtop = lua_gettop(LuaHandle);
@@ -1567,6 +1607,7 @@ int32 OnAdditionalEffect(CBattleEntity* PAttacker, CBattleEntity* PDefender, CIt
 
 int32 OnEffectGain(CBattleEntity* PEntity, CStatusEffect* PStatusEffect)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -1620,6 +1661,7 @@ int32 OnEffectGain(CBattleEntity* PEntity, CStatusEffect* PStatusEffect)
 
 int32 OnEffectTick(CBattleEntity* PEntity, CStatusEffect* PStatusEffect)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -1674,6 +1716,7 @@ int32 OnEffectTick(CBattleEntity* PEntity, CStatusEffect* PStatusEffect)
 
 int32 OnEffectLose(CBattleEntity* PEntity, CStatusEffect* PStatusEffect)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -1728,6 +1771,7 @@ int32 OnEffectLose(CBattleEntity* PEntity, CStatusEffect* PStatusEffect)
 
 int32 OnItemCheck(CBaseEntity* PTarget, CItem* PItem, uint32 param)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
 
@@ -1799,6 +1843,7 @@ int32 OnItemCheck(CBaseEntity* PTarget, CItem* PItem, uint32 param)
 
 int32 OnItemUse(CBaseEntity* PTarget, CItem* PItem)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -1850,6 +1895,7 @@ int32 OnItemUse(CBaseEntity* PTarget, CItem* PItem)
 
 int32 CheckForGearSet(CBaseEntity* PTarget)
 {
+	PROFILE_FUNC();
 
 	int8 File[255];
 	memset(File,0,sizeof(File));
@@ -1904,6 +1950,7 @@ int32 CheckForGearSet(CBaseEntity* PTarget)
 
 int32 OnSpellCast(CBattleEntity* PCaster, CBattleEntity* PTarget, CSpell* PSpell)
 {
+	PROFILE_FUNC();
     int8 File[255];
     memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -1963,6 +2010,7 @@ int32 OnSpellCast(CBattleEntity* PCaster, CBattleEntity* PTarget, CSpell* PSpell
 
 int32 OnMonsterMagicPrepare(CBattleEntity* PCaster, CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PCaster == NULL || PTarget == NULL);
 
 	int8 File[255];
@@ -2024,6 +2072,7 @@ int32 OnMonsterMagicPrepare(CBattleEntity* PCaster, CBattleEntity* PTarget)
 
 int32 OnMobInitialize(CBaseEntity* PMob)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PMob == NULL);
 
     int8 File[255];
@@ -2069,6 +2118,7 @@ int32 OnMobInitialize(CBaseEntity* PMob)
 
 int32 OnMobPath(CBaseEntity* PMob)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PMob == NULL);
 
     int8 File[255];
@@ -2119,6 +2169,7 @@ int32 OnMobPath(CBaseEntity* PMob)
 
 int32 OnMobEngaged(CBaseEntity* PMob, CBaseEntity* PTarget)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PTarget == NULL || PMob == NULL);
 
 
@@ -2182,6 +2233,7 @@ int32 OnMobEngaged(CBaseEntity* PMob, CBaseEntity* PTarget)
 
 int32 OnMobDisengage(CBaseEntity* PMob)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PMob == NULL);
 
 	int8 File[255];
@@ -2230,6 +2282,7 @@ int32 OnMobDisengage(CBaseEntity* PMob)
 
 int32 OnMobDrawIn(CBaseEntity* PMob, CBaseEntity* PTarget)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PTarget == NULL || PMob == NULL);
 
 
@@ -2293,6 +2346,7 @@ int32 OnMobDrawIn(CBaseEntity* PMob, CBaseEntity* PTarget)
 
 int32 OnMobFight(CBaseEntity* PMob, CBaseEntity* PTarget)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PMob == NULL || PMob->objtype != TYPE_MOB)
     DSP_DEBUG_BREAK_IF(PTarget == NULL || PTarget->objtype == TYPE_NPC);
 
@@ -2342,6 +2396,7 @@ int32 OnMobFight(CBaseEntity* PMob, CBaseEntity* PTarget)
 
 int32 OnCriticalHit(CBattleEntity* PMob)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PMob == NULL || PMob->objtype != TYPE_MOB)
 
 	CLuaBaseEntity LuaMobEntity(PMob);
@@ -2393,6 +2448,7 @@ int32 OnCriticalHit(CBattleEntity* PMob)
 
 int32 OnMobDeath(CBaseEntity* PMob, CBaseEntity* PKiller)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PKiller == NULL || PMob == NULL);
 
     CCharEntity* PChar = (CCharEntity*)PKiller;
@@ -2544,6 +2600,7 @@ int32 OnMobDeath(CBaseEntity* PMob, CBaseEntity* PKiller)
 
 int32 OnMobSpawn(CBaseEntity* PMob)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PMob == NULL);
 
     int8 File[255];
@@ -2589,6 +2646,7 @@ int32 OnMobSpawn(CBaseEntity* PMob)
 
 int32 OnMobRoamAction(CBaseEntity* PMob)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PMob == NULL || PMob->objtype != TYPE_MOB)
 
 	CLuaBaseEntity LuaMobEntity(PMob);
@@ -2639,6 +2697,7 @@ int32 OnMobRoamAction(CBaseEntity* PMob)
 
 int32 OnMobRoam(CBaseEntity* PMob)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PMob == NULL || PMob->objtype != TYPE_MOB)
 
 	CLuaBaseEntity LuaMobEntity(PMob);
@@ -2691,6 +2750,7 @@ int32 OnMobRoam(CBaseEntity* PMob)
 
 int32 OnMobDespawn(CBaseEntity* PMob)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PMob == NULL);
 
 	int8 File[255];
@@ -2741,6 +2801,7 @@ int32 OnMobDespawn(CBaseEntity* PMob)
 
 int32 OnGameDayAutomatisation()
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -2788,6 +2849,7 @@ int32 OnGameDayAutomatisation()
 
 int32 OnGameHourAutomatisation()
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -2829,6 +2891,7 @@ int32 OnGameHourAutomatisation()
 
 int32 OnZoneWeatherChange(uint16 ZoneID, uint8 weather)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -2869,6 +2932,7 @@ int32 OnZoneWeatherChange(uint16 ZoneID, uint8 weather)
 
 int32 OnTOTDChange(uint16 ZoneID, uint8 TOTD)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -2915,6 +2979,7 @@ int32 OnTOTDChange(uint16 ZoneID, uint8 TOTD)
 
 int32 OnUseWeaponSkill(CCharEntity* PChar, CBaseEntity* PMob, uint16* tpHitsLanded, uint16* extraHitsLanded)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -2987,6 +3052,7 @@ int32 OnUseWeaponSkill(CCharEntity* PChar, CBaseEntity* PMob, uint16* tpHitsLand
 
 int32 OnMobWeaponSkill(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -3050,6 +3116,7 @@ int32 OnMobWeaponSkill(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobS
 
 int32 OnMobSkillCheck(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -3113,6 +3180,7 @@ int32 OnMobSkillCheck(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSk
 
 int32 OnMagicCastingCheck(CBaseEntity* PChar,CBaseEntity* PTarget,CSpell* PSpell)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -3176,6 +3244,7 @@ int32 OnMagicCastingCheck(CBaseEntity* PChar,CBaseEntity* PTarget,CSpell* PSpell
 
 int32 OnAbilityCheck(CBaseEntity* PChar, CBaseEntity* PTarget, CAbility* PAbility, CBaseEntity** PMsgTarget)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PAbility == NULL);
 
 	int8 File[255];
@@ -3253,6 +3322,7 @@ int32 OnAbilityCheck(CBaseEntity* PChar, CBaseEntity* PTarget, CAbility* PAbilit
 
 int32 OnPetAbility(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill, CBaseEntity* PMobMaster)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -3319,6 +3389,7 @@ int32 OnPetAbility(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill
 
 int32 OnUseAbility(CCharEntity* PChar, CBattleEntity* PTarget, CAbility* PAbility, apAction_t* action)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
 
@@ -3400,6 +3471,7 @@ int32 OnUseAbility(CCharEntity* PChar, CBattleEntity* PTarget, CAbility* PAbilit
 
 int32 clearVarFromAll(lua_State *L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isstring(L, -1));
 
 	const int8* varname = lua_tostring(L, -1);
@@ -3417,6 +3489,7 @@ int32 clearVarFromAll(lua_State *L)
 
 int32 OnUseAbilityRoll(CCharEntity* PChar, CBattleEntity* PTarget, CAbility* PAbility, uint8 total)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -3475,6 +3548,7 @@ int32 OnUseAbilityRoll(CCharEntity* PChar, CBattleEntity* PTarget, CAbility* PAb
 
 int32 StartElevator(lua_State* L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(lua_isnil(L,-1) || !lua_isnumber(L,-1));
 
 	uint32 ElevatorID = (uint32)lua_tointeger(L, -1);
@@ -3491,6 +3565,7 @@ int32 StartElevator(lua_State* L)
 
 int32 GetServerVariable(lua_State *L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(lua_isnil(L,-1) || !lua_isstring(L,-1));
 
     int32 value = 0;
@@ -3515,6 +3590,7 @@ int32 GetServerVariable(lua_State *L)
 
 int32 SetServerVariable(lua_State *L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
 	DSP_DEBUG_BREAK_IF(lua_isnil(L, -2) || !lua_isstring(L, -2));
 
@@ -3539,6 +3615,7 @@ int32 SetServerVariable(lua_State *L)
 
 int32 OnTransportEvent(CCharEntity* PChar, uint32 TransportID)
 {
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -3590,6 +3667,7 @@ int32 OnTransportEvent(CCharEntity* PChar, uint32 TransportID)
 	onBcnmEnter - callback when you enter a BCNM via a lua call to bcnmEnter(bcnmid)
 *********************************************************************/
 int32 OnBcnmEnter(CCharEntity* PChar, CInstance* PInstance){
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -3646,6 +3724,7 @@ int32 OnBcnmEnter(CCharEntity* PChar, CInstance* PInstance){
 	so if they leave via win, this will be called for each char.
 *********************************************************************/
 int32 OnBcnmLeave(CCharEntity* PChar, CInstance* PInstance, uint8 LeaveCode){
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -3705,6 +3784,7 @@ int32 OnBcnmLeave(CCharEntity* PChar, CInstance* PInstance, uint8 LeaveCode){
 	registration, and after CInstance:init() procedure.
 *********************************************************************/
 int32 OnBcnmRegister(CCharEntity* PChar, CInstance* PInstance){
+	PROFILE_FUNC();
 	int8 File[255];
 	memset(File,0,sizeof(File));
     int32 oldtop = lua_gettop(LuaHandle);
@@ -3756,6 +3836,7 @@ int32 OnBcnmRegister(CCharEntity* PChar, CInstance* PInstance){
 ************************************************************************/
 int32 DeterMob(lua_State* L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,1) && lua_isnumber(L,1) ) {
 		uint32 mobid = (uint32)lua_tointeger(L,1);
 		CMobEntity* PMob = (CMobEntity*)zoneutils::GetEntity(mobid, TYPE_MOB);
@@ -3789,6 +3870,7 @@ int32 DeterMob(lua_State* L)
 
 int32 UpdateNMSpawnPoint(lua_State* L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,1) && lua_isnumber(L,1) ) {
 		uint32 mobid = (uint32)lua_tointeger(L,1);
 		CMobEntity* PMob = (CMobEntity*)zoneutils::GetEntity(mobid, TYPE_MOB);
@@ -3823,6 +3905,7 @@ int32 UpdateNMSpawnPoint(lua_State* L)
 
 int32 GetMobRespawnTime(lua_State* L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(lua_isnil(L,-1) || !lua_isnumber(L,-1));
 
     uint32 mobid = (uint32)lua_tointeger(L,-1);
@@ -3847,6 +3930,7 @@ int32 GetMobRespawnTime(lua_State* L)
 
 int32 SetDropRate(lua_State *L)
 {
+	PROFILE_FUNC();
 	DropList_t* DropList = itemutils::GetDropList(lua_tointeger(L,1));
 
 	for(uint8 i = 0; i < DropList->size(); ++i)
@@ -3868,6 +3952,7 @@ int32 SetDropRate(lua_State *L)
 *******************************************************************************/
 int32 UpdateTreasureSpawnPoint(lua_State* L)
 {
+	PROFILE_FUNC();
 	// TODO: check respawn time
 	if ( !lua_isnil(L,1) && lua_isnumber(L,1) ) {
 		uint32 npcid = (uint32)lua_tointeger(L,1);
@@ -3897,6 +3982,7 @@ int32 UpdateTreasureSpawnPoint(lua_State* L)
 
 int32 getCorsairRollEffect(lua_State* L)
 {
+	PROFILE_FUNC();
     if(!lua_isnil(L,1) && lua_isnumber(L,1))
 	{
 		lua_pushinteger(L, battleutils::getCorsairRollEffect(lua_tointeger(L,1)));
@@ -3907,6 +3993,7 @@ int32 getCorsairRollEffect(lua_State* L)
 
 int32 getSpell(lua_State* L)
 {
+	PROFILE_FUNC();
     if(!lua_isnil(L,1) && lua_isnumber(L,1))
 	{
 		CSpell* PSpell = spell::GetSpell(lua_tointeger(L,1));
@@ -3925,6 +4012,7 @@ int32 getSpell(lua_State* L)
 
 int32 UpdateServerMessage(lua_State* L)
 {
+	PROFILE_FUNC();
     int8 line[1024];
     FILE* fp;
 
@@ -3975,6 +4063,7 @@ int32 UpdateServerMessage(lua_State* L)
 
 inline int32 nearLocation(lua_State* L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(lua_isnil(L, 1));
     DSP_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
     DSP_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));

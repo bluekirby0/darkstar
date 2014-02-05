@@ -37,6 +37,7 @@ namespace attackutils
 ************************************************************************/
 uint8 getHitCount(uint8 hits)
 {
+	PROFILE_FUNC();
     uint8 distribution = rand()%100;
     uint8 num = 1;
 
@@ -104,6 +105,7 @@ uint8 getHitCount(uint8 hits)
 ************************************************************************/
 bool IsParried(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
     if(isFaceing(PDefender->loc.p, PAttacker->loc.p, 40))
     {
         return (rand() % 100 < battleutils::GetParryRate(PAttacker, PDefender));
@@ -118,6 +120,7 @@ bool IsParried(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 ************************************************************************/
 bool IsGuarded(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
     if(isFaceing(PDefender->loc.p, PAttacker->loc.p, 40))
     {
         return(rand() % 100 < battleutils::GetGuardRate(PAttacker, PDefender));
@@ -132,6 +135,7 @@ bool IsGuarded(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 ************************************************************************/
 bool IsBlocked(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
 	if(isFaceing(PDefender->loc.p, PAttacker->loc.p, 40))
     {
         return(rand() % 100 < battleutils::GetBlockRate(PAttacker, PDefender));
@@ -146,6 +150,7 @@ bool IsBlocked(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 ************************************************************************/
 uint32 CheckForDamageMultiplier(CCharEntity* PChar, CItemWeapon* PWeapon, uint32 damage, PHYSICAL_ATTACK_TYPE attackType)
 {
+	PROFILE_FUNC();
 	if (PWeapon==NULL)
 	{
 		return damage;
@@ -214,6 +219,7 @@ uint32 CheckForDamageMultiplier(CCharEntity* PChar, CItemWeapon* PWeapon, uint32
 ************************************************************************/
 void TryAbsorbMPfromPhysicalAttack(CBattleEntity* battleEntity, uint32 damage)
 {
+	PROFILE_FUNC();
 	if (battleEntity->objtype != TYPE_PC)
 	{
 		return;
@@ -235,6 +241,7 @@ void TryAbsorbMPfromPhysicalAttack(CBattleEntity* battleEntity, uint32 damage)
 ************************************************************************/
 bool TryAbsorbHPfromPhysicalAttack(CBattleEntity* battleEntity, uint32 damage)
 {
+	PROFILE_FUNC();
 	if (battleEntity->objtype != TYPE_PC)
 	{
 		return false;

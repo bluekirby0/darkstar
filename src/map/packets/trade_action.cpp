@@ -35,6 +35,7 @@
 
 CTradeActionPacket::CTradeActionPacket(CCharEntity* PChar, uint32 action) 
 {
+	PROFILE_FUNC();
 	this->type = 0x22;
 	this->size = 0x08;
 	

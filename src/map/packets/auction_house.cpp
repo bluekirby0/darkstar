@@ -36,6 +36,7 @@ bool IsAuctionOpen = true;  // торговля на аукционе разре
 
 CAuctionHousePacket::CAuctionHousePacket(uint8 action)
 {
+	PROFILE_FUNC();
 	this->type = 0x4C;
 	this->size = 0x1E;
 
@@ -51,6 +52,7 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action)
 
 CAuctionHousePacket::CAuctionHousePacket(uint8 action, CItem* PItem, uint8 quantity)
 {
+	PROFILE_FUNC();
     this->type = 0x4C;
     this->size = 0x1E;
 
@@ -70,6 +72,7 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action, CItem* PItem, uint8 quant
 //e.g. client history, client probes a slot number which you give the correct itemid+price
 CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 slot, CCharEntity* PChar) 
 {
+	PROFILE_FUNC();
     this->type = 0x4C;
     this->size = 0x1E;
 
@@ -94,6 +97,7 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 slot, CCharEntity* 
 
 CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 message, uint16 itemid, uint32 price)
 {
+	PROFILE_FUNC();
     this->type = 0x4C;
     this->size = 0x1E;
 
@@ -105,6 +109,7 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 message, uint16 ite
 
 CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 message, CCharEntity* PChar, uint8 slot, bool keepItem)
 {
+	PROFILE_FUNC();
     this->type = 0x4C;
     this->size = 0x1E;
 

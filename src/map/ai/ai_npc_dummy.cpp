@@ -35,6 +35,7 @@
 
 CAINpcDummy::CAINpcDummy(CNpcEntity* PNpc)
 {
+	PROFILE_FUNC();
   m_PNpc = PNpc;
   m_PPathFind = new CPathFind(PNpc);
 }
@@ -55,6 +56,7 @@ void CAINpcDummy::CheckCurrentAction(uint32 tick)
 
 void CAINpcDummy::WeatherChange(WEATHER weather, uint8 element)
 {
+	PROFILE_FUNC();
 
 }
 

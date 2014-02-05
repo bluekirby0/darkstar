@@ -28,6 +28,7 @@
 
 CMenuMogPacket::CMenuMogPacket() 
 {
+	PROFILE_FUNC();
 	this->type = 0x2E;
 	this->size = 0x02;
 }

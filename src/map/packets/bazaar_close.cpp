@@ -31,6 +31,7 @@
 
 CBazaarClosePacket::CBazaarClosePacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	this->type = 0x07;	// 0x107
 	this->size = 0x0B;
 

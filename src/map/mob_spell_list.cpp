@@ -29,11 +29,13 @@
 
 CMobSpellList::CMobSpellList()
 {
+	PROFILE_FUNC();
 
 }
 
 void CMobSpellList::AddSpell(uint16 spellId, uint16 minLvl, uint16 maxLvl)
 {
+	PROFILE_FUNC();
   MobSpell_t Mob_Spell = {spellId, minLvl, maxLvl};
 
   m_spellList.push_back(Mob_Spell);
@@ -97,7 +99,8 @@ namespace mobSpellList
     ************************************************************************/
 
     CMobSpellList* GetMobSpellList(uint16 MobSpellListID)
-    {
+	{
+		PROFILE_FUNC();
 	    if (MobSpellListID < MAX_MOBSPELLLIST_ID)
 	    {
 			return PMobSpellList[MobSpellListID];

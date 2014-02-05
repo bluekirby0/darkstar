@@ -26,6 +26,7 @@
 
 CWeaponSkill::CWeaponSkill(uint16 id)
 {
+	PROFILE_FUNC();
 	m_ID = id;
 
 	m_AnimationId = 0;
@@ -43,141 +44,169 @@ CWeaponSkill::CWeaponSkill(uint16 id)
 
 void CWeaponSkill::setID(uint16 id)
 {
+	PROFILE_FUNC();
 	m_ID = id;
 }
 
 void CWeaponSkill::setType(uint8 type)
 {
+	PROFILE_FUNC();
 	m_TypeID = type;
 }
 
 bool CWeaponSkill::isAoE()
 {
+	PROFILE_FUNC();
     return m_AOE == 2;
 }
 
 bool CWeaponSkill::mainOnly()
 {
+	PROFILE_FUNC();
     return m_mainOnly;
 }
 
 void CWeaponSkill::setMainOnly(uint8 main)
 {
+	PROFILE_FUNC();
     m_mainOnly = main;
 }
 
 void CWeaponSkill::setJob(int8* jobs)
 {
+	PROFILE_FUNC();
 	memcpy(&m_Job[1], jobs, 22);
 }
 
 void CWeaponSkill::setSkillLevel(uint16 level)
 {
+	PROFILE_FUNC();
 	m_Skilllevel = level;
 }
 
 const int8* CWeaponSkill::getName()
 {
+	PROFILE_FUNC();
 	return m_name.c_str();
 }
 
 void CWeaponSkill::setElement(uint8 element)
 {
+	PROFILE_FUNC();
     m_Element = element;
 }
 
 void CWeaponSkill::setPrimarySkillchain(uint8 skillchain)
 {
+	PROFILE_FUNC();
 	m_PrimarySkillchain = skillchain;
 }
 
 void CWeaponSkill::setSecondarySkillchain(uint8 skillchain)
 {
+	PROFILE_FUNC();
     m_SecondarySkillchain = skillchain;
 }
 
 void CWeaponSkill::setTertiarySkillchain(uint8 skillchain)
 {
+	PROFILE_FUNC();
     m_TertiarySkillchain = skillchain;
 }
 
 void CWeaponSkill::setName(int8* name)
 {
+	PROFILE_FUNC();
 	m_name.clear();
 	m_name.insert(0,name);
 }
 
 void CWeaponSkill::setAnimationId(int8 id)
 {
+	PROFILE_FUNC();
 	m_AnimationId = id;
 }
 
 void CWeaponSkill::setAoe(uint8 aoe)
 {
+	PROFILE_FUNC();
 	m_AOE = aoe;
 }
 
 void CWeaponSkill::setRange(uint8 range)
 {
+	PROFILE_FUNC();
 	m_Range = range;
 }
 
 uint16 CWeaponSkill::getID()
 {
+	PROFILE_FUNC();
 	return m_ID;
 }
 
 uint8 CWeaponSkill::getType()
 {
+	PROFILE_FUNC();
 	return m_TypeID;
 }
 
 uint8 CWeaponSkill::getJob(JOBTYPE job)
 {
+	PROFILE_FUNC();
 	return m_Job[job];
 }
 
 uint16 CWeaponSkill::getSkillLevel()
 {
+	PROFILE_FUNC();
 	return m_Skilllevel;
 }
 
 uint8 CWeaponSkill::getElement()
 {
+	PROFILE_FUNC();
 	return m_Element;
 }
 
 bool CWeaponSkill::isElemental()
 {
+	PROFILE_FUNC();
     return m_Element != 0;
 }
 
 uint8 CWeaponSkill::getAnimationId()
 {
+	PROFILE_FUNC();
 	return m_AnimationId;
 }
 
 uint8 CWeaponSkill::getAoe()
 {
+	PROFILE_FUNC();
 	return m_AOE;
 }
 
 uint8 CWeaponSkill::getRange()
 {
+	PROFILE_FUNC();
 	return m_Range;
 }
 
 uint8 CWeaponSkill::getPrimarySkillchain()
 {
+	PROFILE_FUNC();
     return m_PrimarySkillchain;
 }
 
 uint8 CWeaponSkill::getSecondarySkillchain()
 {
+	PROFILE_FUNC();
     return m_SecondarySkillchain;
 }
 
 uint8 CWeaponSkill::getTertiarySkillchain()
 {
+	PROFILE_FUNC();
     return m_TertiarySkillchain;
 }

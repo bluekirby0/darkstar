@@ -31,6 +31,7 @@
 
 CZoneVisitedPacket::CZoneVisitedPacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	this->type = 0x08;
 	this->size = 0x1A;
 

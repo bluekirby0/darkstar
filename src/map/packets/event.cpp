@@ -43,6 +43,7 @@ CEventPacket::CEventPacket(
 	uint32 param7,
     int16 textTable)
 {
+	PROFILE_FUNC();
 	this->type = 0x32;
 	this->size = 0x0A;
 

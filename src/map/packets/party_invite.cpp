@@ -32,6 +32,7 @@
 
 CPartyInvitePacket::CPartyInvitePacket(CCharEntity* PChar, CCharEntity* PInviter, INVITETYPE InviteType)
 {
+	PROFILE_FUNC();
 	this->type = 0xDC;
 	this->size = 0x10; 
 

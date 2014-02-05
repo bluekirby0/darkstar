@@ -28,6 +28,7 @@
 CMobSkillState::CMobSkillState(CBattleEntity* PEntity, CTargetFind* PTargetFind)
 : CState(PEntity, PTargetFind)
 {
+	PROFILE_FUNC();
   m_PMob = (CMobEntity*)PEntity;
 
   m_PMobSkill = NULL;
@@ -37,42 +38,50 @@ CMobSkillState::CMobSkillState(CBattleEntity* PEntity, CTargetFind* PTargetFind)
 
 CMobSkill* CMobSkillState::PickSkill(PICKSKILL pickFlags = PICKSKILL_RANDOM)
 {
+	PROFILE_FUNC();
   // pick and return a random skill
   return NULL;
 }
 
 bool CMobSkillState::CanUseSkill(CMobSkill* PMobSkill, CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
   return false;
 }
 
 bool CMobSkillState::CanUseTwoHour(CBattleEntity* PTarget, JOBTYPE job)
 {
+	PROFILE_FUNC();
   return false;
 }
 
 STATESTATUS CMobSkillState::UseSkill(CMobSkill* PMobSkill, CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
   return STATESTATUS_ERROR;
 }
 
 STATESTATUS CMobSkillState::UseTwoHour(CBattleEntity* PTarget, JOBTYPE job)
 {
+	PROFILE_FUNC();
   return STATESTATUS_ERROR;
 }
 
 void CMobSkillState::InterruptSkill()
 {
+	PROFILE_FUNC();
 
 }
 
 void CMobSkillState::FinishSkill()
 {
+	PROFILE_FUNC();
 
 }
 
 STATESTATUS CMobSkillState::Update(uint32 tick)
 {
+	PROFILE_FUNC();
   if(CState::Update(tick) == STATESTATUS_ERROR || !CheckValidTarget(m_PTarget))
   {
     return STATESTATUS_ERROR;
@@ -97,6 +106,7 @@ STATESTATUS CMobSkillState::Update(uint32 tick)
 
 void CMobSkillState::Clear()
 {
+	PROFILE_FUNC();
   CState::Clear();
 
   m_PMobSkill = NULL;
@@ -104,15 +114,18 @@ void CMobSkillState::Clear()
 
 CMobSkill* CMobSkillState::GetSkill()
 {
+	PROFILE_FUNC();
   return m_PMobSkill;
 }
 
 bool CMobSkillState::IsUsing()
 {
+	PROFILE_FUNC();
   return m_PMobSkill != NULL;
 }
 
 bool CMobSkillState::ValidUse()
 {
+	PROFILE_FUNC();
   return true;
 }

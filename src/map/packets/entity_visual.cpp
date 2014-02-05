@@ -30,6 +30,7 @@
 
 CEntityVisualPacket::CEntityVisualPacket(CBaseEntity* PEntity, uint8 param1, uint8 param2, uint8 param3, uint8 param4)
 {
+	PROFILE_FUNC();
 	this->type = 0x39;
 	this->size = 0x0A;
 

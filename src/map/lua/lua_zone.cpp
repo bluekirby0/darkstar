@@ -36,6 +36,7 @@
 
 CLuaZone::CLuaZone(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,-1) )
 	{
 		m_pLuaZone = (CZone*)(lua_touserdata(L,-1));
@@ -53,6 +54,7 @@ CLuaZone::CLuaZone(lua_State *L)
 
 CLuaZone::CLuaZone(CZone* PZone)
 {
+	PROFILE_FUNC();
 	m_pLuaZone = PZone;
 }
 
@@ -65,6 +67,7 @@ CLuaZone::CLuaZone(CZone* PZone)
 
 inline int32 CLuaZone::registerRegion(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pLuaZone != NULL) 
 	{
 		if( !lua_isnil(L,1) && lua_isnumber(L,1) &&
@@ -102,6 +105,7 @@ inline int32 CLuaZone::registerRegion(lua_State *L)
 
 inline int32 CLuaZone::levelRestriction(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pLuaZone != NULL) 
 	{
 		

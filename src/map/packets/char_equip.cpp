@@ -28,6 +28,7 @@
 
 CEquipPacket::CEquipPacket(uint8 EquipSlot, uint8 SlotID) 
 {
+	PROFILE_FUNC();
 	this->type = 0x50;
 	this->size = 0x04;
 

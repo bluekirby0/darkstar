@@ -34,6 +34,7 @@
 
 CBasicPacket::CBasicPacket() 
 {
+	PROFILE_FUNC();
 	this->type = 0;
 	this->size = 0;
 	this->code = 0;
@@ -50,15 +51,18 @@ CBasicPacket::CBasicPacket()
 
 uint8 CBasicPacket::getSize() 
 {
+	PROFILE_FUNC();
 	return (this->size & 0xFE);
 }
 
 uint8 CBasicPacket::getType() 
 {
+	PROFILE_FUNC();
 	return this->type;
 }
 
 void CBasicPacket::setCode(uint16 code)
 {
+	PROFILE_FUNC();
 	this->code = code;
 }

@@ -30,6 +30,7 @@
 
 CCharHealthPacket::CCharHealthPacket(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	this->type = 0xDF;
 	this->size = 0x10;
 

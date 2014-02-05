@@ -35,6 +35,7 @@
 
 CPetSyncPacket::CPetSyncPacket(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	this->type = 0x67;
 	this->size = 0x12;
 

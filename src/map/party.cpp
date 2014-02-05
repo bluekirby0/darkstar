@@ -54,6 +54,7 @@
 
 CParty::CParty(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PEntity == NULL);
 	DSP_DEBUG_BREAK_IF(PEntity->PParty != NULL);
 
@@ -79,6 +80,7 @@ CParty::CParty(CBattleEntity* PEntity)
 
 void CParty::DisbandParty()
 {
+	PROFILE_FUNC();
 	DisableSync();
 	SetQuaterMaster(NULL);
 
@@ -130,6 +132,7 @@ void CParty::DisbandParty()
 
 void CParty::AssignPartyRole(int8* MemberName, uint8 role)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF (m_PartyType != PARTY_PCS);
 
 	for (uint32 i = 0; i < members.size(); ++i)
@@ -161,6 +164,7 @@ void CParty::AssignPartyRole(int8* MemberName, uint8 role)
 
 uint8 CParty::MemberCount(uint8 ZoneID)
 {
+	PROFILE_FUNC();
 	uint8 count = 0;
 
 	for (uint32 i = 0; i < members.size(); ++i)
@@ -181,6 +185,7 @@ uint8 CParty::MemberCount(uint8 ZoneID)
 
 void CParty::RemoveMemberByName(int8* MemberName)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PartyType != PARTY_PCS);
 
 	for (uint32 i = 0; i < members.size(); ++i)
@@ -202,6 +207,7 @@ void CParty::RemoveMemberByName(int8* MemberName)
 
 void CParty::RemoveMember(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PEntity == NULL);
 	DSP_DEBUG_BREAK_IF(PEntity->PParty != this);
 
@@ -284,6 +290,7 @@ void CParty::RemoveMember(CBattleEntity* PEntity)
 
 void CParty::RemovePartyLeader(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(members.empty());
 	DSP_DEBUG_BREAK_IF(m_PLeader != PEntity);
     DSP_DEBUG_BREAK_IF(PEntity->objtype != TYPE_PC);
@@ -314,6 +321,7 @@ void CParty::RemovePartyLeader(CBattleEntity* PEntity)
 
 void CParty::AddMember(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PEntity == NULL);
 	DSP_DEBUG_BREAK_IF(PEntity->PParty != NULL);
 
@@ -371,6 +379,7 @@ void CParty::AddMember(CBattleEntity* PEntity)
 
 uint32 CParty::GetPartyID()
 {
+	PROFILE_FUNC();
 	return m_PartyID;
 }
 
@@ -382,6 +391,7 @@ uint32 CParty::GetPartyID()
 
 CBattleEntity* CParty::GetLeader()
 {
+	PROFILE_FUNC();
 	return m_PLeader;
 }
 
@@ -393,6 +403,7 @@ CBattleEntity* CParty::GetLeader()
 
 CBattleEntity* CParty::GetSyncTarget()
 {
+	PROFILE_FUNC();
 	return m_PSyncTarget;
 }
 
@@ -404,6 +415,7 @@ CBattleEntity* CParty::GetSyncTarget()
 
 CBattleEntity* CParty::GetQuaterMaster()
 {
+	PROFILE_FUNC();
 	return m_PQuaterMaster;
 }
 
@@ -417,6 +429,7 @@ CBattleEntity* CParty::GetQuaterMaster()
 
 uint16 CParty::GetMemberFlags(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PEntity == NULL);
 	DSP_DEBUG_BREAK_IF(PEntity->PParty != this);
 
@@ -451,6 +464,7 @@ uint16 CParty::GetMemberFlags(CBattleEntity* PEntity)
 
 void CParty::ReloadParty()
 {
+	PROFILE_FUNC();
 
 	//alliance
 	if (this->m_PAlliance != NULL)
@@ -501,6 +515,7 @@ void CParty::ReloadParty()
 
 void CParty::ReloadPartyMembers(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 
 	if(PChar->PParty != NULL)
 	{
@@ -540,6 +555,7 @@ void CParty::ReloadPartyMembers(CCharEntity* PChar)
 
 void CParty::ReloadTreasurePool(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PChar == NULL);
 
 	if (PChar->PTreasurePool != NULL && PChar->PTreasurePool->GetPoolType() == TREASUREPOOL_ZONE){
@@ -606,6 +622,7 @@ void CParty::ReloadTreasurePool(CCharEntity* PChar)
 
 void CParty::SetLeader(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PEntity == NULL);
 	DSP_DEBUG_BREAK_IF(PEntity->PParty != this);
 
@@ -626,6 +643,7 @@ void CParty::SetLeader(CBattleEntity* PEntity)
 
 void CParty::SetSyncTarget(CBattleEntity* PEntity, uint16 message)
 {
+	PROFILE_FUNC();
     if (map_config.level_sync_enable)
     {
         if (PEntity && PEntity->objtype == TYPE_PC)
@@ -711,6 +729,7 @@ void CParty::SetSyncTarget(CBattleEntity* PEntity, uint16 message)
 
 void CParty::SetQuaterMaster(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
 	m_PQuaterMaster = PEntity;
 }
 
@@ -724,6 +743,7 @@ void CParty::SetQuaterMaster(CBattleEntity* PEntity)
 
 void CParty::PushPacket(CCharEntity* PPartyMember, uint8 ZoneID, CBasicPacket* packet)
 {
+	PROFILE_FUNC();
 	for (uint32 i = 0; i < members.size(); ++i)
 	{
 		if (members.at(i) == NULL || members.at(i)->objtype != TYPE_PC)
@@ -748,12 +768,14 @@ void CParty::PushPacket(CCharEntity* PPartyMember, uint8 ZoneID, CBasicPacket* p
 
 void CParty::DisableSync()
 {
+	PROFILE_FUNC();
     m_PSyncTarget = NULL;
     ReloadParty();
 }
 
 void CParty::RefreshSync()
 {
+	PROFILE_FUNC();
     CCharEntity* sync = (CCharEntity*)m_PSyncTarget;
     uint8 syncLevel = sync->jobs.job[sync->GetMJob()];
     if (syncLevel < 10)

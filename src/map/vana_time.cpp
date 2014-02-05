@@ -41,6 +41,7 @@ CVanaTime* CVanaTime::_instance = NULL;
 
 CVanaTime::CVanaTime()
 {
+	PROFILE_FUNC();
 	setCustomOffset(0);
 }
 
@@ -55,46 +56,55 @@ CVanaTime* CVanaTime::getInstance()
 
 uint32 CVanaTime::getDate()
 {
+	PROFILE_FUNC();
 	return m_vanaDate;
 }
 
 uint32 CVanaTime::getYear()
 {
+	PROFILE_FUNC();
 	return m_vYear;
 }
 
 uint32 CVanaTime::getMonth()
 {
+	PROFILE_FUNC();
 	return m_vMon;
 }
 
 uint32 CVanaTime::getDayOfTheMonth()
 {
+	PROFILE_FUNC();
 	return m_vDate;
 }
 
 uint32 CVanaTime::getHour()
 {
+	PROFILE_FUNC();
 	return m_vHour;
 }
 
 uint32 CVanaTime::getMinute()
 {
+	PROFILE_FUNC();
 	return m_vMin;
 }
 
 uint32 CVanaTime::getWeekday()
 {
+	PROFILE_FUNC();
 	return m_vDay;
 }
 
 uint32 CVanaTime::getSysTime()
 {
+	PROFILE_FUNC();
 	return (uint32)(time(NULL) + m_customOffset * 2.4f);
 }
 
 uint32 CVanaTime::getSysHour()
 {
+	PROFILE_FUNC();
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
 
@@ -103,6 +113,7 @@ uint32 CVanaTime::getSysHour()
 
 uint32 CVanaTime::getSysMinute()
 {
+	PROFILE_FUNC();
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
 
@@ -111,6 +122,7 @@ uint32 CVanaTime::getSysMinute()
 
 uint32 CVanaTime::getSysSecond()
 {
+	PROFILE_FUNC();
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
 
@@ -119,6 +131,7 @@ uint32 CVanaTime::getSysSecond()
 
 uint32 CVanaTime::getSysWeekDay()
 {
+	PROFILE_FUNC();
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
 
@@ -127,6 +140,7 @@ uint32 CVanaTime::getSysWeekDay()
 
 uint32 CVanaTime::getSysYearDay()
 {
+	PROFILE_FUNC();
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
 
@@ -137,11 +151,13 @@ uint32 CVanaTime::getSysYearDay()
 
 uint32 CVanaTime::getVanaTime()
 {
+	PROFILE_FUNC();
     return getSysTime() - 1009810800;
 }
 
 int32 CVanaTime::getCustomOffset()
 {
+	PROFILE_FUNC();
 	return m_customOffset;
 }
 
@@ -162,11 +178,13 @@ void CVanaTime::setCustomOffset(int32 offset)
 
 TIMETYPE CVanaTime::GetCurrentTOTD()
 {
+	PROFILE_FUNC();
 	return m_TimeType;
 }
 
 uint32 CVanaTime::getMoonPhase()
 {
+	PROFILE_FUNC();
 	int32  phase = 0;
 	uint32 rawtime = this->getSysTime();
 
@@ -184,6 +202,7 @@ uint32 CVanaTime::getMoonPhase()
 
 uint8 CVanaTime::getMoonDirection()
 {
+	PROFILE_FUNC();
 	int32  phase = 0;
 	uint32 rawtime = this->getSysTime();
 
@@ -201,6 +220,7 @@ uint8 CVanaTime::getMoonDirection()
 
 TIMETYPE CVanaTime::SyncTime()
 {
+	PROFILE_FUNC();
 	timeb SysTime;
 	ftime(&SysTime);
 

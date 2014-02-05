@@ -41,6 +41,7 @@
 
 uint16 GetMogHouseID(CCharEntity * PChar)
 {
+	PROFILE_FUNC();
 	if ( (PChar->loc.prevzone >= 48) && (PChar->loc.prevzone <= 50) )
 	{
 		return 0x00D6;
@@ -72,6 +73,7 @@ uint16 GetMogHouseID(CCharEntity * PChar)
 
 uint8 GetMosHouseFlag(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     if ((PChar->loc.prevzone >= 48) && (PChar->loc.prevzone <= 50))
 	{
 		if (PChar->profile.mhflag & 0x10) return 5;
@@ -103,6 +105,7 @@ uint8 GetMosHouseFlag(CCharEntity* PChar)
 
 CZoneInPacket::CZoneInPacket(CCharEntity * PChar, int16 csid) 
 {
+	PROFILE_FUNC();
 	this->type = 0x0A;
 	this->size = 0x82;
 

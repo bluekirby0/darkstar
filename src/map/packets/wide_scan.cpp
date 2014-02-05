@@ -31,6 +31,7 @@
 
 CWideScanPacket::CWideScanPacket(WIDESCAN_STATUS status) 
 {
+	PROFILE_FUNC();
 	this->type = 0xF6;
 	this->size = 0x04;
 
@@ -39,6 +40,7 @@ CWideScanPacket::CWideScanPacket(WIDESCAN_STATUS status)
 
 CWideScanPacket::CWideScanPacket(CCharEntity * PChar, CBaseEntity * PEntity) 
 {
+	PROFILE_FUNC();
 	this->type = 0xF4;
 	this->size = 0x0E;
 

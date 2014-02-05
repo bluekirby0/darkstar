@@ -72,6 +72,7 @@ void LoadFishingMessages()
 
 uint16 GetMessageOffset(uint8 ZoneID)
 {
+	PROFILE_FUNC();
 	return MessageOffset[ZoneID];
 }
 
@@ -83,6 +84,7 @@ uint16 GetMessageOffset(uint8 ZoneID)
 
 void StartFishing(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	if (PChar->animation != ANIMATION_NONE)
 	{
 		PChar->pushPacket(new CMessageSystemPacket(0,0,142));
@@ -142,6 +144,7 @@ void StartFishing(CCharEntity* PChar)
 
 bool CheckFisherLuck(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	if (PChar->UContainer->GetType() != UCONTAINER_EMPTY)
 	{
 		ShowDebug(CL_CYAN"Player cannot fish! UContainer is not empty\n" CL_RESET);
@@ -268,7 +271,8 @@ bool CheckFisherLuck(CCharEntity* PChar)
 ************************************************************************/
 
 bool LureLoss(CCharEntity* PChar, bool RemoveFly)
-{	
+{
+	PROFILE_FUNC();
 	CItemWeapon* PLure = (CItemWeapon*)PChar->getStorage(LOC_INVENTORY)->GetItem(PChar->equip[SLOT_AMMO]);
 
 	DSP_DEBUG_BREAK_IF(PLure == NULL);
@@ -298,6 +302,7 @@ bool LureLoss(CCharEntity* PChar, bool RemoveFly)
 
 void RodBreaks(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	uint8  SlotID = PChar->equip[SLOT_RANGED];
 	CItem* PRod   = PChar->getStorage(LOC_INVENTORY)->GetItem(SlotID);
 
@@ -338,6 +343,7 @@ void RodBreaks(CCharEntity* PChar)
 
 void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina)
 {
+	PROFILE_FUNC();
 	uint16 MessageOffset = GetMessageOffset(PChar->getZone());
 
 	switch (action) 

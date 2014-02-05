@@ -27,6 +27,7 @@
 
 CChocoboMusicPacket::CChocoboMusicPacket()
 {
+	PROFILE_FUNC();
 	this->type = 0x5F;
 	this->size = 0x04;
 

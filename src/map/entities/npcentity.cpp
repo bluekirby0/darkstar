@@ -40,6 +40,7 @@
 
 int32 close_door(uint32 tick, CTaskMgr::CTask* PTask)
 {
+	PROFILE_FUNC();
 	//DSP_DEBUG_BREAK_IF(PTask->m_data == NULL)
     //DSP_DEBUG_BREAK_IF(((CBaseEntity*)PTask->m_data)->objtype != TYPE_NPC);
 
@@ -52,6 +53,7 @@ int32 close_door(uint32 tick, CTaskMgr::CTask* PTask)
 
 int32 open_door(uint32 tick, CTaskMgr::CTask* PTask)
 {
+	PROFILE_FUNC();
 	CNpcEntity* PNpc = (CNpcEntity*)PTask->m_data;
 
 	PNpc->animation = ANIMATION_OPEN_DOOR;
@@ -67,6 +69,7 @@ int32 open_door(uint32 tick, CTaskMgr::CTask* PTask)
 
 int32 reappear_npc(uint32 tick, CTaskMgr::CTask* PTask)
 {
+	PROFILE_FUNC();
 	CNpcEntity* PNpc = (CNpcEntity*)PTask->m_data;
 
 	PNpc->status = STATUS_NORMAL;
@@ -82,11 +85,13 @@ int32 reappear_npc(uint32 tick, CTaskMgr::CTask* PTask)
 
 CNpcEntity::CNpcEntity() 
 {
+	PROFILE_FUNC();
 	objtype = TYPE_NPC;
 	look.face = 0x32;
 }
 
 CNpcEntity::~CNpcEntity()
 {
+	PROFILE_FUNC();
   
 }

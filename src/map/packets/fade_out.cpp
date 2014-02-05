@@ -30,6 +30,7 @@
 
 CFadeOutPacket::CFadeOutPacket(CBaseEntity * PEntity)
 {
+	PROFILE_FUNC();
 	this->type = 0x38;
 	this->size = 0x0A;
 

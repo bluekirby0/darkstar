@@ -32,6 +32,7 @@
 
 CLuaAbility::CLuaAbility(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,-1) )
 	{
 		m_PLuaAbility = (CAbility*)(lua_touserdata(L,-1));
@@ -49,6 +50,7 @@ CLuaAbility::CLuaAbility(lua_State *L)
 
 CLuaAbility::CLuaAbility(CAbility* PAbility)
 {
+	PROFILE_FUNC();
 	m_PLuaAbility = PAbility;
 }
 
@@ -60,6 +62,7 @@ CLuaAbility::CLuaAbility(CAbility* PAbility)
 
 inline int32 CLuaAbility::setMsg(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaAbility == NULL); 
     DSP_DEBUG_BREAK_IF(lua_isnil(L,-1) || !lua_isnumber(L,-1));
 
@@ -75,6 +78,7 @@ inline int32 CLuaAbility::setMsg(lua_State *L)
 
 inline int32 CLuaAbility::setAnimation(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaAbility == NULL); 
     DSP_DEBUG_BREAK_IF(lua_isnil(L,-1) || !lua_isnumber(L,-1));
 
@@ -84,6 +88,7 @@ inline int32 CLuaAbility::setAnimation(lua_State *L)
 
 inline int32 CLuaAbility::getID(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaAbility == NULL); 
 
 	lua_pushinteger(L, m_PLuaAbility->getID());

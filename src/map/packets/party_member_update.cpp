@@ -32,7 +32,8 @@
 #include "../party.h"
 
 CPartyMemberUpdatePacket::CPartyMemberUpdatePacket(CCharEntity* PChar, uint8 MemberNumber, uint8 ZoneID) 
-{	
+{
+	PROFILE_FUNC();
 
 		this->type = 0xDD;
 		this->size = 0x20;	

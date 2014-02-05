@@ -35,6 +35,7 @@
 
 CCheckPacket::CCheckPacket(CCharEntity* PChar, CCharEntity* PTarget) 
 {
+	PROFILE_FUNC();
 	this->type = 0xC9;
 	this->size = 0x06;
 

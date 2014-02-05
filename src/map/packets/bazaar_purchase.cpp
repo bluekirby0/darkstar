@@ -37,6 +37,7 @@
 
 CBazaarPurchasePacket::CBazaarPurchasePacket(CCharEntity* PChar, bool result)
 {
+	PROFILE_FUNC();
 	this->type = 0x06;  // 0x106
 	this->size = 0x0D;
 

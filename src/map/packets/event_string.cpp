@@ -45,6 +45,7 @@ CEventStringPacket::CEventStringPacket(
 	uint32 param6,
 	uint32 param7)
 {
+	PROFILE_FUNC();
 	this->type = 0x33;
 	this->size = 0x38;
 

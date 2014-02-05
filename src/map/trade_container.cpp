@@ -29,11 +29,13 @@
 
 CTradeContainer::CTradeContainer()
 {
+	PROFILE_FUNC();
 	Clean();
 }
 
 CItem* CTradeContainer::getItem(uint8 slotID)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		return m_PItem[slotID];
@@ -43,6 +45,7 @@ CItem* CTradeContainer::getItem(uint8 slotID)
 
 uint16 CTradeContainer::getItemID(uint8 slotID)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		return m_itemID[slotID];
@@ -52,6 +55,7 @@ uint16 CTradeContainer::getItemID(uint8 slotID)
 
 uint8 CTradeContainer::getInvSlotID(uint8 slotID)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		return m_slotID[slotID];
@@ -61,6 +65,7 @@ uint8 CTradeContainer::getInvSlotID(uint8 slotID)
 
 uint32 CTradeContainer::getQuantity(uint8 slotID)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		return m_quantity[slotID];
@@ -70,6 +75,7 @@ uint32 CTradeContainer::getQuantity(uint8 slotID)
 
 bool CTradeContainer::getConfirmedStatus(uint8 slotID)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		return m_confirmed[slotID];
@@ -79,6 +85,7 @@ bool CTradeContainer::getConfirmedStatus(uint8 slotID)
 
 uint32 CTradeContainer::getItemQuantity(uint16 itemID)
 {
+	PROFILE_FUNC();
 	uint32 quantity = 0;
 	for(uint8 slotID = 0; slotID < CONTAINER_SIZE; ++slotID) 
 	{
@@ -92,6 +99,7 @@ uint32 CTradeContainer::getItemQuantity(uint16 itemID)
 
 uint32 CTradeContainer::getTotalQuantity() 
 {
+	PROFILE_FUNC();
 	uint32 quantity = 0;
 	for(uint8 slotID = 0; slotID < CONTAINER_SIZE; ++slotID) 
 	{
@@ -102,6 +110,7 @@ uint32 CTradeContainer::getTotalQuantity()
 
 uint8 CTradeContainer::getSlotCount() 
 {
+	PROFILE_FUNC();
 	uint8 count = 0;
 	for(uint8 slotID = 0; slotID < CONTAINER_SIZE; ++slotID) 
 	{
@@ -115,6 +124,7 @@ uint8 CTradeContainer::getSlotCount()
 
 void CTradeContainer::setItem(uint8 slotID, CItem* item)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		m_PItem[slotID] = item;
@@ -124,6 +134,7 @@ void CTradeContainer::setItem(uint8 slotID, CItem* item)
 
 void CTradeContainer::setItemID(uint8 slotID, uint16 itemID)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		m_itemID[slotID] = itemID;
@@ -133,6 +144,7 @@ void CTradeContainer::setItemID(uint8 slotID, uint16 itemID)
 
 void CTradeContainer::setInvSlotID(uint8 slotID, uint8 invSlotID)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		m_slotID[slotID] = invSlotID;
@@ -142,6 +154,7 @@ void CTradeContainer::setInvSlotID(uint8 slotID, uint8 invSlotID)
 
 void CTradeContainer::setQuantity(uint8 slotID, uint32 quantity)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		m_quantity[slotID] = quantity;
@@ -151,6 +164,7 @@ void CTradeContainer::setQuantity(uint8 slotID, uint32 quantity)
 
 void CTradeContainer::setConfirmedStatus(uint8 slotID, bool confirmed)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		m_confirmed[slotID] = true;
@@ -159,6 +173,7 @@ void CTradeContainer::setConfirmedStatus(uint8 slotID, bool confirmed)
 
 void CTradeContainer::setItem(uint8 slotID, uint16 itemID, uint8 invSlotID, uint32 quantity, CItem* item)
 {
+	PROFILE_FUNC();
 	if (slotID < CONTAINER_SIZE)
 	{
 		m_ItemsCount += 1;
@@ -173,26 +188,31 @@ void CTradeContainer::setItem(uint8 slotID, uint16 itemID, uint8 invSlotID, uint
 
 uint8 CTradeContainer::getItemsCount()
 {
+	PROFILE_FUNC();
 	return m_ItemsCount;
 }
 
 void CTradeContainer::setItemsCount(uint8 count)
 {
+	PROFILE_FUNC();
 	m_ItemsCount = count;
 }
 
 uint8 CTradeContainer::getType()
 {
+	PROFILE_FUNC();
 	return m_type;
 }
 
 void CTradeContainer::setType(uint8 type)
 {
+	PROFILE_FUNC();
 	m_type = type;
 }
 
 void CTradeContainer::Clean()
 {
+	PROFILE_FUNC();
 	m_type = 0;
 	m_ItemsCount = 0;
 

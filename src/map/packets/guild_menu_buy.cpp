@@ -34,6 +34,7 @@
 
 CGuildMenuBuyPacket::CGuildMenuBuyPacket(CCharEntity* PChar, CItemContainer* PGuild)
 {
+	PROFILE_FUNC();
 	this->type = 0x83;
 	this->size = 0x7C;
 

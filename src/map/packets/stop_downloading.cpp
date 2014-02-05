@@ -30,6 +30,7 @@
 
 CStopDownloadingPacket::CStopDownloadingPacket(CCharEntity* PChar, std::vector< std::pair< uint32, string_t > > blacklist)
 {
+	PROFILE_FUNC();
 	this->type = 0x41;
 	this->size = 0x7C;
 

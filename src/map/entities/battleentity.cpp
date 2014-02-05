@@ -29,6 +29,7 @@
 
 CBattleEntity::CBattleEntity()
 {
+	PROFILE_FUNC();
     m_OwnerID.clean();
 	m_ModelSize	= 3; // неправильная инициализация, она приведет к тому, что заклинания станут читаться на 3 дальше
 	m_mlvl = 0;
@@ -71,16 +72,19 @@ CBattleEntity::CBattleEntity()
 
 CBattleEntity::~CBattleEntity()
 {
+	PROFILE_FUNC();
 	delete StatusEffectContainer;
 }
 
 bool CBattleEntity::isDead()
 {
+	PROFILE_FUNC();
 	return (health.hp <= 0 || status == STATUS_DISAPPEAR);
 }
 
 bool CBattleEntity::isInDynamis()
 {
+	PROFILE_FUNC();
 	if(loc.zone != NULL){
 		return loc.zone->GetType() == ZONETYPE_DYNAMIS;
 	}
@@ -90,6 +94,7 @@ bool CBattleEntity::isInDynamis()
 // return true if the mob has immunity
 bool CBattleEntity::hasImmunity(uint32 imID)
 {
+	PROFILE_FUNC();
 	if(objtype == TYPE_MOB || objtype == TYPE_PET){
 		IMMUNITY mobImmunity = (IMMUNITY)imID;
 		return (m_Immunity & mobImmunity);
@@ -99,6 +104,7 @@ bool CBattleEntity::hasImmunity(uint32 imID)
 
 bool CBattleEntity::isAsleep()
 {
+	PROFILE_FUNC();
 	return (PBattleAI->GetCurrentAction() == ACTION_SLEEP);
 }
 
@@ -110,6 +116,7 @@ bool CBattleEntity::isAsleep()
 
 void CBattleEntity::UpdateHealth()
 {
+	PROFILE_FUNC();
     int32 dif = (getMod(MOD_CONVMPTOHP) - getMod(MOD_CONVHPTOMP));
 
     health.modmp = ((health.maxmp + getMod(MOD_MP)) * (100 + getMod(MOD_MPP)) / 100) + dsp_min((health.maxmp * m_modStat[MOD_FOOD_MPP] / 100), m_modStat[MOD_FOOD_MP_CAP]);
@@ -133,11 +140,13 @@ void CBattleEntity::UpdateHealth()
 
 uint8 CBattleEntity::GetHPP()
 {
+	PROFILE_FUNC();
 	return (uint8)ceil(((float)health.hp / (float)GetMaxHP()) * 100);
 }
 
 int32 CBattleEntity::GetMaxHP()
 {
+	PROFILE_FUNC();
     return health.modhp;
 }
 
@@ -149,11 +158,13 @@ int32 CBattleEntity::GetMaxHP()
 
 uint8 CBattleEntity::GetMPP()
 {
+	PROFILE_FUNC();
 	return (uint8)ceil(((float)health.mp / (float)GetMaxMP()) * 100);
 }
 
 int32 CBattleEntity::GetMaxMP()
 {
+	PROFILE_FUNC();
     return health.modmp;
 }
 
@@ -165,11 +176,13 @@ int32 CBattleEntity::GetMaxMP()
 
 uint8 CBattleEntity::GetSpeed()
 {
+	PROFILE_FUNC();
     return (animation == ANIMATION_CHOCOBO ? 40 + map_config.speed_mod : dsp_cap(speed * (100 + getMod(MOD_MOVE)) / 100, UINT8_MIN, UINT8_MAX));
 }
 
 bool CBattleEntity::Rest(float rate)
 {
+	PROFILE_FUNC();
 	if(health.hp != health.maxhp || health.mp != health.maxmp){
         // recover 20% HP
         uint32 recoverHP = (float)health.maxhp*rate;
@@ -187,6 +200,7 @@ bool CBattleEntity::Rest(float rate)
 
 int16 CBattleEntity::GetWeaponDelay(bool tp)
 {
+	PROFILE_FUNC();
 	if (StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS) && !tp)
 	{
 		return 1700;
@@ -229,6 +243,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
 
 int16 CBattleEntity::GetRangedWeaponDelay(bool tp)
 {
+	PROFILE_FUNC();
 	CItemWeapon* PRange = (CItemWeapon*)m_Weapons[SLOT_RANGED];
 	CItemWeapon* PAmmo = (CItemWeapon*)m_Weapons[SLOT_AMMO];
 
@@ -262,6 +277,7 @@ int16 CBattleEntity::GetRangedWeaponDelay(bool tp)
 
 int16 CBattleEntity::GetAmmoDelay(bool tp)
 {
+	PROFILE_FUNC();
 	CItemWeapon* PAmmo = (CItemWeapon*)m_Weapons[SLOT_AMMO];
 
 	int delay = 240;
@@ -280,6 +296,7 @@ int16 CBattleEntity::GetAmmoDelay(bool tp)
 
 uint16 CBattleEntity::GetMainWeaponDmg()
 {
+	PROFILE_FUNC();
 	if( m_Weapons[SLOT_MAIN] )
 	{
         if ((m_Weapons[SLOT_MAIN]->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
@@ -300,6 +317,7 @@ uint16 CBattleEntity::GetMainWeaponDmg()
 
 uint16 CBattleEntity::GetSubWeaponDmg()
 {
+	PROFILE_FUNC();
 	if( m_Weapons[SLOT_SUB] )
 	{
         if ((m_Weapons[SLOT_SUB]->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
@@ -320,6 +338,7 @@ uint16 CBattleEntity::GetSubWeaponDmg()
 
 uint16 CBattleEntity::GetRangedWeaponDmg()
 {
+	PROFILE_FUNC();
 	uint8 dmg = 0;
 	if( m_Weapons[SLOT_RANGED] )
 	{
@@ -352,6 +371,7 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
 
 uint16 CBattleEntity::GetMainWeaponRank()
 {
+	PROFILE_FUNC();
 	if( m_Weapons[SLOT_MAIN] )
 	{
 		return (m_Weapons[SLOT_MAIN]->getDamage() + getMod(MOD_MAIN_DMG_RANK)) / 9;
@@ -363,6 +383,7 @@ uint16 CBattleEntity::GetMainWeaponRank()
 
 uint16 CBattleEntity::GetSubWeaponRank()
 {
+	PROFILE_FUNC();
 	if( m_Weapons[SLOT_SUB] )
 	{
 		return (m_Weapons[SLOT_SUB]->getDamage() + getMod(MOD_SUB_DMG_RANK)) / 9;
@@ -374,6 +395,7 @@ uint16 CBattleEntity::GetSubWeaponRank()
 
 uint16 CBattleEntity::GetRangedWeaponRank()
 {
+	PROFILE_FUNC();
 	if( m_Weapons[SLOT_RANGED] )
 	{
 		return (m_Weapons[SLOT_RANGED]->getDamage() + getMod(MOD_RANGED_DMG_RANK)) / 9;
@@ -391,6 +413,7 @@ uint16 CBattleEntity::GetRangedWeaponRank()
 
 uint16 CBattleEntity::addTP(float tp)
 {
+	PROFILE_FUNC();
 	float TPMulti = 1.0;
 
 	if(objtype == TYPE_PC)
@@ -420,6 +443,7 @@ uint16 CBattleEntity::addTP(float tp)
 
 int32 CBattleEntity::addHP(int32 hp)
 {
+	PROFILE_FUNC();
 	if (status == STATUS_NORMAL) status = STATUS_UPDATE;
 
 	if (health.hp == 0 && hp < 0){
@@ -457,6 +481,7 @@ int32 CBattleEntity::addHP(int32 hp)
 
 int32 CBattleEntity::addMP(int32 mp)
 {
+	PROFILE_FUNC();
 	int32 cap = dsp_cap(health.mp + mp, 0, GetMaxMP());
 	mp = health.mp - cap;
 	health.mp = cap;
@@ -471,41 +496,49 @@ int32 CBattleEntity::addMP(int32 mp)
 
 uint16 CBattleEntity::STR()
 {
+	PROFILE_FUNC();
     return dsp_max(0, stats.STR + m_modStat[MOD_STR]);
 }
 
 uint16 CBattleEntity::DEX()
 {
+	PROFILE_FUNC();
     return dsp_max(0, stats.DEX + m_modStat[MOD_DEX]);
 }
 
 uint16 CBattleEntity::VIT()
 {
+	PROFILE_FUNC();
     return dsp_max(0, stats.VIT + m_modStat[MOD_VIT]);
 }
 
 uint16 CBattleEntity::AGI()
 {
+	PROFILE_FUNC();
     return dsp_max(0, stats.AGI + m_modStat[MOD_AGI]);
 }
 
 uint16 CBattleEntity::INT()
 {
+	PROFILE_FUNC();
     return dsp_max(0, stats.INT + m_modStat[MOD_INT]);
 }
 
 uint16 CBattleEntity::MND()
 {
+	PROFILE_FUNC();
     return dsp_max(0, stats.MND + m_modStat[MOD_MND]);
 }
 
 uint16 CBattleEntity::CHR()
 {
+	PROFILE_FUNC();
     return dsp_max(0, stats.CHR + m_modStat[MOD_CHR]);
 }
 
 uint16 CBattleEntity::ATT()
 {
+	PROFILE_FUNC();
     int32 ATT = 8 + m_modStat[MOD_ATT];
 	if (m_Weapons[SLOT_MAIN]->isTwoHanded())
 	{
@@ -522,6 +555,7 @@ uint16 CBattleEntity::ATT()
 
 uint16 CBattleEntity::RATT(uint8 skill)
 {
+	PROFILE_FUNC();
     int32 ATT = 8 + GetSkill(skill) + m_modStat[MOD_RATT] + battleutils::GetRangedAttackBonuses(this) + STR() / 2;
 
     return ATT + (ATT * m_modStat[MOD_RATTP] / 100) +
@@ -530,6 +564,7 @@ uint16 CBattleEntity::RATT(uint8 skill)
 
 uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 {
+	PROFILE_FUNC();
 	if (this->objtype & TYPE_PC){
 		uint8 skill = 0;
 		if (attackNumber == 0)
@@ -574,6 +609,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 
 uint16 CBattleEntity::DEF()
 {
+	PROFILE_FUNC();
 	if(this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE,0)){
 		return VIT()/2 + 1;
 	}
@@ -585,6 +621,7 @@ uint16 CBattleEntity::DEF()
 
 uint16  CBattleEntity::EVA()
 {
+	PROFILE_FUNC();
     return dsp_max(0, (m_modStat[MOD_EVA] * (100 + m_modStat[MOD_EVAP])) / 100 + AGI() / 2);
 }
 
@@ -596,26 +633,31 @@ uint16  CBattleEntity::EVA()
 
 JOBTYPE CBattleEntity::GetMJob()
 {
+	PROFILE_FUNC();
 	return m_mjob;
 }
 
 uint8 CBattleEntity::GetMLevel()
 {
+	PROFILE_FUNC();
 	return m_mlvl;
 }
 
 JOBTYPE CBattleEntity::GetSJob()
 {
+	PROFILE_FUNC();
 	return m_sjob;
 }
 
 uint8 CBattleEntity::GetSLevel()
 {
+	PROFILE_FUNC();
 	return m_slvl;
 }
 
 void CBattleEntity::SetMJob(uint8 mjob)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(mjob == 0 || mjob >= MAX_JOBTYPE);	// выход за пределы доступных профессий
 
 	m_mjob = (JOBTYPE)mjob;
@@ -623,6 +665,7 @@ void CBattleEntity::SetMJob(uint8 mjob)
 
 void CBattleEntity::SetSJob(uint8 sjob)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(sjob >= MAX_JOBTYPE);				// выход за пределы доступных профессий
 
 	m_sjob = (JOBTYPE)sjob;
@@ -630,6 +673,7 @@ void CBattleEntity::SetSJob(uint8 sjob)
 
 void CBattleEntity::SetMLevel(uint8 mlvl)
 {
+	PROFILE_FUNC();
 	m_modStat[MOD_DEF] -= m_mlvl + dsp_cap(m_mlvl-50,0,10);
 	m_mlvl = (mlvl == 0 ? 1 : mlvl);
 	m_modStat[MOD_DEF] += m_mlvl + dsp_cap(m_mlvl-50,0,10);
@@ -637,6 +681,7 @@ void CBattleEntity::SetMLevel(uint8 mlvl)
 
 void CBattleEntity::SetSLevel(uint8 slvl)
 {
+	PROFILE_FUNC();
 	m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
 }
 
@@ -648,6 +693,7 @@ void CBattleEntity::SetSLevel(uint8 slvl)
 
 void CBattleEntity::addModifier(uint16 type, int16 amount)
 {
+	PROFILE_FUNC();
 	m_modStat[(type < MAX_MODIFIER ? type : MOD_NONE)] += amount;
 }
 
@@ -659,6 +705,7 @@ void CBattleEntity::addModifier(uint16 type, int16 amount)
 
 void CBattleEntity::addModifiers(std::vector<CModifier*> *modList)
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < modList->size(); ++i)
 	{
 		m_modStat[modList->at(i)->getModID()] += modList->at(i)->getModAmount();
@@ -667,6 +714,7 @@ void CBattleEntity::addModifiers(std::vector<CModifier*> *modList)
 
 void CBattleEntity::addEquipModifiers(std::vector<CModifier*> *modList, uint8 itemLevel, uint8 slotid)
 {
+	PROFILE_FUNC();
     if (GetMLevel() >= itemLevel)
     {
 	    for (uint16 i = 0; i < modList->size(); ++i)
@@ -753,6 +801,7 @@ void CBattleEntity::addEquipModifiers(std::vector<CModifier*> *modList, uint8 it
 
 void CBattleEntity::setModifier(uint16 type, int16 amount)
 {
+	PROFILE_FUNC();
 	m_modStat[(type < MAX_MODIFIER ? type : MOD_NONE)] = amount;
 }
 
@@ -764,6 +813,7 @@ void CBattleEntity::setModifier(uint16 type, int16 amount)
 
 void CBattleEntity::setModifiers(std::vector<CModifier*> *modList)
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < modList->size(); ++i)
 	{
 		m_modStat[modList->at(i)->getModID()] = modList->at(i)->getModAmount();
@@ -778,16 +828,19 @@ void CBattleEntity::setModifiers(std::vector<CModifier*> *modList)
 
 void CBattleEntity::delModifier(uint16 type, int16 amount)
 {
+	PROFILE_FUNC();
 	m_modStat[(type < MAX_MODIFIER ? type : MOD_NONE)] -= amount;
 }
 
 void CBattleEntity::saveModifiers()
 {
+	PROFILE_FUNC();
 	memcpy(m_modStatSave,m_modStat, sizeof(m_modStat));
 }
 
 void CBattleEntity::restoreModifiers()
 {
+	PROFILE_FUNC();
 	memcpy(m_modStat,m_modStatSave, sizeof(m_modStatSave));
 }
 
@@ -799,6 +852,7 @@ void CBattleEntity::restoreModifiers()
 
 void CBattleEntity::delModifiers(std::vector<CModifier*> *modList)
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < modList->size(); ++i)
 	{
 		m_modStat[modList->at(i)->getModID()] -= modList->at(i)->getModAmount();
@@ -807,6 +861,7 @@ void CBattleEntity::delModifiers(std::vector<CModifier*> *modList)
 
 void CBattleEntity::delEquipModifiers(std::vector<CModifier*> *modList, uint8 itemLevel, uint8 slotid)
 {
+	PROFILE_FUNC();
     if (GetMLevel() >= itemLevel)
     {
 	    for (uint16 i = 0; i < modList->size(); ++i)
@@ -893,6 +948,7 @@ void CBattleEntity::delEquipModifiers(std::vector<CModifier*> *modList, uint8 it
 
 int16 CBattleEntity::getMod(uint16 modID)
 {
+	PROFILE_FUNC();
 	if (modID < MAX_MODIFIER)
 	{
 		return m_modStat[modID];
@@ -908,6 +964,7 @@ int16 CBattleEntity::getMod(uint16 modID)
 
 uint16 CBattleEntity::GetSkill(uint16 SkillID)
 {
+	PROFILE_FUNC();
 	if (SkillID < MAX_SKILLTYPE)
 	{
 		return WorkingSkills.skill[SkillID] & 0x7FFF;

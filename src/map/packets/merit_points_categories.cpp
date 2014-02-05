@@ -66,6 +66,7 @@ struct
 
 CMeritPointsCategoriesPacket::CMeritPointsCategoriesPacket(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     this->type = 0x8C;
 	this->size = 0x80;
 
@@ -88,6 +89,7 @@ CMeritPointsCategoriesPacket::CMeritPointsCategoriesPacket(CCharEntity* PChar)
 
 CMeritPointsCategoriesPacket::CMeritPointsCategoriesPacket(CCharEntity* PChar, MERIT_TYPE merit)
 {
+	PROFILE_FUNC();
     this->type = 0x8C;
 	this->size = 0x08;
 
@@ -104,6 +106,7 @@ CMeritPointsCategoriesPacket::CMeritPointsCategoriesPacket(CCharEntity* PChar, M
 
 void CMeritPointsCategoriesPacket::MeritPointsCategoriesPacket(CCharEntity* PChar, uint8 offset)
 {
+	PROFILE_FUNC();
 
     for (uint8 i = 0; i < MAX_MERITS_IN_PACKET; ++i)
     {

@@ -35,6 +35,7 @@
 
 CCharStatsPacket::CCharStatsPacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	this->type = 0x61;	
 	this->size = 0x2a;	
 	

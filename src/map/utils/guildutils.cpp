@@ -115,6 +115,7 @@ void Initialize()
 
 void UpdateGuildsStock()
 {
+	PROFILE_FUNC();
     for (std::vector<CItemContainer*>::iterator iter = g_PGuildList.begin(); iter != g_PGuildList.end(); iter++)
 	{
 		CItemContainer* PGuild = *iter;
@@ -144,6 +145,7 @@ void UpdateGuildsStock()
 
 CItemContainer* GetGuildShop(uint16 GuildID)
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < g_PGuildList.size(); ++i)
 	{
 		if (g_PGuildList.at(i)->GetID() == GuildID)

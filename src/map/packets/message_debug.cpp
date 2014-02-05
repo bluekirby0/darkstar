@@ -30,6 +30,7 @@
 
 CMessageDebugPacket::CMessageDebugPacket(CBaseEntity* PSender, CBaseEntity* PTarget, int32 param0, int32 param1, uint16 messageID)
 {
+	PROFILE_FUNC();
 	this->type = 0x2d;
 	this->size = 0x0e;
 

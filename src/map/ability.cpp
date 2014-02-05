@@ -26,168 +26,201 @@
 
 CAbility::CAbility(uint16 id)
 {
+	PROFILE_FUNC();
 	m_ID = id;
 }
 
 bool CAbility::isAvatarAbility()
 {
+	PROFILE_FUNC();
   return getID() >= ABILITY_HEALING_RUBY;
 }
 
 bool CAbility::isAoE()
 {
+	PROFILE_FUNC();
   return m_aoe == 1;
 }
 
 bool CAbility::isConal()
 {
+	PROFILE_FUNC();
   // no abilities are conal?
   return false;
 }
 
 void CAbility::resetMsg()
 {
+	PROFILE_FUNC();
   m_message = m_DefaultMessage;
 }
 
 void CAbility::setID(uint16 id)
 {
+	PROFILE_FUNC();
 	m_ID = id;
 }
 
 uint16 CAbility::getID()
 {
+	PROFILE_FUNC();
 	return m_ID;
 }
 
 void CAbility::setJob(JOBTYPE Job)
 {
+	PROFILE_FUNC();
 	m_Job = Job;
 }
 
 void CAbility::setMeritModID(uint16 value)
 {
+	PROFILE_FUNC();
 	m_meritModID = value;
 }
 
 JOBTYPE	CAbility::getJob()
 {
+	PROFILE_FUNC();
 	return m_Job;
 }
 
 void CAbility::setLevel(uint8 level)
 {
+	PROFILE_FUNC();
 	m_level = level;
 }
 
 uint8 CAbility::getLevel()
 {
+	PROFILE_FUNC();
 	return m_level;
 }
 
 void CAbility::setRange(float range)
 {
+	PROFILE_FUNC();
 	m_range = range;
 }
 
 float CAbility::getRange()
 {
+	PROFILE_FUNC();
 	return m_range;
 }
 
 void CAbility::setAOE(uint8 aoe)
 {
+	PROFILE_FUNC();
 	m_aoe = aoe;
 }
 
 uint8 CAbility::getAOE()
 {
+	PROFILE_FUNC();
 	return m_aoe;
 }
 
 void CAbility::setAnimationID(uint8 animationID)
 {
+	PROFILE_FUNC();
 	m_animationID = animationID;
 }
 
 uint8 CAbility::getAnimationID()
 {
+	PROFILE_FUNC();
 	return m_animationID;
 }
 
 void CAbility::setRecastTime(uint16 recastTime)
 {
+	PROFILE_FUNC();
 	m_recastTime =  recastTime;
 }
 
 uint16 CAbility::getRecastTime()
 {
+	PROFILE_FUNC();
 	return m_recastTime;
 }
 
 uint16 CAbility::getMeritModID()
 {
+	PROFILE_FUNC();
 	return m_meritModID;
 }
 
 void CAbility::setValidTarget(uint8 validTarget)
 {
+	PROFILE_FUNC();
 	m_validTarget = validTarget;
 }
 
 uint8 CAbility::getValidTarget()
 {
+	PROFILE_FUNC();
 	return m_validTarget;
 }
 
 uint8 CAbility::getAddType()
 {
+	PROFILE_FUNC();
     return m_addType;
 }
 
 void CAbility::setAddType(uint8 addType)
 {
+	PROFILE_FUNC();
     m_addType = addType;
 }
 
 const int8* CAbility::getName()
 {
+	PROFILE_FUNC();
 	return m_name.c_str();
 }
 
 void CAbility::setName(int8* name)
 {
+	PROFILE_FUNC();
 	m_name.clear();
 	m_name.insert(0,name);
 }
 
 uint16 CAbility::getRecastId()
 {
+	PROFILE_FUNC();
 	return m_recastId;
 }
 
 void CAbility::setRecastId(uint16 recastId)
 {
+	PROFILE_FUNC();
 	m_recastId = recastId;
 }
 
 void CAbility::setCE(uint16 CE)
 {
+	PROFILE_FUNC();
 	m_CE = CE;
 }
 
 uint16 CAbility::getCE()
 {
+	PROFILE_FUNC();
 	return m_CE;
 }
 
 void CAbility::setVE(uint16 VE)
 {
+	PROFILE_FUNC();
 	m_VE = VE;
 }
 
 uint16 CAbility::getVE()
 {
+	PROFILE_FUNC();
 	return m_VE;
 }
 
@@ -199,16 +232,19 @@ uint16 CAbility::getVE()
 
 uint16 CAbility::getMessage()
 {
+	PROFILE_FUNC();
     return m_message;
 }
 
 void CAbility::setMessage(uint16 message)
 {
+	PROFILE_FUNC();
     m_message = message;
 }
 
 uint16 CAbility::getAoEMsg()
 {
+	PROFILE_FUNC();
   switch(m_message){
         case 185:
             return 264;
@@ -251,11 +287,13 @@ uint16 CAbility::getAoEMsg()
 
 uint16 CAbility::getDefaultMessage()
 {
+	PROFILE_FUNC();
     return m_DefaultMessage;
 }
 
 void CAbility::setDefaultMessage(uint16 message)
 {
+	PROFILE_FUNC();
     m_DefaultMessage = message;
 }
 
@@ -278,7 +316,7 @@ namespace ability
     ************************************************************************/
 
     void LoadAbilitiesList()
-    {
+	{
 		PROFILE_FUNC();
         // TODO: добавить поле message в таблицу
 
@@ -363,7 +401,8 @@ namespace ability
     ************************************************************************/
 
     CAbility* GetAbility(uint16 AbilityID)
-    {
+	{
+		PROFILE_FUNC();
 	    if (AbilityID < MAX_ABILITY_ID)
 	    {
 		    return PAbilityList[AbilityID];
@@ -379,7 +418,8 @@ namespace ability
     ************************************************************************/
 
     CAbility* GetTwoHourAbility(JOBTYPE JobID)
-    {
+	{
+		PROFILE_FUNC();
         DSP_DEBUG_BREAK_IF(JobID < JOB_WAR || JobID >= MAX_JOBTYPE);
 
         switch(JobID)
@@ -412,6 +452,7 @@ namespace ability
 
 	bool CanLearnAbility(CBattleEntity* PUser, uint16 AbilityID)
 	{
+		PROFILE_FUNC();
 	    if (GetAbility(AbilityID) != NULL)
 	    {
 		    uint8 Job = PAbilityList[AbilityID]->getJob();
@@ -430,12 +471,14 @@ namespace ability
     ************************************************************************/
 
     std::vector<CAbility*> GetAbilities(JOBTYPE JobID)
-    {
+	{
+		PROFILE_FUNC();
 	    return PAbilitiesList[JobID];
     }
 
     Charge_t* GetCharge(CBattleEntity* PUser, uint16 chargeID)
-    {
+	{
+		PROFILE_FUNC();
         Charge_t* charge = NULL;
         for (std::vector<Charge_t*>::iterator it = PChargesList.begin() ; it != PChargesList.end(); ++it)
         {
@@ -470,7 +513,8 @@ namespace ability
     }
 
     uint32 GetAbsorbMessage(uint32 msg)
-    {
+	{
+		PROFILE_FUNC();
         if (msg == 110)
             return 102;
         else if (msg == 264)

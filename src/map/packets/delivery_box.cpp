@@ -32,6 +32,7 @@
 
 CDeliveryBoxPacket::CDeliveryBoxPacket(uint8 action, uint8 count) 
 {
+	PROFILE_FUNC();
 	this->type = 0x4B;
 	this->size = 0x0A;
 
@@ -49,6 +50,7 @@ CDeliveryBoxPacket::CDeliveryBoxPacket(uint8 action, uint8 count)
 
 CDeliveryBoxPacket::CDeliveryBoxPacket(uint8 action, CItem* PItem, uint8 count, uint8 message)
 {
+	PROFILE_FUNC();
 	this->type = 0x4B;
 	this->size = 0x2C;
 

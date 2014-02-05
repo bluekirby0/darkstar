@@ -26,12 +26,14 @@
 
 CMobSpellContainer::CMobSpellContainer(CMobEntity* PMob)
 {
+	PROFILE_FUNC();
   m_PMob = PMob;
   m_hasSpells = false;
 }
 
 void CMobSpellContainer::ClearSpells()
 {
+	PROFILE_FUNC();
   m_gaList.clear();
   m_damageList.clear();
   m_buffList.clear();
@@ -42,6 +44,7 @@ void CMobSpellContainer::ClearSpells()
 
 void CMobSpellContainer::AddSpell(int16 spellId)
 {
+	PROFILE_FUNC();
   // get spell
   CSpell* spell = spell::GetSpell(spellId);
 
@@ -82,11 +85,13 @@ void CMobSpellContainer::AddSpell(int16 spellId)
 
 bool CMobSpellContainer::HasSpells()
 {
+	PROFILE_FUNC();
   return m_hasSpells;
 }
 
 bool CMobSpellContainer::HasMPSpells()
 {
+	PROFILE_FUNC();
 
   for (std::vector<int16>::iterator it = m_damageList.begin() ; it != m_damageList.end(); ++it)
   {
@@ -107,6 +112,7 @@ bool CMobSpellContainer::HasMPSpells()
 
 int16 CMobSpellContainer::GetAggroSpell()
 {
+	PROFILE_FUNC();
   // high chance to return ga spell
   if(HasGaSpells() && rand()%100 <= m_PMob->getMobMod(MOBMOD_GA_CHANCE)){
     return GetGaSpell();
@@ -118,6 +124,7 @@ int16 CMobSpellContainer::GetAggroSpell()
 
 int16 CMobSpellContainer::GetSpell()
 {
+	PROFILE_FUNC();
   int16 spellId = -1;
   // prioritize curing if health low enough
   if(HasHealSpells() && m_PMob->GetHPP() <= m_PMob->getMobMod(MOBMOD_HP_HEAL_CHANCE) && rand()%100 < m_PMob->getMobMod(MOBMOD_HEAL_CHANCE)){
@@ -148,6 +155,7 @@ int16 CMobSpellContainer::GetSpell()
 
 int16 CMobSpellContainer::GetGaSpell()
 {
+	PROFILE_FUNC();
   if(m_gaList.empty()) return -1;
 
   return m_gaList[rand()%m_gaList.size()];
@@ -155,6 +163,7 @@ int16 CMobSpellContainer::GetGaSpell()
 
 int16 CMobSpellContainer::GetDamageSpell()
 {
+	PROFILE_FUNC();
   if(m_damageList.empty()) return -1;
 
   return m_damageList[rand()%m_damageList.size()];
@@ -162,6 +171,7 @@ int16 CMobSpellContainer::GetDamageSpell()
 
 int16 CMobSpellContainer::GetBuffSpell()
 {
+	PROFILE_FUNC();
   if(m_buffList.empty()) return -1;
 
   return m_buffList[rand()%m_buffList.size()];
@@ -169,6 +179,7 @@ int16 CMobSpellContainer::GetBuffSpell()
 
 int16 CMobSpellContainer::GetHealSpell()
 {
+	PROFILE_FUNC();
   if(m_PMob->m_EcoSystem == SYSTEM_UNDEAD || m_healList.empty()) return -1;
 
   return m_healList[rand()%m_healList.size()];
@@ -176,6 +187,7 @@ int16 CMobSpellContainer::GetHealSpell()
 
 int16 CMobSpellContainer::GetNaSpell()
 {
+	PROFILE_FUNC();
   if(m_naList.empty()) return -1;
 
   // paralyna
@@ -212,31 +224,37 @@ int16 CMobSpellContainer::GetNaSpell()
 
 bool CMobSpellContainer::HasGaSpells()
 {
+	PROFILE_FUNC();
   return !m_gaList.empty();
 }
 
 bool CMobSpellContainer::HasDamageSpells()
 {
+	PROFILE_FUNC();
   return !m_damageList.empty();
 }
 
 bool CMobSpellContainer::HasBuffSpells()
 {
+	PROFILE_FUNC();
   return !m_buffList.empty();
 }
 
 bool CMobSpellContainer::HasHealSpells()
 {
+	PROFILE_FUNC();
   return !m_healList.empty();
 }
 
 bool CMobSpellContainer::HasNaSpells()
 {
+	PROFILE_FUNC();
   return !m_naList.empty();
 }
 
 bool CMobSpellContainer::HasNaSpell(int16 spellId)
 {
+	PROFILE_FUNC();
 
   for(std::vector<int16>::iterator iter = m_naList.begin(); iter != m_naList.end(); iter++)
   {

@@ -35,6 +35,7 @@
 
 CLuaSpell::CLuaSpell(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,-1) )
 	{
 		m_PLuaSpell = (CSpell*)(lua_touserdata(L,-1));
@@ -52,6 +53,7 @@ CLuaSpell::CLuaSpell(lua_State *L)
 
 CLuaSpell::CLuaSpell(CSpell* PSpell)
 {
+	PROFILE_FUNC();
 	m_PLuaSpell = PSpell;
 }
 
@@ -63,6 +65,7 @@ CLuaSpell::CLuaSpell(CSpell* PSpell)
 
 inline int32 CLuaSpell::setMsg(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaSpell == NULL);
     DSP_DEBUG_BREAK_IF(lua_isnil(L,-1) || !lua_isnumber(L,-1));
 
@@ -72,6 +75,7 @@ inline int32 CLuaSpell::setMsg(lua_State *L)
 
 inline int32 CLuaSpell::canTargetEnemy(lua_State* L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaSpell == NULL);
     lua_pushboolean(L, m_PLuaSpell->canTargetEnemy());
     return 1;
@@ -79,6 +83,7 @@ inline int32 CLuaSpell::canTargetEnemy(lua_State* L)
 
 inline int32 CLuaSpell::getTotalTargets(lua_State* L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaSpell == NULL);
     lua_pushinteger(L, m_PLuaSpell->getTotalTargets());
     return 1;
@@ -86,6 +91,7 @@ inline int32 CLuaSpell::getTotalTargets(lua_State* L)
 
 inline int32 CLuaSpell::getDefaultMessage(lua_State* L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaSpell == NULL);
     lua_pushinteger(L, m_PLuaSpell->getDefaultMessage());
     return 1;
@@ -93,6 +99,7 @@ inline int32 CLuaSpell::getDefaultMessage(lua_State* L)
 
 inline int32 CLuaSpell::getMagicBurstMessage(lua_State* L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaSpell == NULL);
     lua_pushinteger(L, m_PLuaSpell->getMagicBurstMessage());
     return 1;
@@ -100,6 +107,7 @@ inline int32 CLuaSpell::getMagicBurstMessage(lua_State* L)
 
 inline int32 CLuaSpell::getElement(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaSpell == NULL);
 	lua_pushinteger(L,m_PLuaSpell->getElement());
 	return 1;
@@ -107,6 +115,7 @@ inline int32 CLuaSpell::getElement(lua_State *L)
 
 inline int32 CLuaSpell::isAoE(lua_State *L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaSpell == NULL);
 	lua_pushinteger(L,m_PLuaSpell->getAOE());
 	return 1;
@@ -114,6 +123,7 @@ inline int32 CLuaSpell::isAoE(lua_State *L)
 
 inline int32 CLuaSpell::getID(lua_State *L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaSpell == NULL);
 	lua_pushinteger(L,m_PLuaSpell->getID());
 	return 1;
@@ -121,6 +131,7 @@ inline int32 CLuaSpell::getID(lua_State *L)
 
 inline int32 CLuaSpell::getSpellGroup(lua_State *L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaSpell == NULL);
 	lua_pushinteger(L,m_PLuaSpell->getSpellGroup());
 	return 1;

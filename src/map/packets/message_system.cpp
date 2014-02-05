@@ -27,6 +27,7 @@
 
 CMessageSystemPacket::CMessageSystemPacket(uint32 param0, uint32 param1, uint16 messageID)
 {
+	PROFILE_FUNC();
 	this->type = 0x53;
 	this->size = 0x08;
 

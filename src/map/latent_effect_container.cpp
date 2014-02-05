@@ -34,11 +34,13 @@
 CLatentEffectContainer::CLatentEffectContainer(CCharEntity* PEntity)
 	:m_POwner(PEntity)
 {
+	PROFILE_FUNC();
 	m_LatentEffectList.reserve(32);
 }
 
 CLatentEffectContainer::~CLatentEffectContainer()
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i)
 	{
 		delete m_LatentEffectList.at(i);
@@ -53,12 +55,14 @@ CLatentEffectContainer::~CLatentEffectContainer()
 
 void CLatentEffectContainer::AddLatentEffect(CLatentEffect* LatentEffect)
 {
+	PROFILE_FUNC();
 	m_LatentEffectList.push_back(LatentEffect);
 	LatentEffect->SetOwner(m_POwner);
 }
 
 void CLatentEffectContainer::AddLatentEffects(std::vector<CLatentEffect*> *latentList, uint8 reqLvl, uint8 slot)
 {
+	PROFILE_FUNC();
     for (uint16 i = 0; i < latentList->size(); ++i)
     {
         if (m_POwner->GetMLevel() >= reqLvl || latentList->at(i)->GetConditionsValue() == LATENT_JOB_LEVEL_ABOVE)
@@ -86,6 +90,7 @@ void CLatentEffectContainer::AddLatentEffects(std::vector<CLatentEffect*> *laten
 
 void CLatentEffectContainer::DelLatentEffects(uint8 reqLvl, uint8 slot)
 {
+	PROFILE_FUNC();
 	for (int16 i = m_LatentEffectList.size()-1; i >= 0; --i) 
 	{
 		if (m_LatentEffectList.at(i)->GetSlot() == slot)
@@ -110,6 +115,7 @@ void CLatentEffectContainer::DelLatentEffects(uint8 reqLvl, uint8 slot)
 
 void CLatentEffectContainer::CheckLatentsHP(int32 hp)
 {
+	PROFILE_FUNC();
 	//TODO: hook into this from anywhere HP changes
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
@@ -198,6 +204,7 @@ void CLatentEffectContainer::CheckLatentsHP(int32 hp)
 
 void CLatentEffectContainer::CheckLatentsTP(float tp)
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
 		switch(m_LatentEffectList.at(i)->GetConditionsID())
@@ -257,6 +264,7 @@ void CLatentEffectContainer::CheckLatentsTP(float tp)
 
 void CLatentEffectContainer::CheckLatentsMP(int32 mp)
 {
+	PROFILE_FUNC();
 	//TODO: hook into this from anywhere MP changes
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
@@ -324,6 +332,7 @@ void CLatentEffectContainer::CheckLatentsMP(int32 mp)
 
 void CLatentEffectContainer::CheckLatentsEquip(uint8 slot)
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
 		if (m_LatentEffectList.at(i)->GetSlot() == slot)
@@ -604,6 +613,7 @@ void CLatentEffectContainer::CheckLatentsEquip(uint8 slot)
 //easy: when animationType changes to ANIMATION_ATTACK or to something else
 void CLatentEffectContainer::CheckLatentsWeaponDraw(bool drawn)
 {
+	PROFILE_FUNC();
 	if( drawn )
 	{
 		for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
@@ -651,6 +661,7 @@ void CLatentEffectContainer::CheckLatentsWeaponDraw(bool drawn)
 
 void CLatentEffectContainer::CheckLatentsStatusEffect()
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
 		if( m_LatentEffectList.at(i)->GetConditionsID() == LATENT_STATUS_EFFECT_ACTIVE)
@@ -677,6 +688,7 @@ void CLatentEffectContainer::CheckLatentsStatusEffect()
 
 void CLatentEffectContainer::CheckLatentsFoodEffect()
 {
+	PROFILE_FUNC();
 
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
@@ -716,6 +728,7 @@ void CLatentEffectContainer::CheckLatentsFoodEffect()
 
 void CLatentEffectContainer::CheckLatentsRollSong(bool active)
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
 		if( m_LatentEffectList.at(i)->GetConditionsID() == LATENT_SONG_ROLL_ACTIVE)
@@ -742,6 +755,7 @@ void CLatentEffectContainer::CheckLatentsRollSong(bool active)
 //probably call this at 00:00 vana time only
 void CLatentEffectContainer::CheckLatentsDay()
 {
+	PROFILE_FUNC();
 
 	TIMETYPE VanadielTOTD = CVanaTime::getInstance()->SyncTime();
 	uint32 VanadielHour = CVanaTime::getInstance()->getHour();
@@ -821,6 +835,7 @@ void CLatentEffectContainer::CheckLatentsDay()
 ************************************************************************/
 void CLatentEffectContainer::CheckLatentsMoonPhase()
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i)
 	{
 		if (m_LatentEffectList.at(i)->GetConditionsID() == LATENT_MOON_FIRST_QUARTER)
@@ -858,6 +873,7 @@ void CLatentEffectContainer::CheckLatentsMoonPhase()
 
 void CLatentEffectContainer::CheckLatentsWeekDay()
 {
+	PROFILE_FUNC();
 
 	uint8 WeekDay = (uint8)CVanaTime::getInstance()->getWeekday();
 
@@ -1019,6 +1035,7 @@ void CLatentEffectContainer::CheckLatentsWeekDay()
 ************************************************************************/
 void CLatentEffectContainer::CheckLatentsHours()
 {
+	PROFILE_FUNC();
 	uint32 VanadielHour = CVanaTime::getInstance()->getHour();
 
 	for(uint16 i = 0; i < m_LatentEffectList.size(); ++i)
@@ -1140,6 +1157,7 @@ void CLatentEffectContainer::CheckLatentsHours()
 
 void CLatentEffectContainer::CheckLatentsPartyMembers(uint8 members)
 {
+	PROFILE_FUNC();
 
     for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
     {
@@ -1191,6 +1209,7 @@ void CLatentEffectContainer::CheckLatentsPartyMembers(uint8 members)
 
 void CLatentEffectContainer::CheckLatentsPartyJobs()
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
 		if(m_LatentEffectList.at(i)->GetConditionsID() == LATENT_JOB_IN_PARTY)
@@ -1241,6 +1260,7 @@ void CLatentEffectContainer::CheckLatentsPartyJobs()
 
 void CLatentEffectContainer::CheckLatentsPartyAvatar()
 {
+	PROFILE_FUNC();
 
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i)
 	{
@@ -1295,6 +1315,7 @@ void CLatentEffectContainer::CheckLatentsPartyAvatar()
 
 void CLatentEffectContainer::CheckLatentsJobLevel()
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
 		switch(m_LatentEffectList.at(i)->GetConditionsID())
@@ -1386,6 +1407,7 @@ void CLatentEffectContainer::CheckLatentsJobLevel()
 
 void CLatentEffectContainer::CheckLatentsPetType(PETTYPE petID)
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
 		if( m_LatentEffectList.at(i)->GetConditionsID() == LATENT_PET_ID)
@@ -1413,6 +1435,7 @@ void CLatentEffectContainer::CheckLatentsPetType(PETTYPE petID)
 //will probably only call this at transition points in the day
 void CLatentEffectContainer::CheckLatentsTime()
 {
+	PROFILE_FUNC();
 	
 }
 
@@ -1424,6 +1447,7 @@ void CLatentEffectContainer::CheckLatentsTime()
 
 void CLatentEffectContainer::CheckLatentsWeaponBreak(uint8 slot)
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
 		if( m_LatentEffectList.at(i)->GetConditionsID() == LATENT_WEAPON_BROKEN && m_LatentEffectList.at(i)->GetConditionsValue() == slot)
@@ -1445,6 +1469,7 @@ void CLatentEffectContainer::CheckLatentsWeaponBreak(uint8 slot)
 
 void CLatentEffectContainer::CheckLatentsZone()
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < m_LatentEffectList.size(); ++i) 
 	{
         switch (m_LatentEffectList.at(i)->GetConditionsID())

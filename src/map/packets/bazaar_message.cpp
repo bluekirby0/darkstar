@@ -32,6 +32,7 @@
 
 CBazaarMessagePacket::CBazaarMessagePacket(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	this->type = 0xCA;
 	this->size = 0x4A;
 

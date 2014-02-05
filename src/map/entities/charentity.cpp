@@ -36,6 +36,7 @@
 
 CCharEntity::CCharEntity()
 {
+	PROFILE_FUNC();
 	objtype		= TYPE_PC;
 	m_EcoSystem = SYSTEM_HUMANOID;
 
@@ -142,6 +143,7 @@ CCharEntity::CCharEntity()
 
 CCharEntity::~CCharEntity()
 {
+	PROFILE_FUNC();
 	clearPacketList();
 
     if(PTreasurePool != NULL)
@@ -169,21 +171,25 @@ CCharEntity::~CCharEntity()
 
 uint8 CCharEntity::GetGender()
 {
+	PROFILE_FUNC();
     return (look.race)%2 ^ (look.race > 6);
 }
 
 int32 CCharEntity::firstPacketSize()
 {
+	PROFILE_FUNC();
 	return PacketList.front()->getSize();
 }
 
 bool CCharEntity::isPacketListEmpty()
 {
+	PROFILE_FUNC();
 	return PacketList.empty();
 }
 
 void CCharEntity::clearPacketList()
 {
+	PROFILE_FUNC();
 	while(!PacketList.empty())
 	{
 	   delete popPacket();
@@ -192,6 +198,7 @@ void CCharEntity::clearPacketList()
 
 void CCharEntity::resetPetZoningInfo()
 {
+	PROFILE_FUNC();
 	// reset the petZoning info
 	petZoningInfo.petHP = 0;
 	petZoningInfo.petTP = 0;
@@ -221,6 +228,7 @@ CBasicPacket* CCharEntity::popPacket()
 ************************************************************************/
 bool CCharEntity::isWeaponUnlocked(uint16 indexid)
 {
+	PROFILE_FUNC();
 	return unlockedWeapons[indexid-1].unlocked;
 }
 
@@ -232,6 +240,7 @@ bool CCharEntity::isWeaponUnlocked(uint16 indexid)
 ************************************************************************/
 bool CCharEntity::addWsPoints(uint8 points, uint16 WeaponIndex)
 {
+	PROFILE_FUNC();
 	this->unlockedWeapons[WeaponIndex].points += points;
 
 	if (unlockedWeapons[WeaponIndex].points >= unlockedWeapons[WeaponIndex].required)
@@ -264,6 +273,7 @@ bool CCharEntity::addWsPoints(uint8 points, uint16 WeaponIndex)
 
 CItemContainer* CCharEntity::getStorage(uint8 LocationID)
 {
+	PROFILE_FUNC();
 	switch(LocationID)
 	{
 		case LOC_INVENTORY:	 return m_Inventory;
@@ -282,6 +292,7 @@ CItemContainer* CCharEntity::getStorage(uint8 LocationID)
 
 int8 CCharEntity::getShieldSize()
 {
+	PROFILE_FUNC();
 	CItemArmor* PItem = (CItemArmor*)(getStorage(LOC_INVENTORY)->GetItem(equip[SLOT_SUB]));
 
     if(PItem == NULL){
@@ -297,11 +308,13 @@ int8 CCharEntity::getShieldSize()
 
 void CCharEntity::SetName(int8* name)
 {
+	PROFILE_FUNC();
 	this->name.insert(0, name, dsp_cap(strlen((const int8*)name), 0, 15));
 }
 
 uint16 CCharEntity::addTP(float tp)
 {
+	PROFILE_FUNC();
 	float oldtp = health.tp;
 	tp = CBattleEntity::addTP(tp);
 //	if ((oldtp < 100 && health.tp >= 100 ) || (oldtp >= 100 && health.tp < 100))
@@ -313,6 +326,7 @@ uint16 CCharEntity::addTP(float tp)
 
 int32 CCharEntity::addHP(int32 hp)
 {
+	PROFILE_FUNC();
 	hp = CBattleEntity::addHP(hp);
 	PLatentEffectContainer->CheckLatentsHP(health.hp);
 
@@ -321,6 +335,7 @@ int32 CCharEntity::addHP(int32 hp)
 
 int32 CCharEntity::addMP(int32 mp)
 {
+	PROFILE_FUNC();
 	mp = CBattleEntity::addMP(mp);
 	PLatentEffectContainer->CheckLatentsMP(health.mp);
 
@@ -329,20 +344,24 @@ int32 CCharEntity::addMP(int32 mp)
 
 bool CCharEntity::getWeaponSkillKill()
 {
+	PROFILE_FUNC();
 	return m_isWeaponSkillKill;
 }
 
 void CCharEntity::setWeaponSkillKill(bool isWeaponSkillKill)
 {
+	PROFILE_FUNC();
 	m_isWeaponSkillKill = isWeaponSkillKill;
 }
 
 bool CCharEntity::getMijinGakure()
 {
+	PROFILE_FUNC();
 	return m_isMijinGakure;
 }
 
 void CCharEntity::setMijinGakure(bool isMijinGakure)
 {
+	PROFILE_FUNC();
 	m_isMijinGakure = isMijinGakure;
 }

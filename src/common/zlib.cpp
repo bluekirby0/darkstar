@@ -37,6 +37,7 @@ int32   zlib_init()
 
 int32   zlib_compress_sub(char * output,ppuint32 var1,ppuint32 cume, char * lookup1,ppuint32 var2,ppuint32 var3,ppuint32 lookup2)
 {
+	PROFILE_FUNC();
 	if((cume + lookup2 + 7)/8 > var1)
 		return -1;
 	var1 = lookup2+var3;
@@ -52,6 +53,7 @@ int32   zlib_compress_sub(char * output,ppuint32 var1,ppuint32 cume, char * look
 
 int32   zlib_compress(char * input,ppuint32 var1, char * output, ppuint32 var2, ppuint32 * lookup)
 {
+	PROFILE_FUNC();
 	unsigned int i, cume = 0, tmp;
 	unsigned long * ptr;
 
@@ -76,6 +78,7 @@ int32   zlib_compress(char * input,ppuint32 var1, char * output, ppuint32 var2, 
 
 ppuint32 zlib_decompress(char *in,ppuint32 inSize, char *out, ppuint32 outSize, char **table)
 {
+	PROFILE_FUNC();
 	unsigned int ** follow = (unsigned int **)table[0];
 	unsigned long i, j=0;
 

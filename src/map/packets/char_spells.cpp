@@ -32,6 +32,7 @@
 
 CCharSpellsPacket::CCharSpellsPacket(CCharEntity* PChar) 
 {
+	PROFILE_FUNC();
 	this->type = 0xAA;
 	this->size = 0x42;
 

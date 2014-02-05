@@ -32,6 +32,7 @@
 
 CCharJobExtraPacket::CCharJobExtraPacket(CCharEntity* PChar, bool mjob)
 {
+	PROFILE_FUNC();
 	this->type = 0x44;
 	this->size = 0x4E;
 

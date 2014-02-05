@@ -29,6 +29,7 @@
 
 CShopMenuPacket::CShopMenuPacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	this->type = 0x3E;
 	this->size = 0x04;
 

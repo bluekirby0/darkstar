@@ -25,26 +25,32 @@
 
 CItemPuppet::CItemPuppet(uint16 id) : CItem(id)
 {
+	PROFILE_FUNC();
 	setType(ITEM_PUPPET);
 }
 
 CItemPuppet::~CItemPuppet()
 {
+	PROFILE_FUNC();
 }
 
 uint8 CItemPuppet::getEquipSlot()
 {
+	PROFILE_FUNC();
     return m_equipSlot;
 }
 void CItemPuppet::setEquipSlot(uint32 slot)
 {
+	PROFILE_FUNC();
     m_equipSlot = slot;
 }
 uint32 CItemPuppet::getElementSlots()
 {
+	PROFILE_FUNC();
     return m_elementSlots;
 }
 void CItemPuppet::setElementSlots(uint32 slots)
 {
+	PROFILE_FUNC();
     m_elementSlots = slots;
 }

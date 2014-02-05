@@ -48,64 +48,76 @@
 
 CLinkshell::CLinkshell(uint32 id)
 {
+	PROFILE_FUNC();
     m_id = id;
 }
 
 uint32 CLinkshell::getID()
 {
+	PROFILE_FUNC();
     return m_id;
 }
 
 uint16 CLinkshell::getColor()
 {
+	PROFILE_FUNC();
     return m_color;
 }
 
 void CLinkshell::setColor(uint16 color)
 {
+	PROFILE_FUNC();
     m_color = color;
 }
 
 const int8* CLinkshell::getName()
 {
+	PROFILE_FUNC();
     return m_name.c_str();
 }
 
 void CLinkshell::setName(int8* name)
 {
+	PROFILE_FUNC();
 	m_name.clear();
 	m_name.insert(0,name);
 }
 
 const int8* CLinkshell::getPoster()
 {
+	PROFILE_FUNC();
     return m_poster.c_str();
 }
 
 void CLinkshell::setPoster(int8* poster)
 {
+	PROFILE_FUNC();
     m_poster.clear();
 	m_poster.insert(0,poster);
 }
 
 const int8* CLinkshell::getMessage()
 {
+	PROFILE_FUNC();
     return m_message.c_str();
 }
 
 void CLinkshell::setMessage(int8* message)
 {
+	PROFILE_FUNC();
     m_message.clear();
 	m_message.insert(0,message);
 }
 
 uint32 CLinkshell::getMessageTime()
 {
+	PROFILE_FUNC();
     return m_time;
 }
 
 void CLinkshell::setMessageTime(uint32 time)
 {
+	PROFILE_FUNC();
     m_time = time;
 }
 
@@ -117,6 +129,7 @@ void CLinkshell::setMessageTime(uint32 time)
 
 void CLinkshell::AddMember(CCharEntity* PChar, int8 type)
 {
+	PROFILE_FUNC();
     members.push_back(PChar);
 	Sql_Query(SqlHandle,"UPDATE accounts_sessions SET linkshellid = %u , linkshellrank = %u WHERE charid = %u", this->getID(),type, PChar->id);
     PChar->PLinkshell = this;
@@ -130,6 +143,7 @@ void CLinkshell::AddMember(CCharEntity* PChar, int8 type)
 
 void CLinkshell::DelMember(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     for (uint32 i = 0; i < members.size(); ++i)
 	{
         if (members.at(i) == PChar)
@@ -150,6 +164,7 @@ void CLinkshell::DelMember(CCharEntity* PChar)
 
 void CLinkshell::ChangeMemberRank(int8* MemberName, uint8 toSack)
 {
+	PROFILE_FUNC();
 	//topearl = 3
 	//tosack = 2
 	int newId = 512 + toSack;
@@ -208,6 +223,7 @@ void CLinkshell::ChangeMemberRank(int8* MemberName, uint8 toSack)
 
 void CLinkshell::RemoveMemberByName(int8* MemberName)
 {
+	PROFILE_FUNC();
 	for (uint32 i = 0; i < members.size(); ++i) 
 	{
 		if (strcmp(MemberName, members.at(i)->GetName()) == 0)
@@ -268,6 +284,7 @@ void CLinkshell::RemoveMemberByName(int8* MemberName)
 
 void CLinkshell::PushPacket(CCharEntity* PChar, CBasicPacket* packet)
 {
+	PROFILE_FUNC();
     for (uint32 i = 0; i < members.size(); ++i)
 	{
         if (members.at(i) != PChar &&
@@ -329,7 +346,8 @@ namespace linkshell
     ************************************************************************/
 
     bool AddOnlineMember(CCharEntity* PChar, CItemLinkshell* PItemLinkshell)
-    {
+	{
+		PROFILE_FUNC();
         DSP_DEBUG_BREAK_IF(PChar == NULL);
         if (PItemLinkshell != NULL && PItemLinkshell->isType(ITEM_LINKSHELL))
         {
@@ -350,7 +368,8 @@ namespace linkshell
     ************************************************************************/
 
     bool DelOnlineMember(CCharEntity* PChar, CItemLinkshell* PItemLinkshell)
-    {
+	{
+		PROFILE_FUNC();
         DSP_DEBUG_BREAK_IF(PChar == NULL);
         if (PItemLinkshell != NULL && PItemLinkshell->isType(ITEM_LINKSHELL))
         {
@@ -372,7 +391,8 @@ namespace linkshell
     ************************************************************************/
 
     bool IsValidLinkshellName(const int8* name)
-    {
+	{
+		PROFILE_FUNC();
         for (LinkshellList_t::iterator it = LinkshellList.begin(); it != LinkshellList.end() ; ++it)
 	    {
             if (strcmp(it->second->getName(), name) == 0) return false;
@@ -387,7 +407,8 @@ namespace linkshell
     ************************************************************************/
 
     uint32 RegisterNewLinkshell(const int8* name, uint16 color)
-    {
+	{
+		PROFILE_FUNC();
         if (IsValidLinkshellName(name))
         {
 		    if (Sql_Query(SqlHandle, "INSERT INTO linkshells (name, color) VALUES ('%s', %u)", name, color) != SQL_ERROR)

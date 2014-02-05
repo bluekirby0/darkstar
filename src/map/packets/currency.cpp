@@ -29,6 +29,7 @@
 
 CCurrencyPacket::CCurrencyPacket(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	this->type = 0x13;
 	this->size = 0x73;
 

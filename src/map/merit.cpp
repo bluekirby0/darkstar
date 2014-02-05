@@ -184,6 +184,7 @@ static const MeritCategoryInfo_t meritCatInfo[] =
 
 CMeritPoints::CMeritPoints(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	/*
 	DSP_DEBUG_BREAK_IF(sizeof(merits) != sizeof(merits::GMeritsTemplate));
 
@@ -221,6 +222,7 @@ CMeritPoints::CMeritPoints(CCharEntity* PChar)
 
 void CMeritPoints::LoadMeritPoints(uint32 charid)
 {
+	PROFILE_FUNC();
 
     const int8* Query = "SELECT merits FROM chars WHERE charid = %u";
 
@@ -274,6 +276,7 @@ void CMeritPoints::LoadMeritPoints(uint32 charid)
 
 void CMeritPoints::SaveMeritPoints(uint32 charid, bool resetingMerits)
 {
+	PROFILE_FUNC();
 	const int8* Query =  "UPDATE chars SET merits = '%s' WHERE charid = %u";
 
 	int8 points[MERITS_COUNT*2+1];
@@ -305,6 +308,7 @@ void CMeritPoints::SaveMeritPoints(uint32 charid, bool resetingMerits)
 
 uint16 CMeritPoints::GetLimitPoints()
 {
+	PROFILE_FUNC();
     return m_LimitPoints;
 }
 
@@ -316,6 +320,7 @@ uint16 CMeritPoints::GetLimitPoints()
 
 uint8 CMeritPoints::GetMeritPoints()
 {
+	PROFILE_FUNC();
     return m_MeritPoints;
 }
 
@@ -328,6 +333,7 @@ uint8 CMeritPoints::GetMeritPoints()
 
 const Merit_t* CMeritPoints::GetMerits()
 {
+	PROFILE_FUNC();
     return merits;
 }
 
@@ -342,6 +348,7 @@ const Merit_t* CMeritPoints::GetMerits()
 
 bool CMeritPoints::AddLimitPoints(uint16 points)
 {
+	PROFILE_FUNC();
     m_LimitPoints += points;
 
     if (m_LimitPoints >= MAX_LIMIT_POINTS)
@@ -374,6 +381,7 @@ bool CMeritPoints::AddLimitPoints(uint16 points)
 
 void CMeritPoints::SetLimitPoints(uint16 points)
 {
+	PROFILE_FUNC();
     m_LimitPoints = dsp_min(points, MAX_LIMIT_POINTS - 1);
 }
 
@@ -385,6 +393,7 @@ void CMeritPoints::SetLimitPoints(uint16 points)
 
 void CMeritPoints::SetMeritPoints(uint16 points)
 {
+	PROFILE_FUNC();
     m_MeritPoints = dsp_min(points, MAX_MERIT_POINTS);
 }
 
@@ -397,6 +406,7 @@ void CMeritPoints::SetMeritPoints(uint16 points)
 
 bool CMeritPoints::IsMeritExist(MERIT_TYPE merit)
 {
+	PROFILE_FUNC();
     if ((int16)merit <  MCATEGORY_START) return false;
     if ((int16)merit >= MCATEGORY_COUNT) return false;
 
@@ -413,6 +423,7 @@ bool CMeritPoints::IsMeritExist(MERIT_TYPE merit)
 
 const Merit_t* CMeritPoints::GetMerit(MERIT_TYPE merit)
 {
+	PROFILE_FUNC();
     return GetMeritPointer(merit);
 }
 
@@ -424,6 +435,7 @@ const Merit_t* CMeritPoints::GetMerit(MERIT_TYPE merit)
 
 const Merit_t* CMeritPoints::GetMeritByIndex(uint16 index)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(index >= MERITS_COUNT);
 
 	return  &merits[index];
@@ -438,6 +450,7 @@ const Merit_t* CMeritPoints::GetMeritByIndex(uint16 index)
 
 Merit_t* CMeritPoints::GetMeritPointer(MERIT_TYPE merit)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(!IsMeritExist(merit));
 
     return &Categories[GetMeritCategory(merit)][GetMeritID(merit)];
@@ -451,6 +464,7 @@ Merit_t* CMeritPoints::GetMeritPointer(MERIT_TYPE merit)
 
 void CMeritPoints::RaiseMerit(MERIT_TYPE merit)
 {
+	PROFILE_FUNC();
     Merit_t* PMerit = GetMeritPointer(merit);
 
     if (m_MeritPoints >= PMerit->next)
@@ -478,6 +492,7 @@ void CMeritPoints::RaiseMerit(MERIT_TYPE merit)
 
 void CMeritPoints::LowerMerit(MERIT_TYPE merit)
 {
+	PROFILE_FUNC();
     Merit_t* PMerit = GetMeritPointer(merit);
 
     if (PMerit->count > 0)
@@ -513,6 +528,7 @@ void CMeritPoints::LowerMerit(MERIT_TYPE merit)
 
 int32 CMeritPoints::GetMeritValue(MERIT_TYPE merit, CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     Merit_t* PMerit = GetMeritPointer(merit);
 	uint8 meritValue = 0;
 
@@ -526,6 +542,7 @@ int32 CMeritPoints::GetMeritValue(MERIT_TYPE merit, CCharEntity* PChar)
 
 int32 CMeritPoints::GetMeritValue(Merit_t* merit, CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     uint8 meritValue = 0;
     if (merit->catid < 5 || (merit->jobs & (1 << (PChar->GetMJob() - 1)) && PChar->GetMLevel() >= 75))
         meritValue = dsp_min(merit->count, cap[PChar->GetMLevel()]);

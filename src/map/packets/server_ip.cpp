@@ -29,6 +29,7 @@
 
 CServerIPPacket::CServerIPPacket(CCharEntity* PChar, uint8 type)
 {
+	PROFILE_FUNC();
 	this->type = 0x0B;
 	this->size = 0x0E;
 

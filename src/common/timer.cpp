@@ -30,6 +30,7 @@ time_t start_time;
 static uint64 RDTSC_BEGINTICK = 0,   RDTSC_CLOCK = 0;
 
 static __inline uint64 _rdtsc(){
+	PROFILE_FUNC();
 	register union{
 		uint64	qw;
 		uint32 	dw[2];
@@ -41,6 +42,7 @@ static __inline uint64 _rdtsc(){
 }
 
 static void rdtsc_calibrate(){
+	PROFILE_FUNC();
 	uint64 t1, t2;
 	int32 i;
 	
@@ -93,6 +95,7 @@ static int32  gettick_count = 1;
 
 unsigned int gettick_nocache(void)
 {
+	PROFILE_FUNC();
 	gettick_count = TICK_CACHE;
 	gettick_cache = tick();
 	return gettick_cache;
@@ -100,6 +103,7 @@ unsigned int gettick_nocache(void)
 
 unsigned int gettick(void)
 {
+	PROFILE_FUNC();
 	return ( --gettick_count == 0 ) ? gettick_nocache() : gettick_cache;
 }
 //////////////////////////////
@@ -108,11 +112,13 @@ unsigned int gettick(void)
 // tick doesn't get cached
 uint32 gettick_nocache(void)
 {
+	PROFILE_FUNC();
 	return tick() + 100000000; // +27 hours for respawn
 }
 
 uint32 gettick(void)
 {
+	PROFILE_FUNC();
 	return tick() + 100000000; // +27 hours for respawn
 }
 //////////////////////////////////////////////////////////////////////////
@@ -121,11 +127,13 @@ uint32 gettick(void)
 
 uint32 get_uptime(void)
 {
+	PROFILE_FUNC();
 	return (uint32)difftime(time(NULL), start_time);
 }
 
 void timer_init(void)
 {
+	PROFILE_FUNC();
 #if defined(ENABLE_RDTSC)
 	rdtsc_calibrate();
 #endif
@@ -135,4 +143,5 @@ void timer_init(void)
 
 void timer_final(void)
 {
+	PROFILE_FUNC();
 }

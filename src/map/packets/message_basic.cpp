@@ -30,6 +30,7 @@
 
 CMessageBasicPacket::CMessageBasicPacket(CBaseEntity* PSender, CBaseEntity* PTarget, int32 param, int32 value, uint16 messageID)
 {
+	PROFILE_FUNC();
 	this->type = 0x29;
 	this->size = 0x0E;
 

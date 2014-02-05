@@ -28,6 +28,7 @@
 
 CWorldPassPacket::CWorldPassPacket(uint32 WorldPass)
 {
+	PROFILE_FUNC();
 	this->type = 0x59;
 	this->size = 0x12; 
 

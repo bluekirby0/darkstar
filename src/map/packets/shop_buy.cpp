@@ -28,6 +28,7 @@
 
 CShopBuyPacket::CShopBuyPacket(uint8 slotID, uint32 quantity)
 {
+	PROFILE_FUNC();
 	this->type = 0x3F;
 	this->size = 0x06;
 

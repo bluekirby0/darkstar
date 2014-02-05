@@ -31,6 +31,7 @@
 
 CLockOnPacket::CLockOnPacket(CCharEntity* PChar, CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
 	this->type = 0x58;
 	this->size = 0x08;
 

@@ -264,6 +264,7 @@ void do_final(void)
 
 void do_abort(void)
 {
+	PROFILE_FUNC();
 	do_final();
 }
 
@@ -275,6 +276,7 @@ void do_abort(void)
 
 void set_server_type()
 {
+	PROFILE_FUNC();
 	SERVER_TYPE = DARKSTAR_SERVER_MAP;
 }
 
@@ -286,6 +288,7 @@ void set_server_type()
 
 int32 do_sockets(fd_set* rfd,int32 next)
 {
+	PROFILE_FUNC();
 	struct timeval timeout;
 	int32 ret;
 	memcpy(rfd, &readfds, sizeof(*rfd));
@@ -371,6 +374,7 @@ int32 do_sockets(fd_set* rfd,int32 next)
 
 int32 parse_console(int8* buf)
 {
+	PROFILE_FUNC();
 	return 0;
 }
 

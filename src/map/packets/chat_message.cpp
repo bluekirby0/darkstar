@@ -32,6 +32,7 @@
 
 CChatMessagePacket::CChatMessagePacket(CCharEntity* PChar, CHAT_MESSAGE_TYPE MessageType, int8* buff) 
 {
+	PROFILE_FUNC();
 	this->type = 0x17;
 	this->size = 32 + strlen(buff) + strlen(buff)%2;
 

@@ -31,6 +31,7 @@
 
 CCharJobsPacket::CCharJobsPacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	this->type = 0x1B;
 	this->size = 0x32;
 

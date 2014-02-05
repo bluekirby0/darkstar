@@ -25,10 +25,12 @@
 
 CItemCurrency::CItemCurrency(uint16 id) : CItem(id)
 {
+	PROFILE_FUNC();
 	setType(ITEM_CURRENCY);
 	setStackSize(999999999);
 }
 
 CItemCurrency::~CItemCurrency()
 {
+	PROFILE_FUNC();
 }

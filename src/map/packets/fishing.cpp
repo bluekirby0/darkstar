@@ -41,6 +41,7 @@ unsigned char packet[] =
 
 CFishingPacket::CFishingPacket() 
 {
+	PROFILE_FUNC();
 	this->type = 0x81;
 	this->size = 0x0C;
 
@@ -55,6 +56,7 @@ CFishingPacket::CFishingPacket()
 
 CFishingPacket::CFishingPacket(uint8 stamina, uint8 pull, uint8 hp) 
 {
+	PROFILE_FUNC();
 	this->type = 0x81;
 	this->size = 0x0C;
 

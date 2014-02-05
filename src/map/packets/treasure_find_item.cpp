@@ -31,6 +31,7 @@
 
 CTreasureFindItemPacket::CTreasureFindItemPacket(TreasurePoolItem* PItem , CBaseEntity* PMob) 
 {
+	PROFILE_FUNC();
 	this->type = 0xD2;
 	this->size = 0x1E;
 

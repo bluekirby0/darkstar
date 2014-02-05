@@ -56,6 +56,7 @@ namespace zoneutils
 
 void TOTDCharnge(TIMETYPE TOTD)
 {
+	PROFILE_FUNC();
 	for (uint16 ZoneID = 0; ZoneID < MAX_ZONEID; ZoneID++)
 	{
 		g_PZoneList[ZoneID]->TOTDChange(TOTD);
@@ -64,6 +65,7 @@ void TOTDCharnge(TIMETYPE TOTD)
 
 void UpdateTreasureSpawnPoint(uint32 npcid, uint32 respawnTime)
 {
+	PROFILE_FUNC();
 	CBaseEntity* PNpc = zoneutils::GetEntity(npcid, TYPE_NPC);
 
 	if (PNpc != NULL) {
@@ -133,12 +135,14 @@ void UpdateWeather()
 
 CZone* GetZone(uint16 ZoneID)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(ZoneID >= MAX_ZONEID);
 	return g_PZoneList[ZoneID];
 }
 
 CNpcEntity* GetTrigger(uint16 TargID, uint16 ZoneID)
 {
+	PROFILE_FUNC();
 	g_PTrigger->targid = TargID;
 	g_PTrigger->id = ((4096 + ZoneID) << 12) + TargID;
 
@@ -154,6 +158,7 @@ CNpcEntity* GetTrigger(uint16 TargID, uint16 ZoneID)
 
 CBaseEntity* GetEntity(uint32 ID, uint8 filter)
 {
+	PROFILE_FUNC();
     return g_PZoneList[(uint16)((ID >> 12) & 0x0FFF)]->GetEntity((uint16)(ID & 0x0FFF), filter);
 }
 
@@ -165,6 +170,7 @@ CBaseEntity* GetEntity(uint32 ID, uint8 filter)
 
 CCharEntity* GetCharByName(int8* name)
 {
+	PROFILE_FUNC();
     for (uint16 ZoneID = 0; ZoneID < MAX_ZONEID; ZoneID++)
     {
         CCharEntity* PChar = g_PZoneList[ZoneID]->GetCharByName(name);
@@ -185,6 +191,7 @@ CCharEntity* GetCharByName(int8* name)
 
 CCharEntity* GetCharFromRegion(uint32 charid, uint16 targid, uint8 RegionID)
 {
+	PROFILE_FUNC();
     for (uint16 ZoneID = 0; ZoneID < MAX_ZONEID; ZoneID++)
 	{
         if (g_PZoneList[ZoneID]->GetRegionID() == RegionID)
@@ -520,6 +527,7 @@ void LoadZoneList()
 
 REGIONTYPE GetCurrentRegion(uint16 ZoneID)
 {
+	PROFILE_FUNC();
 	switch (ZoneID)
 	{
 		case ZONE_BOSTAUNIEUX_OUBLIETTE:
@@ -820,6 +828,7 @@ REGIONTYPE GetCurrentRegion(uint16 ZoneID)
 
 CONTINENTTYPE GetCurrentContinent(uint16 ZoneID)
 {
+	PROFILE_FUNC();
     return GetCurrentRegion(ZoneID) != REGION_UNKNOWN ? THE_MIDDLE_LANDS : OTHER_AREAS;
 }
 
@@ -831,6 +840,7 @@ CONTINENTTYPE GetCurrentContinent(uint16 ZoneID)
 
 void FreeZoneList()
 {
+	PROFILE_FUNC();
 	for (uint16 ZoneID = 0; ZoneID < MAX_ZONEID; ZoneID++)
 	{
 		delete g_PZoneList[ZoneID];

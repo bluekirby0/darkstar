@@ -31,6 +31,7 @@
 
 CQuestMissionLogPacket::CQuestMissionLogPacket(CCharEntity * PChar, uint8 logID, uint8 status) 
 {
+	PROFILE_FUNC();
 	this->type = 0x56;
 	this->size = 0x14; 
 
@@ -215,6 +216,7 @@ CQuestMissionLogPacket::CQuestMissionLogPacket(CCharEntity * PChar, uint8 logID,
 
 void CQuestMissionLogPacket::generateQuestPacket(CCharEntity * PChar, uint8 logID, uint8 status) 
 {
+	PROFILE_FUNC();
 	if(status == 0x01)
 		memcpy(data, PChar->m_questLog[logID].current, 32);
 	else if(status == 0x02)
@@ -222,7 +224,8 @@ void CQuestMissionLogPacket::generateQuestPacket(CCharEntity * PChar, uint8 logI
 }
 
 void CQuestMissionLogPacket::generateCurrentMissionPacket(CCharEntity * PChar) 
-{	
+{
+	PROFILE_FUNC();
 	uint16 add_on_scenarios = 0;
 
 	add_on_scenarios += PChar->m_acpCurrent;
@@ -245,13 +248,15 @@ void CQuestMissionLogPacket::generateCurrentMissionPacket(CCharEntity * PChar)
 
 void CQuestMissionLogPacket::generateCompleteMissionPacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	for(uint8 logID = 0x00; logID <= 0x03; logID++)
 		for(uint8 questMissionID = 0; questMissionID < 64; questMissionID++)
 			data[(questMissionID/8) + (logID*0x08)] ^= ((PChar->m_missionLog[logID].complete[questMissionID]) << (questMissionID % 8));
 }
 
 void CQuestMissionLogPacket::generateCurrentExpMissionPacket(CCharEntity * PChar) 
-{				
+{
+	PROFILE_FUNC();
 	WBUFW(data,(0x14)-4) = PChar->m_assaultLog.current;							// Assault Missions
 	WBUFW(data,(0x18)-4) = PChar->m_missionLog[MISSION_TOAU-11].current;		// Treasures of Aht Urhgan
 	WBUFW(data,(0x1C)-4) = PChar->m_missionLog[MISSION_WOTG-11].current;		// Wings of the Goddess
@@ -260,6 +265,7 @@ void CQuestMissionLogPacket::generateCurrentExpMissionPacket(CCharEntity * PChar
 
 void CQuestMissionLogPacket::generateCompleteExpMissionPacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	for(uint8 logID = 0x04; logID <= 0x05; logID++)
 		for(uint8 questMissionID = 0; questMissionID < 64; questMissionID++)
 			data[(questMissionID/8) + ((logID-0x04)*0x08)] ^= ((PChar->m_missionLog[logID].complete[questMissionID]) << (questMissionID % 8));
@@ -267,6 +273,7 @@ void CQuestMissionLogPacket::generateCompleteExpMissionPacket(CCharEntity * PCha
 
 void CQuestMissionLogPacket::generateCompleteCopMissionPacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	uint8 logID = 0x06;
 	for(uint8 questMissionID = 0; questMissionID < 64; questMissionID++)
 		data[(questMissionID/8) + (logID*0x08)] ^= ((PChar->m_missionLog[logID].complete[questMissionID]) << (questMissionID % 8));
@@ -274,18 +281,21 @@ void CQuestMissionLogPacket::generateCompleteCopMissionPacket(CCharEntity * PCha
 
 void CQuestMissionLogPacket::generateCompaingUnMissionPacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	for(uint16 questMissionID = 0; questMissionID < 256; questMissionID++)
 		data[(questMissionID/8)] ^= ((PChar->m_campaignLog.complete[questMissionID]) << (questMissionID % 8));
 }
 
 void CQuestMissionLogPacket::generateCompaingDeuxMissionPacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	for(uint16 questMissionID = 0; questMissionID < 256; questMissionID++)
 		data[(questMissionID/8)] ^= ((PChar->m_campaignLog.complete[questMissionID+256]) << (questMissionID % 8));
 }
 
 void CQuestMissionLogPacket::generateAssaultMissionPacket(CCharEntity * PChar) 
 {
+	PROFILE_FUNC();
 	for(uint16 questMissionID = 0; questMissionID < 128; questMissionID++)
 		data[(questMissionID/8)+0x10] ^= ((PChar->m_assaultLog.complete[questMissionID]) << (questMissionID % 8));
 }

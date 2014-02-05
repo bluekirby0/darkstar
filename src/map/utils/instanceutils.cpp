@@ -40,6 +40,7 @@ namespace instanceutils{
 		a new Instance object.
 	****************************************************************/
 	CInstance* loadInstance(CInstanceHandler* hand, uint16 bcnmid, INSTANCETYPE type){
+		PROFILE_FUNC();
 		const int8* fmtQuery = "SELECT name, bcnmId, fastestName, fastestTime, timeLimit, levelCap, lootDropId, rules, partySize, zoneId \
 						    FROM bcnm_info \
 							WHERE bcnmId = %u";
@@ -76,6 +77,7 @@ namespace instanceutils{
 		instance.
 	****************************************************************/
 	bool spawnMonstersForBcnm(CInstance* instance){
+		PROFILE_FUNC();
 		DSP_DEBUG_BREAK_IF(instance==NULL);
 
 		//get ids from DB
@@ -147,6 +149,7 @@ namespace instanceutils{
 		Spawns treasure chest/armory crate, what ever on winning bcnm
 	****************************************************************/
 	bool spawnTreasureForBcnm(CInstance* instance){
+		PROFILE_FUNC();
 		DSP_DEBUG_BREAK_IF(instance==NULL);
 
 		//get ids from DB
@@ -192,6 +195,7 @@ namespace instanceutils{
 	(e.g. mob below X% HP, successful Steal, etc)
 	***************************************************************/
 	bool meetsWinningConditions(CInstance* instance, uint32 tick){
+		PROFILE_FUNC();
 		//handle odd cases e.g. stop fight @ x% HP
 
 		//handle Maat fights
@@ -226,6 +230,7 @@ namespace instanceutils{
 	or when everyone has left, etc.
 	****************************************************************/
 	bool meetsLosingConditions(CInstance* instance, uint32 tick){
+		PROFILE_FUNC();
 		//check for expired duration e.g. >30min. Need the tick>start check as the start can be assigned
 		//after the tick initially due to threading
 		if(tick>instance->getStartTime() && (tick - instance->getStartTime()) > instance->getTimeLimit()*1000){
@@ -260,7 +265,8 @@ namespace instanceutils{
 	/*************************************************************
 	Returns the losing exit position for this BCNM.
 	****************************************************************/
-	void getLosePosition(CInstance* instance, int (&pPosition)[4]){
+	void getLosePosition(CInstance* instance, int(&pPosition)[4]){
+		PROFILE_FUNC();
 		if(instance==NULL)
 			return;
 
@@ -271,7 +277,8 @@ namespace instanceutils{
 		}
 	}
 
-	void getStartPosition(uint8 zoneid, int (&pPosition)[4]){
+	void getStartPosition(uint8 zoneid, int(&pPosition)[4]){
+		PROFILE_FUNC();
 
 		switch(zoneid){
 		case 139: //Horlais Peak
@@ -295,7 +302,8 @@ namespace instanceutils{
 	/*************************************************************
 	Returns the winning exit position for this BCNM.
 	****************************************************************/
-	void getWinPosition(CInstance* instance, int (&pPosition)[4]){
+	void getWinPosition(CInstance* instance, int(&pPosition)[4]){
+		PROFILE_FUNC();
 		if(instance==NULL)
 			return;
 
@@ -308,6 +316,7 @@ namespace instanceutils{
 
 
 	uint8 getMaxLootGroups(CInstance* instance){
+		PROFILE_FUNC();
 		const int8* fmtQuery = "SELECT MAX(lootGroupId) \
 						FROM bcnm_loot \
 						JOIN bcnm_info ON bcnm_info.LootDropId = bcnm_loot.LootDropId \
@@ -324,6 +333,7 @@ namespace instanceutils{
 	}
 
 	uint16 getRollsPerGroup(CInstance* instance, uint8 groupID){
+		PROFILE_FUNC();
 		const int8* fmtQuery = "SELECT SUM(CASE \
 			WHEN LootDropID = %u \
 			AND lootGroupId = %u \
@@ -345,7 +355,8 @@ namespace instanceutils{
 	Get loot from the armoury crate
 	****************************************************************/
 
-  void getChestItems(CInstance* instance){
+	void getChestItems(CInstance* instance){
+		PROFILE_FUNC();
     int instzone = instance->getZoneId();
 	uint8 maxloot = 0;
 		LootList_t* LootList = itemutils::GetLootList(instance->getLootId());
@@ -396,6 +407,7 @@ namespace instanceutils{
 	}
 
 	bool spawnSecondPartDynamis(CInstance* instance){
+		PROFILE_FUNC();
 		DSP_DEBUG_BREAK_IF(instance==NULL);
 
 		//get ids from DB

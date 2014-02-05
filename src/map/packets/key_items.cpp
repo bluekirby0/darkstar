@@ -31,6 +31,7 @@
 
 CKeyItemsPacket::CKeyItemsPacket(CCharEntity * PChar, KEYS_TABLE KeyTable)
 {
+	PROFILE_FUNC();
 	this->type = 0x55;
 	this->size = 0x44;
 

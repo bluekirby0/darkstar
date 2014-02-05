@@ -29,6 +29,7 @@
 
 CSynthMessagePacket::CSynthMessagePacket(CCharEntity * PChar, SYNTH_MESSAGE messageID, uint16 itemID, uint8 quantity)
 {
+	PROFILE_FUNC();
 	this->type = 0x6F;
 	this->size = 0x12;
 

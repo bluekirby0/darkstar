@@ -35,6 +35,7 @@
 
 CTradeItemPacket::CTradeItemPacket(CItem* PItem, uint8 slot)
 {
+	PROFILE_FUNC();
 	this->type = 0x25;
 	this->size = 0x06;
 	

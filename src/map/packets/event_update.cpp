@@ -37,6 +37,7 @@ CEventUpdatePacket::CEventUpdatePacket(
 	uint32 param6,
 	uint32 param7)
 {
+	PROFILE_FUNC();
 	this->type = 0x5C;
 	this->size = 0x12;
 

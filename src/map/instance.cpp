@@ -36,6 +36,7 @@
 
 
 CInstance::CInstance(CInstanceHandler* hand, uint16 id, INSTANCETYPE type){
+	PROFILE_FUNC();
 	m_Type = type;
 	m_BcnmID = id;
 	m_Handler = hand;
@@ -48,98 +49,121 @@ CInstance::CInstance(CInstanceHandler* hand, uint16 id, INSTANCETYPE type){
 }
 
 uint16 CInstance::getID(){
+	PROFILE_FUNC();
 	return m_BcnmID;
 }
 
 uint8 CInstance::getInstanceNumber(){
+	PROFILE_FUNC();
 	return m_InstanceNumber;
 }
 
 uint32 CInstance::getTimeLimit(){
+	PROFILE_FUNC();
 	return m_TimeLimit;
 }
 
 INSTANCETYPE CInstance::getType()
 {
+	PROFILE_FUNC();
 	return m_Type;
 }
 
 uint16 CInstance::getZoneId(){
+	PROFILE_FUNC();
 	return m_ZoneID;
 }
 
 uint8 CInstance::getMaxParticipants(){
+	PROFILE_FUNC();
 	return m_MaxParticipants;
 }
 
 uint8 CInstance::getMaxPlayerInBCNM(){
+	PROFILE_FUNC();
 	return m_PlayerList.size();
 }
 
 uint8 CInstance::getLevelCap(){
+	PROFILE_FUNC();
 	return m_LevelCap;
 }
 
 uint16 CInstance::getLootId(){
+	PROFILE_FUNC();
 	return m_LootId;
 }
 
 uint32 CInstance::getStartTime(){
+	PROFILE_FUNC();
 	return m_StartTime;
 }
 
 uint32 CInstance::getDeadTime(){
+	PROFILE_FUNC();
 	return m_AllDeadTime;
 }
 
 const int8* CInstance::getBcnmName(){
+	PROFILE_FUNC();
 	return m_name.c_str();
 }
 
 uint8 CInstance::getEntrance(){
+	PROFILE_FUNC();
 	return m_entrance;
 }
 
 void CInstance::setBcnmName(int8* name){
+	PROFILE_FUNC();
 	m_name.clear();
 	m_name.insert(0,name);
 }
 
 void CInstance::setTimeLimit(uint32 time){
+	PROFILE_FUNC();
 	m_TimeLimit = time;
 }
 
 void CInstance::setDeadTime(uint32 time){
+	PROFILE_FUNC();
 	m_AllDeadTime = time;
 }
 
 void CInstance::setInstanceNumber(uint8 instance){
+	PROFILE_FUNC();
 	m_InstanceNumber = instance;
 }
 
 void CInstance::setZoneId(uint16 zone){
+	PROFILE_FUNC();
 	m_ZoneID = zone;
 }
 
 void CInstance::setMaxParticipants(uint8 max){
+	PROFILE_FUNC();
 	m_MaxParticipants = max;
 }
 
 void CInstance::setLevelCap(uint8 cap){
+	PROFILE_FUNC();
 	m_LevelCap = cap;
 }
 
 void CInstance::setLootId(uint16 id){
+	PROFILE_FUNC();
 	m_LootId = id;
 }
 
 void CInstance::setEntrance(uint8 entrance){
+	PROFILE_FUNC();
 	m_entrance = entrance;
 }
 
 //========================PLAYER FUNCTIONS=============================================//
 
 void CInstance::enableSubJob(){
+	PROFILE_FUNC();
 	if(m_PlayerList.size()==0){
 		ShowWarning("instance:enableSubjob - No players in battlefield!\n");
 		return;
@@ -150,6 +174,7 @@ void CInstance::enableSubJob(){
 }
 
 void CInstance::disableSubJob(){
+	PROFILE_FUNC();
 	if(m_PlayerList.size()==0){
 		ShowWarning("instance:disableSubjob - No players in battlefield!\n");
 		return;
@@ -160,6 +185,7 @@ void CInstance::disableSubJob(){
 }
 
 uint8 CInstance::getPlayerMainJob(){
+	PROFILE_FUNC();
 	if(m_PlayerList.size()==0){
 		ShowWarning("instance:getPlayerMainJob - No players in battlefield!\n");
 		return 1;
@@ -168,6 +194,7 @@ uint8 CInstance::getPlayerMainJob(){
 }
 
 uint8 CInstance::getPlayerMainLevel(){
+	PROFILE_FUNC();
 	if(m_PlayerList.size()==0){
 		ShowWarning("instance:getPlayerMainLevel - No players in battlefield!\n");
 		return 1;
@@ -176,6 +203,7 @@ uint8 CInstance::getPlayerMainLevel(){
 }
 
 void CInstance::capPlayerToBCNM(){ //adjust player's level to the appropriate cap and remove buffs
+	PROFILE_FUNC();
 	if(m_PlayerList.size()==0){
 		ShowWarning("instance:getPlayerMainLevel - No players in battlefield!\n");
 		return;
@@ -194,6 +222,7 @@ void CInstance::capPlayerToBCNM(){ //adjust player's level to the appropriate ca
 
 
 bool CInstance::isPlayerInBcnm(CCharEntity* PChar){
+	PROFILE_FUNC();
 	for(int i=0; i<m_PlayerList.size(); i++){
 		if(PChar->id == m_PlayerList.at(i)->id){
 			return PChar->m_insideBCNM;
@@ -203,6 +232,7 @@ bool CInstance::isPlayerInBcnm(CCharEntity* PChar){
 }
 
 void CInstance::pushMessageToAllInBcnm(uint16 msg, uint16 param){
+	PROFILE_FUNC();
 	for(int i=0; i<m_PlayerList.size(); i++){
 		if(m_PlayerList.at(i)->m_lastBcnmTimePrompt != param){
 			m_PlayerList.at(i)->pushPacket(new CMessageBasicPacket(m_PlayerList.at(i),m_PlayerList.at(i),param,0,msg));
@@ -212,6 +242,7 @@ void CInstance::pushMessageToAllInBcnm(uint16 msg, uint16 param){
 }
 
 bool CInstance::addPlayerToBcnm(CCharEntity* PChar){
+	PROFILE_FUNC();
 	//split to get the reason for debugging
 	if(m_PlayerList.size() >= m_MaxParticipants){
 		ShowDebug("Cannot add %s to BCNM list, max size reached.\n",PChar->GetName());return false;
@@ -230,6 +261,7 @@ bool CInstance::addPlayerToBcnm(CCharEntity* PChar){
 }
 
 bool CInstance::delPlayerFromBcnm(CCharEntity* PChar){
+	PROFILE_FUNC();
 	for(int i=0; i<m_PlayerList.size(); i++){
 		if(m_PlayerList.at(i)->id == PChar->id){
 			PChar->m_insideBCNM = false;
@@ -246,6 +278,7 @@ bool CInstance::delPlayerFromBcnm(CCharEntity* PChar){
 }
 
 bool CInstance::enterBcnm(CCharEntity* PChar){
+	PROFILE_FUNC();
 	for(int i=0; i<m_PlayerList.size(); i++){
 		if(m_PlayerList.at(i)->id == PChar->id){
 			if(PChar->m_insideBCNM){ShowWarning("%s is already inside a BCNM!\n",PChar->GetName());}
@@ -260,6 +293,7 @@ bool CInstance::enterBcnm(CCharEntity* PChar){
 }
 
 bool CInstance::isValidPlayerForBcnm(CCharEntity* PChar){
+	PROFILE_FUNC();
 	for(int i=0; i<m_PlayerList.size(); i++){
 		if(PChar->id == m_PlayerList.at(i)->id){
 			return true;
@@ -269,6 +303,7 @@ bool CInstance::isValidPlayerForBcnm(CCharEntity* PChar){
 }
 
 bool CInstance::allPlayersDead(){
+	PROFILE_FUNC();
 	if(m_PlayerList.size()==0){ShowWarning("instance:allPlayersDead : No players in list!\n");}
 
 	for(int i=0; i<m_PlayerList.size();i++){
@@ -282,6 +317,7 @@ bool CInstance::allPlayersDead(){
 //==================BCNM FUNCTIONS=====================================================//
 
 void CInstance::lockBcnm(){
+	PROFILE_FUNC();
 	for(int i=0; i<m_PlayerList.size(); i++){
 		if(!m_PlayerList.at(i)->m_insideBCNM){
 			ShowDebug("Removing %s from the valid players list for BCNMID %i Instance %i \n",m_PlayerList.at(i)->GetName(),
@@ -292,6 +328,7 @@ void CInstance::lockBcnm(){
 }
 
 void CInstance::init(){
+	PROFILE_FUNC();
 	//reload from sql
 	instanceutils::spawnMonstersForBcnm(this);
 	m_StartTime = gettick();
@@ -299,6 +336,7 @@ void CInstance::init(){
 }
 
 void CInstance::addEnemy(CMobEntity* PMob, uint8 condition){
+	PROFILE_FUNC();
 	m_EnemyList.push_back(PMob);
 	if (condition & CONDITION_WIN_REQUIREMENT)
 	{
@@ -308,10 +346,12 @@ void CInstance::addEnemy(CMobEntity* PMob, uint8 condition){
 }
 
 void CInstance::addNpc(CBaseEntity* PNpc){
+	PROFILE_FUNC();
 	m_NpcList.push_back(PNpc);
 }
 
 bool CInstance::allEnemiesDefeated(){
+	PROFILE_FUNC();
 	bool allDefeated = true;
 	for(int i=0; i<m_EnemyVictoryList.size(); i++){
 		if(m_EnemyVictoryList.at(i).MobEntity->PBattleAI->GetCurrentAction() >= 20 && m_EnemyVictoryList.at(i).MobEntity->PBattleAI->GetCurrentAction() <= 23){
@@ -325,6 +365,7 @@ bool CInstance::allEnemiesDefeated(){
 }
 
 bool CInstance::isPlayersFighting(){
+	PROFILE_FUNC();
 	for(int i=0; i<m_EnemyList.size(); i++){
 		if(m_EnemyList.at(i)->PEnmityContainer->GetHighestEnmity() != NULL){
 			return true;
@@ -334,11 +375,13 @@ bool CInstance::isPlayersFighting(){
 }
 
 bool CInstance::isReserved(){
+	PROFILE_FUNC();
 	if(m_PlayerList.size()>0){return true;}
 	return false;
 }
 
 void CInstance::cleanup(){
+	PROFILE_FUNC();
 	ShowDebug("bcnm cleanup id:%i inst:%i \n",this->getID(),this->getInstanceNumber());
 	//wipe enmity from all mobs in list if needed
 	for(int i=0; i<m_EnemyList.size(); i++){
@@ -368,6 +411,7 @@ void CInstance::cleanup(){
 }
 
 void CInstance::beforeCleanup(){
+	PROFILE_FUNC();
 	if(!(m_RuleMask & RULES_ALLOW_SUBJOBS)){
 		// enable subjob
 		enableSubJob();
@@ -375,6 +419,7 @@ void CInstance::beforeCleanup(){
 }
 
 bool CInstance::winBcnm(){
+	PROFILE_FUNC();
 	beforeCleanup();
 	for(int i=0; i<m_PlayerList.size(); i++){
 		luautils::OnBcnmLeave(m_PlayerList.at(i),this,LEAVE_WIN);
@@ -385,11 +430,13 @@ bool CInstance::winBcnm(){
 }
 
 bool CInstance::spawnTreasureChest(){
+	PROFILE_FUNC();
 	instanceutils::spawnTreasureForBcnm(this);
 	return true;
 }
 
 void CInstance::OpenChestinBcnm(){
+	PROFILE_FUNC();
 	instanceutils::getChestItems(this);
 }
 
@@ -399,6 +446,7 @@ void CInstance::getHighestTHforBcnm(){
 }*/
 
 bool CInstance::loseBcnm(){
+	PROFILE_FUNC();
 	beforeCleanup();
 	for(int i=0; i<m_PlayerList.size(); i++){
 		luautils::OnBcnmLeave(m_PlayerList.at(i),this,LEAVE_LOSE);
@@ -410,6 +458,7 @@ bool CInstance::loseBcnm(){
 }
 
 bool CInstance::isEnemyBelowHPP(uint8 hpp){
+	PROFILE_FUNC();
 	for(int i=0; i<m_EnemyList.size(); i++){
 		if(m_EnemyList.at(i)->GetHPP()>hpp){
 			return false;
@@ -422,16 +471,19 @@ bool CInstance::isEnemyBelowHPP(uint8 hpp){
 
 //Create dynamis unique ID for player can't cheat by leaving a dynamis before the end and enter the next
 void CInstance::setDynaUniqueID(){
+	PROFILE_FUNC();
 	m_DynaUniqueID = m_BcnmID + m_StartTime;
 	printf("uniqueid core: %u",m_DynaUniqueID);
 }
 
 uint16 CInstance::getDynaUniqueID(){
+	PROFILE_FUNC();
 	return m_DynaUniqueID;
 }
 
 //Add player to dynamis
 bool CInstance::addPlayerToDynamis(CCharEntity* PChar){
+	PROFILE_FUNC();
 	//split to get the reason for debugging
 	if(m_PlayerList.size() >= m_MaxParticipants){
 		ShowDebug("Cannot add %s to Dynamis list, max size reached.\n",PChar->GetName());return false;
@@ -450,10 +502,12 @@ bool CInstance::addPlayerToDynamis(CCharEntity* PChar){
 
 //Add time on dynamis instance
 void CInstance::addTimeLimit(uint32 time){
+	PROFILE_FUNC();
 	m_TimeLimit += time;
 }
 
 bool CInstance::finishDynamis(){
+	PROFILE_FUNC();
 	for(int i=0; i<m_PlayerList.size(); i++){
 		luautils::OnBcnmLeave(m_PlayerList.at(i),this,LEAVE_LOSE);
 		if(this->delPlayerFromDynamis(m_PlayerList.at(i))){i--;}
@@ -464,6 +518,7 @@ bool CInstance::finishDynamis(){
 }
 
 void CInstance::cleanupDynamis(){
+	PROFILE_FUNC();
 	ShowDebug("Dynamis cleanup id:%i \n",this->getID());
 
 	//get all mob of this dyna zone
@@ -500,6 +555,7 @@ void CInstance::cleanupDynamis(){
 }
 
 bool CInstance::delPlayerFromDynamis(CCharEntity* PChar){
+	PROFILE_FUNC();
 	for(int i=0; i<m_PlayerList.size(); i++){
 		if(m_PlayerList.at(i)->id == PChar->id){
 			PChar->m_insideBCNM = false;
@@ -514,11 +570,13 @@ bool CInstance::delPlayerFromDynamis(CCharEntity* PChar){
 
 void CInstance::addMonsterInList(CMobEntity* PMob)
 {
+	PROFILE_FUNC();
 	m_MobList.push_back(PMob);
 }
 
 bool CInstance::isMonsterInList(CMobEntity* PMob)
 {
+	PROFILE_FUNC();
 	for(int i=0; i < m_MobList.size(); i++)
 	{
 		if(PMob->id == m_MobList.at(i)->id)
@@ -531,6 +589,7 @@ bool CInstance::isMonsterInList(CMobEntity* PMob)
 
 void CInstance::clearPlayerEnmity(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	for (std::vector<CMobEntity*>::iterator it = m_MobList.begin() ; it != m_MobList.end(); ++it)
 	{
 		CMobEntity* PMob = *it;

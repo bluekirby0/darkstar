@@ -89,6 +89,7 @@ sigfunc *compat_signal(int signo, sigfunc *func)
 
 static void sig_proc(int sn)
 {
+	PROFILE_FUNC();
 	static int is_called = 0;
 
 	switch (sn) 
@@ -127,6 +128,7 @@ static void sig_proc(int sn)
 
 void signals_init (void)
 {
+	PROFILE_FUNC();
 	compat_signal(SIGTERM, sig_proc);
 	compat_signal(SIGINT, sig_proc);
 #ifndef _DEBUG // need unhandled exceptions to debug on Windows
@@ -159,6 +161,7 @@ const char* get_git_revision(void)
 
 const char* get_git_revision(void)
 {
+	PROFILE_FUNC();
     FILE *fp = NULL;
 
     // Pull lastest fetch version from FETCH_HEAD..
@@ -189,6 +192,7 @@ const char* get_git_revision(void)
 
 static void display_title(void)
 {
+	PROFILE_FUNC();
 	ShowInfo("DarkStar - Git Revision Hash: " CL_WHITE"%s" CL_RESET".\n", get_git_revision());
 }
 
@@ -200,6 +204,7 @@ static void display_title(void)
 
 void usercheck(void)
 {
+	PROFILE_FUNC();
 #ifndef _WIN32
     if ((getuid() == 0) && (getgid() == 0)) 
 	{

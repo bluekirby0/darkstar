@@ -30,6 +30,7 @@
 
 CPartyMapPacket::CPartyMapPacket(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	this->type = 0xA0;
 	this->size = 0x0C;
 

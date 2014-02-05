@@ -90,6 +90,7 @@ Sql_t* Sql_Malloc(void)
 
 int32 Sql_Connect(Sql_t* self, const char* user, const char* passwd, const char* host, uint16 port, const char* db)
 {
+	PROFILE_FUNC();
 	if( self == NULL )
 		return SQL_ERROR;
 
@@ -111,6 +112,7 @@ int32 Sql_Connect(Sql_t* self, const char* user, const char* passwd, const char*
 
 int32 Sql_GetTimeout(Sql_t* self, uint32* out_timeout)
 {
+	PROFILE_FUNC();
 	if( self && out_timeout && SQL_SUCCESS == Sql_Query(self, "SHOW VARIABLES LIKE 'wait_timeout'") )
 	{
 		char* data;
@@ -136,6 +138,7 @@ int32 Sql_GetTimeout(Sql_t* self, uint32* out_timeout)
 
 int32 Sql_GetColumnNames(Sql_t* self, const char* table, char* out_buf, size_t buf_len, char sep)
 {
+	PROFILE_FUNC();
 	char* data;
 	size_t len;
 	size_t off = 0;
@@ -170,6 +173,7 @@ int32 Sql_GetColumnNames(Sql_t* self, const char* table, char* out_buf, size_t b
 
 int32 Sql_SetEncoding(Sql_t* self, const char* encoding)
 {
+	PROFILE_FUNC();
 	if( self && mysql_set_character_set(&self->handle, encoding) == 0 )
 	{
 		return SQL_SUCCESS;
@@ -185,6 +189,7 @@ int32 Sql_SetEncoding(Sql_t* self, const char* encoding)
 
 int32 Sql_Ping(Sql_t* self)
 {
+	PROFILE_FUNC();
 	if( self && mysql_ping(&self->handle) == 0 )
 	{
 		return SQL_SUCCESS;
@@ -202,6 +207,7 @@ int32 Sql_Ping(Sql_t* self)
 
 static int32 Sql_P_KeepaliveTimer(uint32 tick,CTaskMgr::CTask* PTask)
 {
+	PROFILE_FUNC();
 	Sql_t* self = (Sql_t*)PTask->m_data;
 	ShowInfo("Pinging SQL server to keep connection alive...\n");
 	Sql_Ping(self);
@@ -218,6 +224,7 @@ static int32 Sql_P_KeepaliveTimer(uint32 tick,CTaskMgr::CTask* PTask)
 
 int32 Sql_Keepalive(Sql_t* self)
 {
+	PROFILE_FUNC();
 	uint32 timeout, ping_interval;
 
 	// set a default value first
@@ -244,6 +251,7 @@ int32 Sql_Keepalive(Sql_t* self)
 
 size_t Sql_EscapeStringLen(Sql_t* self, char *out_to, const char *from, size_t from_len)
 {
+	PROFILE_FUNC();
 	if( self )
 		return (size_t)mysql_real_escape_string(&self->handle, out_to, from, (uint32)from_len);
 	else
@@ -258,6 +266,7 @@ size_t Sql_EscapeStringLen(Sql_t* self, char *out_to, const char *from, size_t f
 
 size_t Sql_EscapeString(Sql_t* self, char *out_to, const char *from)
 {
+	PROFILE_FUNC();
 	return Sql_EscapeStringLen(self,out_to,from,strlen(from));
 }
 
@@ -288,6 +297,7 @@ int32 Sql_Query(Sql_t* self, const char* query, ...)
 
 int32 Sql_QueryV(Sql_t* self, const char* query, va_list args)
 {
+	PROFILE_FUNC();
 	if( self == NULL )
 		return SQL_ERROR;
 
@@ -316,6 +326,7 @@ int32 Sql_QueryV(Sql_t* self, const char* query, va_list args)
 
 int32 Sql_QueryStr(Sql_t* self, const char* query)
 {
+	PROFILE_FUNC();
 	if( self == NULL )
 		return SQL_ERROR;
 
@@ -344,6 +355,7 @@ int32 Sql_QueryStr(Sql_t* self, const char* query)
 
 uint64 Sql_AffectedRows(Sql_t* self)
 {
+	PROFILE_FUNC();
 	if( self )
 	{
 		return (uint64)mysql_affected_rows(&self->handle);
@@ -360,6 +372,7 @@ uint64 Sql_AffectedRows(Sql_t* self)
 
 uint64 Sql_LastInsertId(Sql_t* self)
 {
+	PROFILE_FUNC();
 	if( self )
 	{
 		return (uint64)mysql_insert_id(&self->handle);
@@ -375,6 +388,7 @@ uint64 Sql_LastInsertId(Sql_t* self)
 
 uint32 Sql_NumColumns(Sql_t* self)
 {
+	PROFILE_FUNC();
 	if( self && self->result )
 	{
 		return (uint32)mysql_num_fields(self->result);
@@ -390,6 +404,7 @@ uint32 Sql_NumColumns(Sql_t* self)
 
 uint64 Sql_NumRows(Sql_t* self)
 {
+	PROFILE_FUNC();
 	if( self && self->result )
 	{
 		return (uint64)mysql_num_rows(self->result);
@@ -405,6 +420,7 @@ uint64 Sql_NumRows(Sql_t* self)
 
 int32 Sql_NextRow(Sql_t* self)
 {
+	PROFILE_FUNC();
 	if( self && self->result )
 	{
 		self->row = mysql_fetch_row(self->result);
@@ -431,6 +447,7 @@ int32 Sql_NextRow(Sql_t* self)
 
 int32 Sql_GetData(Sql_t* self, size_t col, char** out_buf, size_t* out_len)
 {
+	PROFILE_FUNC();
 	if( self && self->row )
 	{
 		if( col < Sql_NumColumns(self) )
@@ -457,6 +474,7 @@ int32 Sql_GetData(Sql_t* self, size_t col, char** out_buf, size_t* out_len)
 
 int8* Sql_GetData(Sql_t* self, size_t col)
 {
+	PROFILE_FUNC();
 	if( self && self->row )
 	{
 		if( col < Sql_NumColumns(self) )
@@ -476,6 +494,7 @@ int8* Sql_GetData(Sql_t* self, size_t col)
 
 int32 Sql_GetIntData(Sql_t *self, size_t col)
 {
+	PROFILE_FUNC();
 	if( self && self->row )
 	{
 		if( col < Sql_NumColumns(self) )
@@ -495,6 +514,7 @@ int32 Sql_GetIntData(Sql_t *self, size_t col)
 
 uint32 Sql_GetUIntData(Sql_t *self, size_t col)
 {
+	PROFILE_FUNC();
 	if( self && self->row )
 	{
 		if( col < Sql_NumColumns(self) )
@@ -514,6 +534,7 @@ uint32 Sql_GetUIntData(Sql_t *self, size_t col)
 
 float Sql_GetFloatData(Sql_t *self, size_t col)
 {
+	PROFILE_FUNC();
 	if( self && self->row )
 	{
 		if( col < Sql_NumColumns(self) )
@@ -533,6 +554,7 @@ float Sql_GetFloatData(Sql_t *self, size_t col)
 
 void Sql_FreeResult(Sql_t* self)
 {
+	PROFILE_FUNC();
 	if( self && self->result )
 	{
 		mysql_free_result(self->result);
@@ -550,6 +572,7 @@ void Sql_FreeResult(Sql_t* self)
 
 void Sql_ShowDebug_(Sql_t* self, const char* debug_file, const unsigned long debug_line)
 {
+	PROFILE_FUNC();
 	if( StringBuf_Length(&self->buf) > 0 )
 	{
 		ShowDebug("at %s:%lu - %s\n", debug_file, debug_line, StringBuf_Value(&self->buf));
@@ -568,6 +591,7 @@ void Sql_ShowDebug_(Sql_t* self, const char* debug_file, const unsigned long deb
 
 void Sql_Free(Sql_t* self) 
 {
+	PROFILE_FUNC();
 	if( self )
 	{
         mysql_close(&self->handle);
@@ -580,6 +604,7 @@ void Sql_Free(Sql_t* self)
 
 bool Sql_SetAutoCommit(Sql_t* self, bool value)
 {
+	PROFILE_FUNC();
     uint8 val = (value) ? 1 : 0;
 
     //if( self && mysql_autocommit(&self->handle, val) == 0)
@@ -594,6 +619,7 @@ bool Sql_SetAutoCommit(Sql_t* self, bool value)
 
 bool Sql_GetAutoCommit(Sql_t* self)
 {
+	PROFILE_FUNC();
     if( self )
     {
         int32 ret = Sql_Query(self, "SELECT @@autocommit;");
@@ -612,6 +638,7 @@ bool Sql_GetAutoCommit(Sql_t* self)
 
 bool Sql_TransactionStart(Sql_t* self)
 {
+	PROFILE_FUNC();
     if( self && Sql_Query(self, "START TRANSACTION;") != SQL_ERROR)
     {
         return true;
@@ -623,6 +650,7 @@ bool Sql_TransactionStart(Sql_t* self)
 
 bool Sql_TransactionCommit(Sql_t* self)
 {
+	PROFILE_FUNC();
     if( self && mysql_commit(&self->handle) == 0)
     {
         return true;
@@ -634,6 +662,7 @@ bool Sql_TransactionCommit(Sql_t* self)
 
 bool Sql_TransactionRollback(Sql_t* self)
 {
+	PROFILE_FUNC();
     //if( self && mysql_rollback(&self->handle) == 0)
     if( self && Sql_Query(self, "ROLLBACK;") != SQL_ERROR)
     {

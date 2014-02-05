@@ -32,6 +32,7 @@
 
 CBazaarCheckPacket::CBazaarCheckPacket(CCharEntity * PChar, BAZAARCHECK type)
 {
+	PROFILE_FUNC();
 	this->type = 0x08;	// 0x108
 	this->size = 0x11;
 

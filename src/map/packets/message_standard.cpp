@@ -32,6 +32,7 @@
 
 CMessageStandardPacket::CMessageStandardPacket(uint16 MessageID)
 {
+	PROFILE_FUNC();
     this->type = 0x09;
 	this->size = 0x08;
 
@@ -40,6 +41,7 @@ CMessageStandardPacket::CMessageStandardPacket(uint16 MessageID)
 
 CMessageStandardPacket::CMessageStandardPacket(CCharEntity* PChar, uint32 param0, uint32 param1, uint16 MessageID)
 {
+	PROFILE_FUNC();
 	this->type = 0x09;
 	this->size = 0x12;
 
@@ -67,6 +69,7 @@ CMessageStandardPacket::CMessageStandardPacket(CCharEntity* PChar, uint32 param0
 
 CMessageStandardPacket::CMessageStandardPacket(uint32 param0, uint32 param1, uint32 param2, uint32 param3, uint16 MessageID)
 {
+	PROFILE_FUNC();
 	this->type = 0x09;
 	this->size = 0x08;
 
@@ -85,6 +88,7 @@ CMessageStandardPacket::CMessageStandardPacket(uint32 param0, uint32 param1, uin
 
 CMessageStandardPacket::CMessageStandardPacket(CCharEntity* PChar, uint32 param0, uint16 MessageID)
 {
+	PROFILE_FUNC();
 	this->type = 0x09;
 	this->size = 0x18;
 

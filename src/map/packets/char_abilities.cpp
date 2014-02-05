@@ -32,6 +32,7 @@
 
 CCharAbilitiesPacket::CCharAbilitiesPacket(CCharEntity* PChar) 
 {
+	PROFILE_FUNC();
 	this->type = 0xAC;
 	this->size = 0x42;
 

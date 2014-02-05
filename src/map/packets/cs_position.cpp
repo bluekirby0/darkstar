@@ -30,6 +30,7 @@
 
 CCSPositionPacket::CCSPositionPacket(CCharEntity* PChar) 
 {
+	PROFILE_FUNC();
 	this->type = 0x65;
 	this->size = 0x10;
 	

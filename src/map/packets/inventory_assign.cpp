@@ -30,6 +30,7 @@
 
 CInventoryAssignPacket::CInventoryAssignPacket(CItem* PItem, uint8 Flag)
 {
+	PROFILE_FUNC();
 	this->type = 0x1F;
 	this->size = 0x08;
 

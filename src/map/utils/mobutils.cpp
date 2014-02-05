@@ -48,6 +48,7 @@ namespace mobutils
 
 uint16 GetWeaponDamage(CMobEntity* PMob)
 {
+	PROFILE_FUNC();
 	float MainLevel = PMob->GetMLevel();
     if (PMob->m_Type & MOBTYPE_NOTORIOUS)
         return (uint16)(MainLevel * 1.3 * (MainLevel < 40 ? 1.4 - MainLevel / 100 : 1));
@@ -64,6 +65,7 @@ uint16 GetWeaponDamage(CMobEntity* PMob)
 
 uint16 GetBaseToRank(uint8 rank, uint16 lvl)
 {
+	PROFILE_FUNC();
 	switch (rank)
 	{
 		case 1: return (5+((lvl-1)*50)/100);
@@ -85,7 +87,8 @@ uint16 GetBaseToRank(uint8 rank, uint16 lvl)
 ************************************************************************/
 
 uint16 GetBase(CMobEntity * PMob, uint8 rank)
- {
+{
+	PROFILE_FUNC();
  	uint8 lvl = PMob->GetMLevel();
  	if(lvl > 50){
  		switch(rank){
@@ -133,6 +136,7 @@ uint16 GetBase(CMobEntity * PMob, uint8 rank)
 
 void CalculateStats(CMobEntity * PMob)
 {
+	PROFILE_FUNC();
 	// remove all to keep mods in sync
 	PMob->StatusEffectContainer->KillAllStatusEffect();
 	PMob->restoreModifiers();
@@ -630,6 +634,7 @@ void CalculateStats(CMobEntity * PMob)
 
 void AddTraits(CMobEntity* PMob, JOBTYPE jobID, uint8 lvl)
 {
+	PROFILE_FUNC();
 	TraitList_t* PTraitsList = traits::GetTraits(jobID);
     for (uint8 i = 0; i <  PTraitsList->size(); ++i)
 	{
@@ -648,6 +653,7 @@ void AddTraits(CMobEntity* PMob, JOBTYPE jobID, uint8 lvl)
  * then stored in PMob->PSpellContainer
  */
 void GetAvailableSpells(CMobEntity* PMob) {
+	PROFILE_FUNC();
 	//make sure the mob actually has a spell list
 	if (PMob->m_SpellListContainer == NULL)
 	{
@@ -737,6 +743,7 @@ void GetAvailableSpells(CMobEntity* PMob) {
 
 void InitializeMob(CMobEntity* PMob, CZone* PZone)
 {
+	PROFILE_FUNC();
 	// add special mob mods
 
     // this only has to be added once
@@ -897,6 +904,7 @@ void LoadCustomMods()
 
 ModsList_t* GetMobFamilyMods(uint16 familyId, bool create)
 {
+	PROFILE_FUNC();
 	if(mobFamilyModsList[familyId])
 	{
 		return mobFamilyModsList[familyId];
@@ -918,6 +926,7 @@ ModsList_t* GetMobFamilyMods(uint16 familyId, bool create)
 
 ModsList_t* GetMobPoolMods(uint32 poolId, bool create)
 {
+	PROFILE_FUNC();
 	if(mobPoolModsList[poolId])
 	{
 		return mobPoolModsList[poolId];
@@ -939,6 +948,7 @@ ModsList_t* GetMobPoolMods(uint32 poolId, bool create)
 
 ModsList_t* GetMobSpawnMods(uint32 mobId, bool create)
 {
+	PROFILE_FUNC();
 	if(mobSpawnModsList[mobId])
 	{
 		return mobSpawnModsList[mobId];
@@ -960,6 +970,7 @@ ModsList_t* GetMobSpawnMods(uint32 mobId, bool create)
 
 void AddCustomMods(CMobEntity* PMob)
 {
+	PROFILE_FUNC();
 
 	// find my families custom mods
 	ModsList_t* PFamilyMods = GetMobFamilyMods(PMob->m_Family);
@@ -1015,6 +1026,7 @@ void AddCustomMods(CMobEntity* PMob)
 
 void SetupMaat(CMobEntity* PMob, JOBTYPE job)
 {
+	PROFILE_FUNC();
 	//set job based on characters job
 	PMob->ChangeMJob(job);
 

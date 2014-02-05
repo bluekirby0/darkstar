@@ -59,6 +59,7 @@
 
 CCampaingPacket::CCampaingPacket(CCharEntity * PChar, uint8 number) 
 {
+	PROFILE_FUNC();
 	this->type = 0x71; 
 	this->size = 0x66; 
 

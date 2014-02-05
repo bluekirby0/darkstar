@@ -31,6 +31,7 @@
 
 CLinkshellEquipPacket::CLinkshellEquipPacket(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	this->type = 0xE0;
 	this->size = 0x04; 
 

@@ -33,6 +33,7 @@
 
 CBazaarItemPacket::CBazaarItemPacket(CItem* PItem, uint8 SlotID, uint16 Tax) 
 {
+	PROFILE_FUNC();
 	this->type = 0x05;	// 0x105
 	this->size = 0x17;
 

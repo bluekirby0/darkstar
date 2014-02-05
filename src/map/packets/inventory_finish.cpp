@@ -27,6 +27,7 @@
 
 CInventoryFinishPacket::CInventoryFinishPacket() 
 {
+	PROFILE_FUNC();
 	this->type = 0x1D;
 	this->size = 0x04;
 

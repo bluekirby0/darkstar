@@ -33,6 +33,7 @@
 ************************************************************************/
 CAttack::CAttack(CBattleEntity* attacker, PHYSICAL_ATTACK_TYPE type, PHYSICAL_ATTACK_DIRECTION direction, CAttackRound* attackRound)
 {
+	PROFILE_FUNC();
 	m_attacker = attacker;
 	m_victim = attacker->PBattleAI->GetBattleTarget();
 	m_attackRound = attackRound;
@@ -58,6 +59,7 @@ CAttack::CAttack(CBattleEntity* attacker, PHYSICAL_ATTACK_TYPE type, PHYSICAL_AT
 ************************************************************************/
 PHYSICAL_ATTACK_DIRECTION CAttack::GetAttackDirection()
 {
+	PROFILE_FUNC();
 	return m_attackDirection;
 }
 
@@ -68,6 +70,7 @@ PHYSICAL_ATTACK_DIRECTION CAttack::GetAttackDirection()
 ************************************************************************/
 PHYSICAL_ATTACK_TYPE CAttack::GetAttackType()
 {
+	PROFILE_FUNC();
 	return m_attackType;
 }
 
@@ -78,6 +81,7 @@ PHYSICAL_ATTACK_TYPE CAttack::GetAttackType()
 ************************************************************************/
 void CAttack::SetAttackType(PHYSICAL_ATTACK_TYPE type)
 {
+	PROFILE_FUNC();
 	m_attackType = type;
 }
 
@@ -88,6 +92,7 @@ void CAttack::SetAttackType(PHYSICAL_ATTACK_TYPE type)
 ************************************************************************/
 bool CAttack::IsCritical()
 {
+	PROFILE_FUNC();
 	return m_isCritical;
 }
 
@@ -98,6 +103,7 @@ bool CAttack::IsCritical()
 ************************************************************************/
 void CAttack::SetCritical(bool value)
 {
+	PROFILE_FUNC();
 	m_isCritical = value;
 	m_damageRatio = battleutils::GetDamageRatio(m_attacker, m_victim, m_isCritical, 0);
 }
@@ -109,6 +115,7 @@ void CAttack::SetCritical(bool value)
 ************************************************************************/
 bool CAttack::IsGuarded()
 {
+	PROFILE_FUNC();
 	m_isGuarded = attackutils::IsGuarded(m_attacker, m_victim);
 	if (m_isGuarded)
 	{
@@ -131,6 +138,7 @@ bool CAttack::IsGuarded()
 ************************************************************************/
 bool CAttack::IsEvaded()
 {
+	PROFILE_FUNC();
 	return m_isEvaded;
 }
 
@@ -141,6 +149,7 @@ bool CAttack::IsEvaded()
 ************************************************************************/
 void CAttack::SetEvaded(bool value)
 {
+	PROFILE_FUNC();
 	m_isEvaded = value;
 }
 
@@ -151,6 +160,7 @@ void CAttack::SetEvaded(bool value)
 ************************************************************************/
 bool CAttack::IsBlocked()
 {
+	PROFILE_FUNC();
 	m_isBlocked = attackutils::IsBlocked(m_attacker, m_victim);
 	return m_isBlocked;
 }
@@ -162,6 +172,7 @@ bool CAttack::IsBlocked()
 ************************************************************************/
 bool CAttack::IsFirstSwing()
 {
+	PROFILE_FUNC();
 	return m_isFirstSwing;
 }
 
@@ -172,6 +183,7 @@ bool CAttack::IsFirstSwing()
 ************************************************************************/
 void CAttack::SetAsFirstSwing()
 {
+	PROFILE_FUNC();
 	m_isFirstSwing = true;
 }
 
@@ -182,6 +194,7 @@ void CAttack::SetAsFirstSwing()
 ************************************************************************/
 float CAttack::GetDamageRatio()
 {
+	PROFILE_FUNC();
 	return m_damageRatio;
 }
 
@@ -192,6 +205,7 @@ float CAttack::GetDamageRatio()
 ************************************************************************/
 uint8 CAttack::GetWeaponSlot()
 {
+	PROFILE_FUNC();
 	if (m_attackRound->IsH2H())
 	{
 		return SLOT_MAIN;
@@ -206,6 +220,7 @@ uint8 CAttack::GetWeaponSlot()
 ************************************************************************/
 uint8 CAttack::GetAnimationID()
 {
+	PROFILE_FUNC();
 	// Footwork
 	if (m_attacker->GetMJob() == JOB_MNK && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
 	{
@@ -229,6 +244,7 @@ uint8 CAttack::GetAnimationID()
 ************************************************************************/
 uint8 CAttack::GetHitRate()
 {
+	PROFILE_FUNC();
 	// Right hand hitrate
 	if (m_attackDirection == RIGHTATTACK && m_attackType != KICK_ATTACK)
 	{
@@ -274,6 +290,7 @@ uint8 CAttack::GetHitRate()
 ************************************************************************/
 int32 CAttack::GetDamage()
 {
+	PROFILE_FUNC();
 	return m_damage;
 }
 
@@ -284,6 +301,7 @@ int32 CAttack::GetDamage()
 ************************************************************************/
 void CAttack::SetDamage(int32 value)
 {
+	PROFILE_FUNC();
 	m_damage = value;
 }
 
@@ -294,6 +312,7 @@ void CAttack::SetDamage(int32 value)
 ************************************************************************/
 void CAttack::ProcessDamage()
 {
+	PROFILE_FUNC();
 	// Sneak attack.
 	if (m_attacker->GetMJob() == JOB_THF &&
 		m_isFirstSwing &&

@@ -271,6 +271,7 @@ void LoadSkillChainDamageModifiers()
 
 void FreeWeaponSkillsList()
 {
+	PROFILE_FUNC();
 	for(int32 SkillId= 0; SkillId < MAX_WEAPONSKILL_ID; ++SkillId)
 	{
 		delete g_PWeaponSkillList[SkillId];
@@ -282,6 +283,7 @@ void FreeWeaponSkillsList()
 ************************************************************************/
 void FreeMobSkillList()
 {
+	PROFILE_FUNC();
 	for(int32 SkillID= 0; SkillID < MAX_MOBSKILL_ID; ++SkillID)
 	{
 		delete g_PMobSkillList[SkillID];
@@ -290,6 +292,7 @@ void FreeMobSkillList()
 
 void FreeSkillChainDamageModifiers()
 {
+	PROFILE_FUNC();
     // These aren't dynamicly allocated at this point so no need to free them.
 }
 
@@ -299,6 +302,7 @@ void FreeSkillChainDamageModifiers()
 
 uint8 GetSkillRank(SKILLTYPE SkillID, JOBTYPE JobID)
 {
+	PROFILE_FUNC();
 	return g_SkillRanks[SkillID][JobID];
 }
 
@@ -308,15 +312,18 @@ uint8 GetSkillRank(SKILLTYPE SkillID, JOBTYPE JobID)
 
 uint16 GetMaxSkill(SKILLTYPE SkillID, JOBTYPE JobID, uint8 level)
 {
+	PROFILE_FUNC();
 	return g_SkillTable[level][g_SkillRanks[SkillID][JobID]];
 }
 
 uint16 GetMaxSkill(uint8 rank, uint8 level)
 {
+	PROFILE_FUNC();
     return g_SkillTable[level][rank];
 }
 
 bool isValidSelfTargetWeaponskill(int wsid){
+	PROFILE_FUNC();
 	switch(wsid){
 	case 163: //starlight
 	case 164: //moonlight
@@ -335,6 +342,7 @@ bool isValidSelfTargetWeaponskill(int wsid){
 
 uint8 GetEnmityMod(uint8 level, uint8 modType)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(modType >= 2);
 
 	if(level>=100) { level = 99; }
@@ -350,6 +358,7 @@ uint8 GetEnmityMod(uint8 level, uint8 modType)
 
 CWeaponSkill* GetWeaponSkill(uint16 WSkillID)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(WSkillID >= MAX_WEAPONSKILL_ID);
 
     return g_PWeaponSkillList[WSkillID];
@@ -363,6 +372,7 @@ CWeaponSkill* GetWeaponSkill(uint16 WSkillID)
 
 std::list<CWeaponSkill*> GetWeaponSkills(uint8 skill)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(skill >= MAX_SKILLTYPE);
 
 	return g_PWeaponSkillsList[skill];
@@ -376,6 +386,7 @@ std::list<CWeaponSkill*> GetWeaponSkills(uint8 skill)
 
 CMobSkill* GetMobSkill(uint16 SkillID)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(SkillID >= MAX_MOBSKILL_ID);
 
     return g_PMobSkillList[SkillID];
@@ -389,12 +400,14 @@ CMobSkill* GetMobSkill(uint16 SkillID)
 
 std::vector<CMobSkill*> GetMobSkillsByFamily(uint16 FamilyID)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(FamilyID >= sizeof(g_PMobFamilySkills));
 
 	return g_PMobFamilySkills[FamilyID];
 }
 
 int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 Tier, uint8 element){
+	PROFILE_FUNC();
     int32 damage = 0;
 
     // TODO: resists (likely only based off targets resistance, perhaps with some level correction
@@ -498,6 +511,7 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
 ************************************************************************/
 uint16 CalculateSpikeDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 spikesType, uint16 damageTaken)
 {
+	PROFILE_FUNC();
     uint16 damage = PDefender->getMod(MOD_SPIKES_DMG);
     int16 intStat = PDefender->INT();
     int16 mattStat = PDefender->getMod(MOD_MATT);
@@ -523,6 +537,7 @@ uint16 CalculateSpikeDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
 
 bool HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, apAction_t* Action, uint32 damage)
 {
+	PROFILE_FUNC();
     uint16 spikes = PDefender->getMod(MOD_SPIKES);
     Action->spikesMessage = 44;
     if(spikes)
@@ -853,6 +868,7 @@ bool HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, apAc
 
 bool HandleSpikesEquip(CBattleEntity* PAttacker, CBattleEntity* PDefender, apAction_t* Action, uint8 damage, SUBEFFECT spikesType, uint8 chance)
 {
+	PROFILE_FUNC();
     int lvlDiff = dsp_cap((PDefender->GetMLevel() - PAttacker->GetMLevel()), -5, 5)*2;
 
     if(rand()%100 <= chance+lvlDiff){
@@ -875,6 +891,7 @@ bool HandleSpikesEquip(CBattleEntity* PAttacker, CBattleEntity* PDefender, apAct
 
 void HandleSpikesStatusEffect(CBattleEntity* PAttacker, apAction_t* Action)
 {
+	PROFILE_FUNC();
     int lvlDiff = 0;
     if( Action->ActionTarget ){
         lvlDiff = dsp_cap((Action->ActionTarget->GetMLevel() - PAttacker->GetMLevel()), -5, 5)*2;
@@ -913,6 +930,7 @@ void HandleSpikesStatusEffect(CBattleEntity* PAttacker, apAction_t* Action)
 
 void HandleEnspell(CBattleEntity* PAttacker, CBattleEntity* PDefender, apAction_t* Action, uint8 hitNumber, CItemWeapon* weapon, uint32 finaldamage)
 {
+	PROFILE_FUNC();
     CCharEntity* PChar = NULL;
 
     if(PAttacker->objtype == TYPE_PC)
@@ -1213,7 +1231,8 @@ void HandleEnspell(CBattleEntity* PAttacker, CBattleEntity* PDefender, apAction_
 ************************************************************************/
 
 // TODO: remove function, move additional effects into items script files (deleting from switch as they get done)
-void HandleRangedAdditionalEffect(CCharEntity* PAttacker, CBattleEntity* PDefender,apAction_t* Action){
+void HandleRangedAdditionalEffect(CCharEntity* PAttacker, CBattleEntity* PDefender, apAction_t* Action){
+	PROFILE_FUNC();
 	CItemWeapon* PAmmo = (CItemWeapon*)PAttacker->getStorage(LOC_INVENTORY)->GetItem(PAttacker->equip[SLOT_AMMO]);
 	//add effects dont have 100% proc, presume level dependant. 95% chance but -5% for each level diff.
 	//capped at 5% proc when mob is 18 (!!!) levels higher than you.
@@ -1520,6 +1539,7 @@ void HandleRangedAdditionalEffect(CCharEntity* PAttacker, CBattleEntity* PDefend
 
 uint8 GetRangedHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isBarrage)
 {
+	PROFILE_FUNC();
 	int acc = 0;
 	int hitrate = 75;
 
@@ -1560,6 +1580,7 @@ uint8 GetRangedHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool 
 //todo: need to penalise attacker's RangedAttack depending on distance from mob. (% decrease)
 float GetRangedPDIF(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
 
 	//get ranged attack value
 	uint16 rAttack = 1;
@@ -1630,6 +1651,7 @@ float GetRangedPDIF(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 }
 
 float CalculateBaseTP(int delay){
+	PROFILE_FUNC();
 	float x = 1;
 	if(delay<=180){
 		x = 5.0f + (((float)delay-180.0f)*1.5f)/180.0f;
@@ -1650,6 +1672,7 @@ float CalculateBaseTP(int delay){
 }
 
 bool TryInterruptSpell(CBattleEntity* PAttacker, CBattleEntity* PDefender){
+	PROFILE_FUNC();
 
 	// cannot interrupt when manafont is active
 	if(PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
@@ -1733,6 +1756,7 @@ low level monsters as they miss too much. Presuming a min cap of -10%.
 ************************************************************************/
 uint8 GetBlockRate(CBattleEntity* PAttacker,CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
 	int8 shieldSize = 0;
 	float skill = 0.0f;
 
@@ -1794,6 +1818,7 @@ uint8 GetBlockRate(CBattleEntity* PAttacker,CBattleEntity* PDefender)
 
 uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
     CItemWeapon* PWeapon = GetEntityWeapon(PDefender, SLOT_MAIN);
     if((PWeapon != NULL && PWeapon->getID() != 0 && PWeapon->getID() != 65535 &&
        PWeapon->getSkillType() != SKILL_H2H) && battleutils::IsEngauged(PDefender))
@@ -1835,6 +1860,7 @@ uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 
 uint8 GetGuardRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
     CItemWeapon* PWeapon = GetEntityWeapon(PDefender, SLOT_MAIN);
 
     // Defender must have no weapon equipped, or a hand to hand weapon equipped to guard
@@ -1866,6 +1892,7 @@ uint8 GetGuardRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 
 uint32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim)
 {
+	PROFILE_FUNC();
     bool isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
 
 	if(PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FORMLESS_STRIKES))
@@ -2094,6 +2121,7 @@ uint32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, in
 
 uint8 GetHitRateEx(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 attackNumber, uint8 offsetAccuracy) //subWeaponAttack is for calculating acc of dual wielded sub weapon
 {
+	PROFILE_FUNC();
     int32 hitrate = 75;
 
 	if (PAttacker->objtype == TYPE_PC && ((PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK) && abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23) ||
@@ -2111,14 +2139,17 @@ uint8 GetHitRateEx(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 att
 }
 uint8 GetHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
 	return GetHitRateEx(PAttacker, PDefender, 0, 0); //assume attack 0(main)
 }
 uint8 GetHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 attackNumber)
 {
+	PROFILE_FUNC();
 	return GetHitRateEx(PAttacker, PDefender, attackNumber, 0);
 }
 uint8 GetHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 attackNumber, uint8 offsetAccuracy)
 {
+	PROFILE_FUNC();
 	return GetHitRateEx(PAttacker, PDefender, attackNumber, offsetAccuracy);
 }
 
@@ -2130,6 +2161,7 @@ uint8 GetHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 attac
 
 uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ignoreSneakTrickAttack)
 {
+	PROFILE_FUNC();
 	int32 crithitrate = 5;
 	if(PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MIGHTY_STRIKES,0) ||
 		PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MIGHTY_STRIKES)){
@@ -2174,6 +2206,7 @@ uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ig
 
 float GetDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical, uint16 bonusAttPercent)
 {
+	PROFILE_FUNC();
 	// used to apply a % of attack bonus
 	float attPercentBonus = 0;
 	if (bonusAttPercent >= 1)
@@ -2260,6 +2293,7 @@ float GetDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool is
 
 int32 GetFSTR(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 SlotID)
 {
+	PROFILE_FUNC();
 	int32 rank = 0;
 	int32 fstr = 0;
 	float dif = PAttacker->STR() - PDefender->VIT();
@@ -2322,6 +2356,7 @@ int32 GetFSTR(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 SlotID)
 
 uint8 getHitCount(uint8 hits)
 {
+	PROFILE_FUNC();
     uint8 distribution = rand()%100;
     uint8 num = 1;
 
@@ -2389,7 +2424,8 @@ uint8 getHitCount(uint8 hits)
 ************************************************************************/
 
 uint8 CheckMobMultiHits(CBattleEntity* PEntity)
-{		
+{
+	PROFILE_FUNC();
 
 	if (PEntity->objtype == TYPE_MOB || PEntity->objtype == TYPE_PET)
 	{ 
@@ -2436,6 +2472,7 @@ uint8 CheckMobMultiHits(CBattleEntity* PEntity)
 
 uint8 CheckMultiHits(CBattleEntity* PEntity, CItemWeapon* PWeapon)
 {
+	PROFILE_FUNC();
 	//checking players weapon hit count
 	uint8 num = PWeapon->getHitCount();
 
@@ -2491,6 +2528,7 @@ uint8 CheckMultiHits(CBattleEntity* PEntity, CItemWeapon* PWeapon)
 
 bool IsParalised(CBattleEntity* PAttacker)
 {
+	PROFILE_FUNC();
 	return (rand()%100 < dsp_cap(PAttacker->getMod(MOD_PARALYZE) - PAttacker->getMod(MOD_PARALYZERES), 0, 100));
 }
 
@@ -2502,6 +2540,7 @@ to ignore the effects of Third Eye (but NOT try to remove).
 ******************************************************************************/
 bool IsAnticipated(CBattleEntity* PDefender, bool forceRemove, bool ignore)
 {
+	PROFILE_FUNC();
 	if(ignore){
 		return false;
 	}
@@ -2564,6 +2603,7 @@ bool IsAnticipated(CBattleEntity* PDefender, bool forceRemove, bool ignore)
 
 bool IsAbsorbByShadow(CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
 	//utsus always overwrites blink, so if utsus>0 then we know theres no blink.
     uint16 Shadow = PDefender->getMod(MOD_UTSUSEMI);
 	uint16 modShadow = MOD_UTSUSEMI;
@@ -2624,6 +2664,7 @@ bool IsAbsorbByShadow(CBattleEntity* PDefender)
 
 bool IsIntimidated(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
 	// cannot intimidate yourself!
 	if(PAttacker == PDefender) return false;
 
@@ -2656,6 +2697,7 @@ bool IsIntimidated(CBattleEntity* PAttacker, CBattleEntity* PDefender)
 
 bool EnfeebleHit(CBattleEntity* PCaster, CBattleEntity* PDefender, EFFECT Effect)
 {
+	PROFILE_FUNC();
 
 	int16 dlvl = (PCaster->GetMLevel() - PDefender->GetMLevel());
 	int16 maxCap = 90;
@@ -2686,6 +2728,7 @@ bool EnfeebleHit(CBattleEntity* PCaster, CBattleEntity* PDefender, EFFECT Effect
 
 uint8 GetSkillchainSubeffect(SKILLCHAIN_ELEMENT skillchain)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(skillchain < SC_NONE || skillchain > SC_DARKNESS_II);
 
     static const uint8 effects[] = {
@@ -2713,6 +2756,7 @@ uint8 GetSkillchainSubeffect(SKILLCHAIN_ELEMENT skillchain)
 
 uint8 GetSkillchainTier(SKILLCHAIN_ELEMENT skillchain)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(skillchain < SC_NONE || skillchain > SC_DARKNESS_II);
 
     static const uint8 tiers[] = {
@@ -2740,6 +2784,7 @@ uint8 GetSkillchainTier(SKILLCHAIN_ELEMENT skillchain)
 
 SKILLCHAIN_ELEMENT FormSkillchain(std::list<SKILLCHAIN_ELEMENT> resonance, std::list<SKILLCHAIN_ELEMENT> skill)
 {
+	PROFILE_FUNC();
     SKILLCHAIN_ELEMENT result = SC_NONE;
 
     for(std::list<SKILLCHAIN_ELEMENT>::iterator i = skill.begin(); i != skill.end(); i++)
@@ -2806,6 +2851,7 @@ SKILLCHAIN_ELEMENT FormSkillchain(std::list<SKILLCHAIN_ELEMENT> resonance, std::
 
 SUBEFFECT GetSkillChainEffect(CBattleEntity* PDefender, CWeaponSkill* PWeaponSkill)
 {
+	PROFILE_FUNC();
     CStatusEffect* PSCEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
     CStatusEffect* PCBEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_CHAINBOUND, 0);
     SKILLCHAIN_ELEMENT skillchain = SC_NONE;
@@ -2899,6 +2945,7 @@ SUBEFFECT GetSkillChainEffect(CBattleEntity* PDefender, CWeaponSkill* PWeaponSki
 
 SUBEFFECT GetSkillChainEffect(CBattleEntity* PDefender, CBlueSpell* PSpell)
 {
+	PROFILE_FUNC();
     CStatusEffect* PSCEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
     CStatusEffect* PCBEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_CHAINBOUND, 0);
     SKILLCHAIN_ELEMENT skillchain = SC_NONE;
@@ -2991,6 +3038,7 @@ SUBEFFECT GetSkillChainEffect(CBattleEntity* PDefender, CBlueSpell* PSpell)
 
 uint16 GetSkillchainMinimumResistance(SKILLCHAIN_ELEMENT element, CBattleEntity* PDefender)
 {
+	PROFILE_FUNC();
     static const uint16 resistances[][4] =
     {
         {MOD_NONE,       MOD_NONE, MOD_NONE, MOD_NONE}, // SC_NONE
@@ -3056,6 +3104,7 @@ uint16 GetSkillchainMinimumResistance(SKILLCHAIN_ELEMENT element, CBattleEntity*
 
 uint16 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint16 lastSkillDamage)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PAttacker == NULL);
     DSP_DEBUG_BREAK_IF(PDefender == NULL);
 
@@ -3124,6 +3173,7 @@ uint16 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
 
 CItemArmor* GetEntityArmor(CBattleEntity* PEntity, SLOTTYPE Slot)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(Slot < SLOT_HEAD || Slot > SLOT_LINK);
 
     if(PEntity->objtype == TYPE_PC)
@@ -3140,6 +3190,7 @@ CItemArmor* GetEntityArmor(CBattleEntity* PEntity, SLOTTYPE Slot)
 
 CItemWeapon* GetEntityWeapon(CBattleEntity* PEntity, SLOTTYPE Slot)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(Slot < SLOT_MAIN || Slot > SLOT_AMMO);
 
     if(PEntity->objtype == TYPE_PC)
@@ -3156,6 +3207,7 @@ CItemWeapon* GetEntityWeapon(CBattleEntity* PEntity, SLOTTYPE Slot)
 
 void MakeEntityStandUp(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PEntity == NULL);
 
     if (PEntity->objtype == TYPE_PC)
@@ -3171,6 +3223,7 @@ void MakeEntityStandUp(CBattleEntity* PEntity)
 
 bool IsEngauged(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PEntity == NULL);
 
     return (PEntity->animation != ANIMATION_HEALING &&
@@ -3186,6 +3239,7 @@ bool IsEngauged(CBattleEntity* PEntity)
 
 bool HasNinjaTool(CBattleEntity* PEntity, CSpell* PSpell, bool ConsumeTool)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PEntity == NULL || PSpell == NULL);
 
     if (PEntity->objtype == TYPE_PC)
@@ -3278,6 +3332,7 @@ bool HasNinjaTool(CBattleEntity* PEntity, CSpell* PSpell, bool ConsumeTool)
 
 CBattleEntity* getAvailableTrickAttackChar(CBattleEntity* taUser, CBattleEntity* PMob)
 {
+	PROFILE_FUNC();
 	if (!taUser->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK))
 	{
 		return NULL;
@@ -3412,6 +3467,7 @@ return NULL;
 
 void GenerateCureEnmity(CBattleEntity* PSource, CBattleEntity* PTarget, uint16 amount)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PSource == NULL);
 	DSP_DEBUG_BREAK_IF(PTarget == NULL);
     DSP_DEBUG_BREAK_IF(amount < 0);
@@ -3439,6 +3495,7 @@ void GenerateCureEnmity(CBattleEntity* PSource, CBattleEntity* PTarget, uint16 a
 
 void TransferEnmity(CBattleEntity* CharHateReceiver, CBattleEntity* CharHateGiver, CMobEntity* PMob, uint8 percentToTransfer)
 {
+	PROFILE_FUNC();
 	// Ensure the players have a battle target..
 	if (PMob == NULL || ((CMobEntity*)PMob)->PEnmityContainer == NULL)
 		return;
@@ -3457,6 +3514,7 @@ void TransferEnmity(CBattleEntity* CharHateReceiver, CBattleEntity* CharHateGive
 ************************************************************************/
 uint16 doSoulEaterEffect(CCharEntity* m_PChar, uint32 damage)
 {
+	PROFILE_FUNC();
 	// Souleater has no effect <10HP.
 	if(m_PChar->GetMJob()==JOB_DRK && m_PChar->health.hp>=10 && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SOULEATER))
 	{
@@ -3488,6 +3546,7 @@ uint16 doSoulEaterEffect(CCharEntity* m_PChar, uint32 damage)
 ************************************************************************/
 uint8 getStoreTPbonusFromMerit(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
 	if (PEntity->objtype == TYPE_PC)
 	{
 		if (((CCharEntity*)PEntity)->GetMJob() == JOB_SAM)
@@ -3507,6 +3566,7 @@ uint8 getStoreTPbonusFromMerit(CBattleEntity* PEntity)
 ************************************************************************/
 uint16 getOverWhelmDamageBonus(CCharEntity* m_PChar, CBattleEntity* PDefender, uint16 damage)
 {
+	PROFILE_FUNC();
 	if (m_PChar->GetMJob() == JOB_SAM || m_PChar->GetSJob() == JOB_SAM) // only allow if player 75 or more
 	{
 		if (m_PChar->GetMLevel() >= 75)
@@ -3540,6 +3600,7 @@ uint16 getOverWhelmDamageBonus(CCharEntity* m_PChar, CBattleEntity* PDefender, u
 
 uint8 getBarrageShotCount(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	/*
 	Ranger level 30, four shots.
 	Ranger level 50, five shots.
@@ -3599,6 +3660,7 @@ uint8 getBarrageShotCount(CCharEntity* PChar)
 
 uint16 jumpAbility(CBattleEntity* PAttacker, CBattleEntity* PVictim, uint8 tier)
 {
+	PROFILE_FUNC();
 
 	// super jump - remove 99% of enmity
 	if (tier == 3 && PVictim->objtype == TYPE_MOB)
@@ -3741,6 +3803,7 @@ uint16 jumpAbility(CBattleEntity* PAttacker, CBattleEntity* PVictim, uint8 tier)
 
 void tryToCharm(CBattleEntity* PCharmer, CBattleEntity* PVictim)
 {
+	PROFILE_FUNC();
 	//Gear with Charm + does not affect the success rate of Charm, but increases the duration of the Charm.
 	//Each +1 to Charm increases the duration of charm by 5%; +20 Charm doubles the duration of charm.
 
@@ -3894,6 +3957,7 @@ void tryToCharm(CBattleEntity* PCharmer, CBattleEntity* PVictim)
 
 bool TryCharm(CBattleEntity* PCharmer, CBattleEntity* PVictim, uint32 base)
 {
+	PROFILE_FUNC();
 	//---------------------------------------------------------
 	//	chance of charm is based on:
 	//	-CHR - both entities
@@ -3943,6 +4007,7 @@ bool TryCharm(CBattleEntity* PCharmer, CBattleEntity* PVictim, uint32 base)
 ************************************************************************/
 EFFECT getCorsairRollEffect(uint16 id)
 {
+	PROFILE_FUNC();
 	switch(id)
 	{
 		case ABILITY_FIGHTERS_ROLL: return EFFECT_FIGHTERS_ROLL;
@@ -3974,6 +4039,7 @@ EFFECT getCorsairRollEffect(uint16 id)
 
 void ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker)
 {
+	PROFILE_FUNC();
     if(PDefender->objtype == TYPE_MOB)
 	{
         CMobEntity* mob = (CMobEntity*)PDefender;
@@ -3999,6 +4065,7 @@ void ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker)
 
 int32 DmgTaken(CBattleEntity* PDefender, int32 damage)
 {
+	PROFILE_FUNC();
 
     float resist = 1.0f + (PDefender->getMod(MOD_DMG) / 100.0f);
 
@@ -4012,6 +4079,7 @@ int32 DmgTaken(CBattleEntity* PDefender, int32 damage)
 
 int32 BreathDmgTaken(CBattleEntity* PDefender, int32 damage)
 {
+	PROFILE_FUNC();
     float resist = 1.0f + (PDefender->getMod(MOD_UDMGBREATH) / 100.0f);
     damage *= resist;
 
@@ -4025,6 +4093,7 @@ int32 BreathDmgTaken(CBattleEntity* PDefender, int32 damage)
 
 int32 MagicDmgTaken(CBattleEntity* PDefender, int32 damage)
 {
+	PROFILE_FUNC();
     float resist = (256 + PDefender->getMod(MOD_UDMGMAGIC)) / 256.0f;
 
     damage *= resist;
@@ -4041,6 +4110,7 @@ int32 MagicDmgTaken(CBattleEntity* PDefender, int32 damage)
 
 int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage)
 {
+	PROFILE_FUNC();
     float resist = 1.0f + (PDefender->getMod(MOD_UDMGPHYS) / 100.0f);
 
     damage *= resist;
@@ -4057,6 +4127,7 @@ int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage)
 
 int32 RangedDmgTaken(CBattleEntity* PDefender, int32 damage)
 {
+	PROFILE_FUNC();
     float resist = 1.0f + (PDefender->getMod(MOD_UDMGRANGE) / 100.0f);
 
     damage *= resist;
@@ -4073,6 +4144,7 @@ int32 RangedDmgTaken(CBattleEntity* PDefender, int32 damage)
 
 int32 HandleStoneskin(CBattleEntity* PDefender, int32 damage)
 {
+	PROFILE_FUNC();
     int16 skin = PDefender->getMod(MOD_STONESKIN);
     if (damage > 0 && skin > 0)
     {
@@ -4096,6 +4168,7 @@ int32 HandleStoneskin(CBattleEntity* PDefender, int32 damage)
 ************************************************************************/
 CMobSkill* GetTwoHourMobSkill(JOBTYPE job)
 {
+	PROFILE_FUNC();
     uint16 id = 0;
 
     switch(job)
@@ -4134,6 +4207,7 @@ CMobSkill* GetTwoHourMobSkill(JOBTYPE job)
 ************************************************************************/
 void assistTarget(CCharEntity* PChar, uint16 TargID)
 {
+	PROFILE_FUNC();
 
 	// get the player we want to assist
 	CBattleEntity* PlayerToAssist = (CBattleEntity*)PChar->loc.zone->GetEntity(TargID, TYPE_PC);
@@ -4153,6 +4227,7 @@ void assistTarget(CCharEntity* PChar, uint16 TargID)
 
 uint8 GetSpellAoEType(CBattleEntity* PCaster, CSpell* PSpell)
 {
+	PROFILE_FUNC();
     if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE)
         if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION))
             return SPELLAOE_RADIAL;
@@ -4182,6 +4257,7 @@ uint8 GetSpellAoEType(CBattleEntity* PCaster, CSpell* PSpell)
 
 WEATHER GetWeather(CBattleEntity* PEntity, bool ignoreScholar)
 {
+	PROFILE_FUNC();
     WEATHER scholarSpell = WEATHER_NONE;
     if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_FIRESTORM))
         scholarSpell = WEATHER_HOT_SPELL;
@@ -4209,6 +4285,7 @@ WEATHER GetWeather(CBattleEntity* PEntity, bool ignoreScholar)
 
 void DrawIn(CBattleEntity* PEntity, position_t* pos, float offset)
 {
+	PROFILE_FUNC();
 	// don't draw in dead players for now!
 	// see tractor
 	if(PEntity->isDead() || PEntity->animation == ANIMATION_CHOCOBO) return;
@@ -4238,6 +4315,7 @@ void DrawIn(CBattleEntity* PEntity, position_t* pos, float offset)
 ************************************************************************/
 void GetSnapshotReduction(CCharEntity* m_PChar)
 {
+	PROFILE_FUNC();
 	// Set this to zero to start with
 	uint32 SnapShotReductionPercent = 0;
 
@@ -4270,6 +4348,7 @@ void GetSnapshotReduction(CCharEntity* m_PChar)
 ************************************************************************/
 int32 GetRangedAttackBonuses(CBattleEntity* battleEntity)
 {
+	PROFILE_FUNC();
 	if (battleEntity->objtype != TYPE_PC)
 	{
 		return 0;
@@ -4294,6 +4373,7 @@ int32 GetRangedAttackBonuses(CBattleEntity* battleEntity)
 ************************************************************************/
 int32 GetRangedAccuracyBonuses(CBattleEntity* battleEntity)
 {
+	PROFILE_FUNC();
 	if (battleEntity->objtype != TYPE_PC)
 	{
 		return 0;
@@ -4317,6 +4397,7 @@ int32 GetRangedAccuracyBonuses(CBattleEntity* battleEntity)
 ************************************************************************/
 void SetMonsterTreasureHunterLevel(CCharEntity* PChar, CMobEntity* Monster)
 {
+	PROFILE_FUNC();
 	if (charutils::hasTrait(PChar, TRAIT_TREASURE_HUNTER))
 	{
 		if (Monster->m_THLvl == 0)

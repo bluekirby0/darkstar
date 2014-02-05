@@ -34,6 +34,7 @@
 
 CGuildMenuSellUpdatePacket::CGuildMenuSellUpdatePacket(CCharEntity* PChar, uint8 stock, uint16 itemID, uint8 quantity)
 {
+	PROFILE_FUNC();
     this->type = 0x84;
     this->size = 0x04;
 

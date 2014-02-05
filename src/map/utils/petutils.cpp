@@ -236,6 +236,7 @@ void LoadPetList()
 
 void FreePetList()
 {
+	PROFILE_FUNC();
 	while(!g_PPetList.empty())
 	{
 		delete *g_PPetList.begin();
@@ -244,6 +245,7 @@ void FreePetList()
 }
 
 void AttackTarget(CBattleEntity* PMaster, CBattleEntity* PTarget){
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PMaster->PPet==NULL);
 
 	CBattleEntity* PPet = PMaster->PPet;
@@ -257,6 +259,7 @@ void AttackTarget(CBattleEntity* PMaster, CBattleEntity* PTarget){
 }
 
 void RetreatToMaster(CBattleEntity* PMaster){
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PMaster->PPet==NULL);
 
 	CBattleEntity* PPet = PMaster->PPet;
@@ -269,11 +272,13 @@ void RetreatToMaster(CBattleEntity* PMaster){
 
 uint16 GetJugWeaponDamage(CPetEntity* PPet)
 {
+	PROFILE_FUNC();
 	float MainLevel = PPet->GetMLevel();
 	return (uint16)(MainLevel * (MainLevel < 40 ? 1.4 - MainLevel/100 : 1));
 }
 uint16 GetJugBase(CPetEntity * PMob, uint8 rank)
- {
+{
+	PROFILE_FUNC();
 
     uint8 lvl = PMob->GetMLevel();
     if(lvl > 50){
@@ -315,6 +320,7 @@ uint16 GetJugBase(CPetEntity * PMob, uint8 rank)
 }
 uint16 GetBaseToRank(uint8 rank, uint16 lvl)
 {
+	PROFILE_FUNC();
 	switch (rank)
 	{
 		case 1: return (5+((lvl-1)*50)/100);
@@ -329,6 +335,7 @@ uint16 GetBaseToRank(uint8 rank, uint16 lvl)
 }
 
 void LoadJugStats(CPetEntity* PMob, Pet_t* petStats){
+	PROFILE_FUNC();
 	//follows monster formulas but jugs have no subjob
 
 	float growth = 1.0;
@@ -416,6 +423,7 @@ void LoadJugStats(CPetEntity* PMob, Pet_t* petStats){
 
 void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats)
 {
+	PROFILE_FUNC();
 	// Объявление переменных, нужных для рассчета.
 	float raceStat  = 0;			// конечное число HP для уровня на основе расы.
 	float jobStat   = 0;			// конечное число HP для уровня на основе первичной профессии.
@@ -569,6 +577,7 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats)
 
 void LoadAvatarStats(CPetEntity* PChar)
 {
+	PROFILE_FUNC();
 	// Объявление переменных, нужных для рассчета.
 	float raceStat  = 0;			// конечное число HP для уровня на основе расы.
 	float jobStat   = 0;			// конечное число HP для уровня на основе первичной профессии.
@@ -712,6 +721,7 @@ void LoadAvatarStats(CPetEntity* PChar)
 
 void SpawnPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PMaster->PPet != NULL);
     LoadPet(PMaster, PetID, spawningFromZone);
 
@@ -765,6 +775,7 @@ void SpawnPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
 
 void SpawnMobPet(CBattleEntity* PMaster, uint32 PetID)
 {
+	PROFILE_FUNC();
 	// this is ONLY used for mob smn elementals / avatars
 	/*
 	This should eventually be merged into one big spawn pet method.
@@ -822,6 +833,7 @@ void SpawnMobPet(CBattleEntity* PMaster, uint32 PetID)
 
 void DespawnPet(CBattleEntity* PMaster)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PMaster->PPet == NULL);
 
 	CBattleEntity* PPet = PMaster->PPet;
@@ -937,6 +949,7 @@ void DespawnPet(CBattleEntity* PMaster)
 
 void MakePetStay(CBattleEntity* PMaster)
 {
+	PROFILE_FUNC();
 
 	CPetEntity* PPet = (CPetEntity*)PMaster->PPet;
 
@@ -948,6 +961,7 @@ void MakePetStay(CBattleEntity* PMaster)
 
 int16 PerpetuationCost(uint32 id, uint8 level)
 {
+	PROFILE_FUNC();
 	int16 cost = 0;
 	if (id >= 0 && id <= 7)
 	{
@@ -1058,6 +1072,7 @@ Familiars a pet.
 */
 void Familiar(CBattleEntity* PPet)
 {
+	PROFILE_FUNC();
 
     /*
         Boost HP by 10%
@@ -1092,6 +1107,7 @@ void Familiar(CBattleEntity* PPet)
 
 void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PetID >= g_PPetList.size());
 	if(PMaster->GetMJob()!=JOB_DRG && PetID == PETID_WYVERN) {
 		return;

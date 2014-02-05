@@ -26,26 +26,31 @@
 
 CModifier::CModifier(uint16 type, int16 amount)
 {
+	PROFILE_FUNC();
 	m_id	 = (type < MAX_MODIFIER ? type : MOD_NONE);
 	m_amount = amount;
 }
 
 CModifier::~CModifier()
 {
+	PROFILE_FUNC();
 
 }
 
 uint16 CModifier::getModID()
 {
+	PROFILE_FUNC();
 	return m_id;
 }
 
 int16 CModifier::getModAmount()
 {
+	PROFILE_FUNC();
 	return m_amount;
 }
 	
 void CModifier::setModAmount(int16 amount)
 {
+	PROFILE_FUNC();
 	m_amount = amount;
 }

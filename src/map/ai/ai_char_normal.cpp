@@ -70,6 +70,7 @@
 
 CAICharNormal::CAICharNormal(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	m_PChar = PChar;
     m_PTargetFind = new CTargetFind(PChar);
 	m_AttackMessageTime = 0;

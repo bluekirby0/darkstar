@@ -32,6 +32,7 @@
 
 CSendBoxPacket::CSendBoxPacket(uint8 action, uint8 count, uint8 param) 
 {
+	PROFILE_FUNC();
 	this->type = 0x4B;
 	this->size = 0x0A;
 
@@ -53,6 +54,7 @@ CSendBoxPacket::CSendBoxPacket(uint8 action, uint8 count, uint8 param)
 
 CSendBoxPacket::CSendBoxPacket(uint8 action, CItem* PItem, uint8 slotid, uint8 count, uint8 message)
 {
+	PROFILE_FUNC();
 	this->type = 0x4B;
 	this->size = 0x2C;
 

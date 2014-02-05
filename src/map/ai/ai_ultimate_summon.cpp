@@ -57,6 +57,7 @@
 CAIUltimateSummon::CAIUltimateSummon(CPetEntity* PPet)
     : CAIPetDummy(PPet)
 {
+	PROFILE_FUNC();
     m_Timer = 0;
 }
 

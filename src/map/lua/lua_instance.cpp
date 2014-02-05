@@ -34,6 +34,7 @@
 
 CLuaInstance::CLuaInstance(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,-1) )
 	{
 		m_PLuaInstance = (CInstance*)(lua_touserdata(L,-1));
@@ -51,6 +52,7 @@ CLuaInstance::CLuaInstance(lua_State *L)
 
 CLuaInstance::CLuaInstance(CInstance* PInstance)
 {
+	PROFILE_FUNC();
 	m_PLuaInstance = PInstance;
 }
 
@@ -62,6 +64,7 @@ CLuaInstance::CLuaInstance(CInstance* PInstance)
 
 inline int32 CLuaInstance::getInstanceNumber(lua_State* L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaInstance == NULL);
 	
 	lua_pushinteger( L, m_PLuaInstance->getInstanceNumber() );
@@ -70,6 +73,7 @@ inline int32 CLuaInstance::getInstanceNumber(lua_State* L)
 
 inline int32 CLuaInstance::getTimeLimit(lua_State* L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaInstance == NULL);
 	
 	lua_pushinteger( L, m_PLuaInstance->getTimeLimit() );
@@ -78,6 +82,7 @@ inline int32 CLuaInstance::getTimeLimit(lua_State* L)
 
 inline int32 CLuaInstance::getBcnmID(lua_State* L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaInstance == NULL);
 	
 	lua_pushinteger( L, m_PLuaInstance->getID() );
@@ -85,6 +90,7 @@ inline int32 CLuaInstance::getBcnmID(lua_State* L)
 }
 
 inline int32 CLuaInstance::getTimeInside(lua_State* L){
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaInstance == NULL);
 	uint32 duration = (m_PLuaInstance->lastTick - m_PLuaInstance->getStartTime())/1000;
 	lua_pushinteger( L, duration);
@@ -92,6 +98,7 @@ inline int32 CLuaInstance::getTimeInside(lua_State* L){
 }
 
 inline int32 CLuaInstance::getFastestTime(lua_State* L){
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaInstance == NULL);
 	
 	lua_pushinteger( L, m_PLuaInstance->m_FastestTime );
@@ -99,6 +106,7 @@ inline int32 CLuaInstance::getFastestTime(lua_State* L){
 }
 
 inline int32 CLuaInstance::getFastestPlayer(lua_State* L){
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaInstance == NULL);
 	
 	lua_pushstring( L, m_PLuaInstance->m_FastestName.c_str() );
@@ -106,6 +114,7 @@ inline int32 CLuaInstance::getFastestPlayer(lua_State* L){
 }
 
 inline int32 CLuaInstance::setAsFastest(lua_State* L){
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaInstance == NULL);
 	
 	lua_pushinteger( L, 0 );
@@ -113,6 +122,7 @@ inline int32 CLuaInstance::setAsFastest(lua_State* L){
 }
 
 inline int32 CLuaInstance::getEntrance(lua_State* L){
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaInstance == NULL);
 
 	lua_pushinteger(L, m_PLuaInstance->getEntrance());
@@ -120,6 +130,7 @@ inline int32 CLuaInstance::getEntrance(lua_State* L){
 }
 
 inline int32 CLuaInstance::setEntrance(lua_State* L){
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaInstance == NULL);
 	DSP_DEBUG_BREAK_IF(!lua_isnumber(L, 1) || lua_isnil(L, 1));
 	m_PLuaInstance->setEntrance(lua_tointeger(L, 1));

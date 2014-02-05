@@ -29,6 +29,7 @@
 
 CRaiseTractorMenuPacket::CRaiseTractorMenuPacket(CCharEntity * PChar, REVIVAL_TYPE type) 
 {
+	PROFILE_FUNC();
 	this->type = 0xF9;
 	this->size = 0x06;
 

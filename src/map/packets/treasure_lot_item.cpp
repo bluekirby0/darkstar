@@ -33,6 +33,7 @@
 
 CTreasureLotItemPacket::CTreasureLotItemPacket(uint8 slotID, ITEMLOTTYPE MessageType) 
 {
+	PROFILE_FUNC();
 	this->type = 0xD3;
 	this->size = 0x1E;
 	
@@ -43,6 +44,7 @@ CTreasureLotItemPacket::CTreasureLotItemPacket(uint8 slotID, ITEMLOTTYPE Message
 
 CTreasureLotItemPacket::CTreasureLotItemPacket(CBaseEntity* PWinner, uint8 slotID, uint16 Lot, ITEMLOTTYPE MessageType)
 {
+	PROFILE_FUNC();
 	this->type = 0xD3;
 	this->size = 0x1E;
 
@@ -58,6 +60,7 @@ CTreasureLotItemPacket::CTreasureLotItemPacket(CBaseEntity* PWinner, uint8 slotI
 
 CTreasureLotItemPacket::CTreasureLotItemPacket(CBaseEntity* PChar, uint8 slotID, uint16 Lot) 
 {
+	PROFILE_FUNC();
 	
 	this->type = 0xD3;
 	this->size = 0x1E;

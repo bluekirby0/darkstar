@@ -77,6 +77,7 @@ namespace conquest
 
 	void UpdateConquestSystem()
 	{
+		PROFILE_FUNC();
 		for (uint8 i=0; i <= 18; i++)
 		{
 			g_Conquest[i][6] = CreateInfluenceGraphics(i);
@@ -118,7 +119,8 @@ namespace conquest
     ************************************************************************/
 
     void GainInfluencePoints(CCharEntity* PChar)
-    {
+	{
+		PROFILE_FUNC();
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
         if (region == REGIONTYPE::REGION_UNKNOWN)
             return;
@@ -134,6 +136,7 @@ namespace conquest
 
 	void LoseInfluencePoints(CCharEntity* PChar)
 	{
+		PROFILE_FUNC();
 		REGIONTYPE region = PChar->loc.zone->GetRegionID();
 		int8 point = 0;
 
@@ -191,6 +194,7 @@ namespace conquest
 
 	uint32 GetInfluencePoints(REGIONTYPE RegionID, uint8 nation)
 	{
+		PROFILE_FUNC();
 		return g_Conquest[RegionID][nation + 2];
 	}
 
@@ -202,6 +206,7 @@ namespace conquest
 
 	uint8 CreateInfluenceGraphics(uint8 RegionID)
 	{
+		PROFILE_FUNC();
 		//if all nations and beastmen == 0
 		if(g_Conquest[RegionID][2] == 0 && g_Conquest[RegionID][3] == 0 && g_Conquest[RegionID][4] == 0 && g_Conquest[RegionID][5] == 0)
 		{
@@ -265,6 +270,7 @@ namespace conquest
 
 	uint8 GetInfluenceGraphics(REGIONTYPE RegionID)
 	{
+		PROFILE_FUNC();
 		return g_Conquest[RegionID][6];
 	}
 
@@ -276,6 +282,7 @@ namespace conquest
 
 	void UpdateConquestGM()
 	{
+		PROFILE_FUNC();
 		LoadConquestSystem();
 		luautils::SetRegionalConquestOverseers();
 	}
@@ -288,6 +295,7 @@ namespace conquest
 
 	void UpdateWeekConquest()
 	{
+		PROFILE_FUNC();
 		//TODO:
 		//launch conquest message in all zone (monday server midnight)
 
@@ -329,7 +337,8 @@ namespace conquest
     ************************************************************************/
 
     uint8 GetBalance()
-    {
+	{
+		PROFILE_FUNC();
 	    int8 sandy = 0;
 		int8 basty = 0;
 		int8 windy = 0;
@@ -376,7 +385,8 @@ namespace conquest
     ************************************************************************/
 
     uint8 GetNexTally()
-    {
+	{
+		PROFILE_FUNC();
 	    uint32 currData = CVanaTime::getInstance()->getDate() / 1440;
 	    return (uint8)(175 - ((currData - 85)%175));
     }
@@ -388,7 +398,8 @@ namespace conquest
     ************************************************************************/
 
     uint8 GetRegionOwner(REGIONTYPE RegionID)
-    {
+	{
+		PROFILE_FUNC();
         switch (RegionID)
         {
             case REGION_RONFAURE:        return g_Conquest[REGION_RONFAURE][1];
@@ -423,7 +434,8 @@ namespace conquest
     // TODO: необходимо учитывать добавленные очки для еженедельного подсчета conquest
 
     uint32 AddConquestPoints(CCharEntity* PChar, uint32 exp)
-    {
+	{
+		PROFILE_FUNC();
         // ВНИМЕНИЕ: не нужно отправлять персонажу CConquestPacket,
         // т.к. клиент сам запрашивает этот пакет через фиксированный промежуток времени
 

@@ -39,6 +39,7 @@
 
 CTradeUpdatePacket::CTradeUpdatePacket(CItem* PItem, uint8 SlotID)
 {
+	PROFILE_FUNC();
 	this->type = 0x23;
 	this->size = 0x14;
 

@@ -29,6 +29,7 @@
 
 CPositionPacket::CPositionPacket(CBaseEntity* PEntity) 
 {
+	PROFILE_FUNC();
 	this->type = 0x5B;
 	this->size = 0x0E;
 	

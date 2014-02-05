@@ -30,6 +30,7 @@
 
 CChocoboDiggingPacket::CChocoboDiggingPacket(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	this->type = 0x2F;
 	this->size = 0x06;
 

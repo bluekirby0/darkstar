@@ -34,6 +34,7 @@
 
 CLuaMobSkill::CLuaMobSkill(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,-1) )
 	{
 		m_PLuaMobSkill = (CMobSkill*)(lua_touserdata(L,-1));
@@ -51,6 +52,7 @@ CLuaMobSkill::CLuaMobSkill(lua_State *L)
 
 CLuaMobSkill::CLuaMobSkill(CMobSkill* PSkill)
 {
+	PROFILE_FUNC();
 	m_PLuaMobSkill = PSkill;
 }
 
@@ -62,6 +64,7 @@ CLuaMobSkill::CLuaMobSkill(CMobSkill* PSkill)
 
 inline int32 CLuaMobSkill::setMsg(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
     DSP_DEBUG_BREAK_IF(lua_isnil(L,-1) || !lua_isnumber(L,-1));
 
@@ -71,6 +74,7 @@ inline int32 CLuaMobSkill::setMsg(lua_State *L)
 
 inline int32 CLuaMobSkill::setSkillchain(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
     DSP_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
 
@@ -80,6 +84,7 @@ inline int32 CLuaMobSkill::setSkillchain(lua_State *L)
 
 inline int32 CLuaMobSkill::hasMissMsg(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
 
     lua_pushboolean( L, m_PLuaMobSkill->hasMissMsg() );
@@ -88,6 +93,7 @@ inline int32 CLuaMobSkill::hasMissMsg(lua_State *L)
 
 inline int32 CLuaMobSkill::isSingle(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
 
     lua_pushboolean( L, m_PLuaMobSkill->isSingle() );
@@ -96,6 +102,7 @@ inline int32 CLuaMobSkill::isSingle(lua_State *L)
 
 inline int32 CLuaMobSkill::isAoE(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
 
     lua_pushboolean( L, m_PLuaMobSkill->isAoE() );
@@ -104,6 +111,7 @@ inline int32 CLuaMobSkill::isAoE(lua_State *L)
 
 inline int32 CLuaMobSkill::isConal(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
 
     lua_pushboolean( L, m_PLuaMobSkill->isConal() );
@@ -112,6 +120,7 @@ inline int32 CLuaMobSkill::isConal(lua_State *L)
 
 inline int32 CLuaMobSkill::getTotalTargets(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
 
     lua_pushinteger( L, m_PLuaMobSkill->getTotalTargets() );
@@ -120,6 +129,7 @@ inline int32 CLuaMobSkill::getTotalTargets(lua_State *L)
 
 inline int32 CLuaMobSkill::getMsg(lua_State *L)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
 
     lua_pushinteger( L, m_PLuaMobSkill->getMsg() );
@@ -128,6 +138,7 @@ inline int32 CLuaMobSkill::getMsg(lua_State *L)
 
 inline int32 CLuaMobSkill::getID(lua_State* L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
 
 	lua_pushinteger( L, m_PLuaMobSkill->getID() );
@@ -136,6 +147,7 @@ inline int32 CLuaMobSkill::getID(lua_State* L)
 
 inline int32 CLuaMobSkill::getParam(lua_State* L)
 {
+	PROFILE_FUNC();
   DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
 
   lua_pushinteger( L, m_PLuaMobSkill->getParam() );
@@ -150,6 +162,7 @@ inline int32 CLuaMobSkill::getParam(lua_State* L)
 
 inline int32 CLuaMobSkill::getTP(lua_State* L)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(m_PLuaMobSkill == NULL);
 
 	lua_pushnumber( L, m_PLuaMobSkill->getTP() );

@@ -60,6 +60,7 @@
 
 CAIMobDummy::CAIMobDummy(CMobEntity* PMob)
 {
+	PROFILE_FUNC();
 	m_PMob = PMob;
     m_PTargetFind = new CTargetFind(PMob);
     m_PPathFind = new CPathFind(PMob);

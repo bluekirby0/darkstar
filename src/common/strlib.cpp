@@ -15,6 +15,7 @@
 // escapes a string in-place (' -> \' , \ -> \\ , % -> _)
 char* jstrescape (char* pt)
 {
+	PROFILE_FUNC();
 	//copy from here
 	char *ptr;
 	int i = 0, j = 0;
@@ -48,6 +49,7 @@ char* jstrescape (char* pt)
 // escapes a string into a provided buffer
 char* jstrescapecpy (char* pt, const char* spt)
 {
+	PROFILE_FUNC();
 	//copy from here
 	//WARNING: Target string pt should be able to hold strlen(spt)*2, as each time
 	//a escape character is found, the target's final length increases! [Skotlex]
@@ -82,6 +84,7 @@ char* jstrescapecpy (char* pt, const char* spt)
 // escapes exactly 'size' bytes of a string into a provided buffer
 int jmemescapecpy (char* pt, const char* spt, int size)
 {
+	PROFILE_FUNC();
 	//copy from here
 	int i =0, j=0;
 
@@ -109,6 +112,7 @@ int jmemescapecpy (char* pt, const char* spt, int size)
 // Function to suppress control characters in a string.
 int remove_control_chars(char* str)
 {
+	PROFILE_FUNC();
 	int i;
 	int change = 0;
 
@@ -126,6 +130,7 @@ int remove_control_chars(char* str)
 // NOTE: make sure the string is not const!!
 char* trim(char* str)
 {
+	PROFILE_FUNC();
 	size_t start;
 	size_t end;
 
@@ -154,6 +159,7 @@ char* trim(char* str)
 // NOTE: make sure the string is not const!!
 char* normalize_name(char* str,const char* delims)
 {
+	PROFILE_FUNC();
 	char* in = str;
 	char* out = str;
 	int put_space = 0;
@@ -192,6 +198,7 @@ char* normalize_name(char* str,const char* delims)
 //
 const char* stristr(const char* haystack, const char* needle)
 {
+	PROFILE_FUNC();
 	if ( !*needle )
 	{
 		return haystack;
@@ -221,6 +228,7 @@ const char* stristr(const char* haystack, const char* needle)
 #ifdef __WIN32
 char* _strtok_r(char *s1, const char *s2, char **lasts)
 {
+	PROFILE_FUNC();
 	char *ret;
 
 	if (s1 == NULL)
@@ -253,6 +261,7 @@ size_t strnlen(const char* string, size_t maxlen)
 #if defined(WIN32) && defined(_MSC_VER) && _MSC_VER <= 1200
 unsigned long long strtoull(const char* str, char** endptr, int base)
 {
+	PROFILE_FUNC();
 	unsigned long long result;
 	int count;
 	int n;
@@ -293,6 +302,7 @@ unsigned long long strtoull(const char* str, char** endptr, int base)
 //----------------------------------------------------
 int e_mail_check(char* email)
 {
+	PROFILE_FUNC();
 	char ch;
 	char* last_arobas;
 	size_t len = strlen(email);
@@ -330,6 +340,7 @@ int e_mail_check(char* email)
 //--------------------------------------------------
 int config_switch(const char* str)
 {
+	PROFILE_FUNC();
 	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0)
 		return 1;
 	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
@@ -341,6 +352,7 @@ int config_switch(const char* str)
 /// strncpy that always nul-terminates the string
 char* safestrncpy(char* dst, const char* src, size_t n)
 {
+	PROFILE_FUNC();
 	if( n > 0 )
 	{
 		char* d = dst;
@@ -362,6 +374,7 @@ char* safestrncpy(char* dst, const char* src, size_t n)
 /// doesn't crash on null pointer
 size_t safestrnlen(const char* string, size_t maxlen)
 {
+	PROFILE_FUNC();
 	return ( string != NULL ) ? strnlen(string, maxlen) : 0;
 }
 
@@ -376,6 +389,7 @@ size_t safestrnlen(const char* string, size_t maxlen)
 /// @return The size of the string or -1 if the buffer is too small
 int safesnprintf(char* buf, size_t sz, const char* fmt, ...)
 {
+	PROFILE_FUNC();
 	va_list ap;
 	int ret;
 
@@ -394,6 +408,7 @@ int safesnprintf(char* buf, size_t sz, const char* fmt, ...)
 /// Lines start at 1.
 int strline(const char* str, size_t pos)
 {
+	PROFILE_FUNC();
 	const char* target;
 	int line;
 
@@ -420,6 +435,7 @@ int strline(const char* str, size_t pos)
 /// @param count Number of bytes to convert
 bool bin2hex(char* output, unsigned char* input, size_t count)
 {
+	PROFILE_FUNC();
 	char toHex[] = "0123456789abcdef";
 	size_t i;
 
@@ -458,6 +474,7 @@ bool bin2hex(char* output, unsigned char* input, size_t count)
 /// @return Number of fields found in the string or -1 if an error occured
 int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt)
 {
+	PROFILE_FUNC();
 	int i;
 	int count;
 	enum {
@@ -623,6 +640,7 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 /// @return Number of fields found in the string or -1 if an error occured
 int sv_split(char* str, int len, int startoff, char delim, char** out_fields, int nfields, enum e_svopt opt)
 {
+	PROFILE_FUNC();
 	int pos[1024];
 	int i;
 	int done;
@@ -703,6 +721,7 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, in
 /// @return Length of the escaped string
 size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* escapes)
 {
+	PROFILE_FUNC();
 	size_t i;
 	size_t j;
 
@@ -776,6 +795,7 @@ size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* esca
 /// @return Length of the escaped string
 size_t sv_unescape_c(char* out_dest, const char* src, size_t len)
 {
+	PROFILE_FUNC();
 	static unsigned char low2hex[256] = {
 		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x0?
 		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x1?
@@ -871,6 +891,7 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len)
 /// Skips a C escape sequence (starting with '\\').
 const char* skip_escaped_c(const char* p)
 {
+	PROFILE_FUNC();
 	if( p && *p == '\\' )
 	{
 		++p;
@@ -913,6 +934,7 @@ const char* skip_escaped_c(const char* p)
 /// @return true on success, false if file could not be opened
 bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current))
 {
+	PROFILE_FUNC();
 	FILE* fp;
 	int lines = 0;
 	int entries = 0;
@@ -991,6 +1013,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 /// Allocates a StringBuf
 StringBuf* StringBuf_Malloc() 
 {
+	PROFILE_FUNC();
 	StringBuf* self;
 	CREATE(self, StringBuf, 1);
 	StringBuf_Init(self);
@@ -1000,6 +1023,7 @@ StringBuf* StringBuf_Malloc()
 /// Initializes a previously allocated StringBuf
 void StringBuf_Init(StringBuf* self)
 {
+	PROFILE_FUNC();
 	self->max_ = 1024;
 	self->ptr_ = self->buf_ = (char*)aMallocA(self->max_ + 1);
 }
@@ -1007,6 +1031,7 @@ void StringBuf_Init(StringBuf* self)
 /// Appends the result of printf to the StringBuf
 int StringBuf_Printf(StringBuf* self, const char* fmt, ...)
 {
+	PROFILE_FUNC();
 	int len;
 	va_list ap;
 
@@ -1020,6 +1045,7 @@ int StringBuf_Printf(StringBuf* self, const char* fmt, ...)
 /// Appends the result of vprintf to the StringBuf
 int StringBuf_Vprintf(StringBuf* self, const char* fmt, va_list ap)
 {
+	PROFILE_FUNC();
 	int n, size, off;
 
 	for(;;)
@@ -1047,6 +1073,7 @@ int StringBuf_Vprintf(StringBuf* self, const char* fmt, va_list ap)
 /// Appends the contents of another StringBuf to the StringBuf
 int StringBuf_Append(StringBuf* self, const StringBuf* sbuf)
 {
+	PROFILE_FUNC();
 	int available = self->max_ - (self->ptr_ - self->buf_);
 	int needed = (int)(sbuf->ptr_ - sbuf->buf_);
 
@@ -1066,6 +1093,7 @@ int StringBuf_Append(StringBuf* self, const StringBuf* sbuf)
 // Appends str to the StringBuf
 int StringBuf_AppendStr(StringBuf* self, const char* str) 
 {
+	PROFILE_FUNC();
 	int available = self->max_ - (self->ptr_ - self->buf_);
 	int needed = (int)strlen(str);
 
@@ -1085,12 +1113,14 @@ int StringBuf_AppendStr(StringBuf* self, const char* str)
 // Returns the length of the data in the Stringbuf
 int StringBuf_Length(StringBuf* self) 
 {
+	PROFILE_FUNC();
 	return (int)(self->ptr_ - self->buf_);
 }
 
 /// Returns the data in the StringBuf
 char* StringBuf_Value(StringBuf* self) 
 {
+	PROFILE_FUNC();
 	*self->ptr_ = '\0';
 	return self->buf_;
 }
@@ -1098,12 +1128,14 @@ char* StringBuf_Value(StringBuf* self)
 /// Clears the contents of the StringBuf
 void StringBuf_Clear(StringBuf* self) 
 {
+	PROFILE_FUNC();
 	self->ptr_ = self->buf_;
 }
 
 /// Destroys the StringBuf
 void StringBuf_Destroy(StringBuf* self)
 {
+	PROFILE_FUNC();
 	aFree(self->buf_);
 	self->ptr_ = self->buf_ = 0;
 	self->max_ = 0;
@@ -1112,6 +1144,7 @@ void StringBuf_Destroy(StringBuf* self)
 // Frees a StringBuf returned by StringBuf_Malloc
 void StringBuf_Free(StringBuf* self) 
 {
+	PROFILE_FUNC();
 	StringBuf_Destroy(self);
 	aFree(self);
 }

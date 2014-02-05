@@ -31,6 +31,7 @@
 
 CLuaTradeContainer::CLuaTradeContainer(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( !lua_isnil(L,-1) )
 	{
 		m_pMyTradeContainer = (CTradeContainer*)(lua_touserdata(L,-1));
@@ -44,6 +45,7 @@ CLuaTradeContainer::CLuaTradeContainer(lua_State *L)
 
 CLuaTradeContainer::CLuaTradeContainer(CTradeContainer *pTrade)
 {
+	PROFILE_FUNC();
 	m_pMyTradeContainer = pTrade;
 }
 
@@ -51,6 +53,7 @@ CLuaTradeContainer::CLuaTradeContainer(CTradeContainer *pTrade)
 
 inline int32 CLuaTradeContainer::getGil(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pMyTradeContainer != NULL) 
 	{
 		uint16 itemID = m_pMyTradeContainer->getItemID(0);
@@ -65,6 +68,7 @@ inline int32 CLuaTradeContainer::getGil(lua_State *L)
 
 inline int32 CLuaTradeContainer::getItem(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pMyTradeContainer != NULL) 
 	{
 		uint8 SlotID = 0;
@@ -84,6 +88,7 @@ inline int32 CLuaTradeContainer::getItem(lua_State *L)
 
 inline int32 CLuaTradeContainer::getItemSubId(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pMyTradeContainer != NULL) 
 	{
 		uint8 SlotID = 0;
@@ -107,6 +112,7 @@ inline int32 CLuaTradeContainer::getItemSubId(lua_State *L)
 
 inline int32 CLuaTradeContainer::getItemCount(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pMyTradeContainer != NULL) 
 	{
 		lua_pushinteger( L, m_pMyTradeContainer->getTotalQuantity());
@@ -120,6 +126,7 @@ inline int32 CLuaTradeContainer::getItemCount(lua_State *L)
 
 inline int32 CLuaTradeContainer::getSlotCount(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pMyTradeContainer != NULL) 
 	{
 		lua_pushinteger( L, m_pMyTradeContainer->getSlotCount());
@@ -133,6 +140,7 @@ inline int32 CLuaTradeContainer::getSlotCount(lua_State *L)
 
 inline int32 CLuaTradeContainer::getItemQty(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pMyTradeContainer != NULL) 
 	{
 		if( !lua_isnil(L,-1) && lua_isnumber(L,-1) )
@@ -151,6 +159,7 @@ inline int32 CLuaTradeContainer::getItemQty(lua_State *L)
 
 inline int32 CLuaTradeContainer::getSlotQty(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pMyTradeContainer != NULL) 
 	{
 		if( !lua_isnil(L,-1) && lua_isnumber(L,-1) )
@@ -169,6 +178,7 @@ inline int32 CLuaTradeContainer::getSlotQty(lua_State *L)
 
 inline int32 CLuaTradeContainer::hasItemQty(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pMyTradeContainer != NULL) 
 	{
 		if( !lua_isnil(L,-1) && lua_isnumber(L,-1) &&
@@ -193,6 +203,7 @@ inline int32 CLuaTradeContainer::hasItemQty(lua_State *L)
 
 inline int32 CLuaTradeContainer::confirmItem(lua_State *L)
 {
+	PROFILE_FUNC();
 	if( m_pMyTradeContainer != NULL) 
 	{
 		if( !lua_isnil(L,-1) && lua_isnumber(L,-1) )

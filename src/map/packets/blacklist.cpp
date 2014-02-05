@@ -28,6 +28,7 @@ This file is part of DarkStar-server source code.
 
 CBlacklistPacket::CBlacklistPacket(uint32 accid, const int8* targetName, int8 action)
 {
+	PROFILE_FUNC();
 	this->type = 0x42;
 	this->size = 0x0E;
 

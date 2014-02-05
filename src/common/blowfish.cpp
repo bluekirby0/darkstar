@@ -292,11 +292,13 @@ uint8 subkey[4168] =
 
 inline uint32 TT(uint32 working, uint32* S)
 {
+	PROFILE_FUNC();
 	return (((S[256+((working>>8)&0xff)]&1)^32)+((S[768+(working >> 24)]&1)^32)+S[512+((working>>16)&0xff)]+S[working&0xff]);
 }
 
 void blowfish_encipher(uint32* xl, uint32* xr, uint32* P, uint32* S)
-{	
+{
+	PROFILE_FUNC();	
 	
 #if defined (WIN32) && defined (_M_X86)
 
@@ -396,6 +398,7 @@ cycle:
 
 void blowfish_decipher(uint32* xl, uint32* xr, uint32* P, uint32* S)
 {
+	PROFILE_FUNC();
 
 #if defined (WIN32) && defined (_M_X86)
 
@@ -496,6 +499,7 @@ cycle:
 
 uint32* blowfish_init(int8 key[], int16 keybytes, uint32* P, uint32* S)
 {
+	PROFILE_FUNC();
 	int16          i;
 	int16          j;
 	int16          k;

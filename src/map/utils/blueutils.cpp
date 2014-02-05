@@ -45,7 +45,8 @@
 namespace blueutils
 {
 
-void SetBlueSpell(CCharEntity* PChar, CBlueSpell* PSpell, uint8 slotIndex, bool addingSpell) {
+	void SetBlueSpell(CCharEntity* PChar, CBlueSpell* PSpell, uint8 slotIndex, bool addingSpell) {
+		PROFILE_FUNC();
 
 	//sanity check
 	if (slotIndex < 20) {
@@ -75,7 +76,8 @@ void SetBlueSpell(CCharEntity* PChar, CBlueSpell* PSpell, uint8 slotIndex, bool 
 	}
 }
 
-void TryLearningSpells(CCharEntity* PChar, CMobEntity* PMob) {
+	void TryLearningSpells(CCharEntity* PChar, CMobEntity* PMob) {
+		PROFILE_FUNC();
 
 	if (PMob->m_UsedSkillIds.size() == 0) { // minor optimisation.
 		return;
@@ -145,6 +147,7 @@ void TryLearningSpells(CCharEntity* PChar, CMobEntity* PMob) {
 
 bool HasEnoughSetPoints(CCharEntity* PChar, CBlueSpell* PSpellToAdd, uint8 slotToPut)
 {
+	PROFILE_FUNC();
     uint8 setpoints = 0;
     for (int slot = 0; slot < 20; slot++)
     {
@@ -170,6 +173,7 @@ bool HasEnoughSetPoints(CCharEntity* PChar, CBlueSpell* PSpellToAdd, uint8 slotT
 
 void UnequipAllBlueSpells(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     for (int slot = 0; slot < 20; slot++)
     {
         if (PChar->m_SetBlueSpells[slot] != 0)
@@ -192,6 +196,7 @@ void UnequipAllBlueSpells(CCharEntity* PChar)
 
 bool IsSpellSet(CCharEntity* PChar, CBlueSpell* PSpell)
 {
+	PROFILE_FUNC();
     for (int slot = 0; slot < 20; slot++)
     {
         if (PChar->m_SetBlueSpells[slot] != 0)
@@ -207,6 +212,7 @@ bool IsSpellSet(CCharEntity* PChar, CBlueSpell* PSpell)
 
 void CompactSpells(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     for (int i = 0; i < 20; i++)
     {
         if (PChar->m_SetBlueSpells[i] == 0)
@@ -226,6 +232,7 @@ void CompactSpells(CCharEntity* PChar)
 
 void CheckSpellLevels(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     uint8 level = 0;
     if (PChar->GetMJob() == JOB_BLU)
     {
@@ -254,6 +261,7 @@ void CheckSpellLevels(CCharEntity* PChar)
 
 uint8 GetTotalSlots(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     uint8 level = 0;
     if (PChar->GetMJob() == JOB_BLU)
     {
@@ -272,6 +280,7 @@ uint8 GetTotalSlots(CCharEntity* PChar)
 
 uint8 GetTotalBlueMagicPoints(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     uint8 level = 0;
     if (PChar->GetMJob() == JOB_BLU)
     {
@@ -297,6 +306,7 @@ uint8 GetTotalBlueMagicPoints(CCharEntity* PChar)
 
 void SaveSetSpells(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     if (PChar->GetMJob() == JOB_BLU || PChar->GetSJob() == JOB_BLU)
     {
 	    const int8* Query =
@@ -315,6 +325,7 @@ void SaveSetSpells(CCharEntity* PChar)
 
 void LoadSetSpells(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     if (PChar->GetMJob() == JOB_BLU || PChar->GetSJob() == JOB_BLU)
     {
 	    const int8* Query =
@@ -346,6 +357,7 @@ void LoadSetSpells(CCharEntity* PChar)
 
 void ValidateBlueSpells(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     CheckSpellLevels(PChar);
 
     uint8 maxSetPoints = GetTotalBlueMagicPoints(PChar);
@@ -392,6 +404,7 @@ void ValidateBlueSpells(CCharEntity* PChar)
 
 void CalculateTraits(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     TraitList_t* PTraitsList = traits::GetTraits(JOB_BLU);
     std::map<uint8, uint8> points;
 

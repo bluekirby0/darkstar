@@ -28,6 +28,7 @@
 
 CServerMessagePacket::CServerMessagePacket(const string_t message, int8 language, int32 timestamp, int32 message_offset)
 {
+	PROFILE_FUNC();
     this->type = 0x4D;
     this->size = 0x0E;
 

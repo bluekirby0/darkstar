@@ -28,6 +28,7 @@
 
 CItemArmor::CItemArmor(uint16 id) : CItemUsable(id)
 {
+	PROFILE_FUNC();
 	setType(ITEM_ARMOR);
 
 	m_jobs         = 0;
@@ -45,71 +46,85 @@ CItemArmor::CItemArmor(uint16 id) : CItemUsable(id)
 
 CItemArmor::~CItemArmor()
 {
+	PROFILE_FUNC();
 	// ни в коем случае не освобождать здесь указатели на модификатоты и спецеффекты. они глобальны.
 }
 
 uint16 CItemArmor::getModelId()
 {
+	PROFILE_FUNC();
 	return m_modelID;
 }
 
 uint8 CItemArmor::getShieldSize()
 {
+	PROFILE_FUNC();
 	return m_shieldSize;
 }
 
 uint16 CItemArmor::getEquipSlotId()
 {
+	PROFILE_FUNC();
 	return m_equipSlotID;
 }
 
 uint8 CItemArmor::getRemoveSlotId()
 {
+	PROFILE_FUNC();
 	return m_removeSlotID;
 }
 
 uint8 CItemArmor::getReqLvl()
 {
+	PROFILE_FUNC();
 	return m_reqLvl;
 }
 
 uint32 CItemArmor::getJobs()
 {
+	PROFILE_FUNC();
 	return m_jobs;
 }
 
 void CItemArmor::setReqLvl(uint8 lvl)
 {
+	PROFILE_FUNC();
 	m_reqLvl = lvl;
 }
 
 void CItemArmor::setJobs(uint32 jobs)
 {
+	PROFILE_FUNC();
 	m_jobs = jobs;
 }
 
 void CItemArmor::setModelId(uint16 mdl)
 {
+	PROFILE_FUNC();
 	m_modelID = mdl;
 }
 
 void CItemArmor::setShieldSize(uint8 shield)
 {
+	PROFILE_FUNC();
 	m_shieldSize = shield;
 }
 
 void CItemArmor::setEquipSlotId(uint16 equipSlot)
 {
+	PROFILE_FUNC();
 	m_equipSlotID = equipSlot;
 }
 
 void CItemArmor::setRemoveSlotId(uint8 removSlot)
 {
+	PROFILE_FUNC();
 	m_removeSlotID = removSlot;
 }
 
 uint8 CItemArmor::getSlotType()
 {
+	PROFILE_FUNC();
 	uint32 result = 0;
 	getMSB(&result,(uint32)m_equipSlotID);
 	return result;
@@ -123,6 +138,7 @@ uint8 CItemArmor::getSlotType()
 
 uint8 CItemArmor::getShieldAbsorption()
 {
+	PROFILE_FUNC();
     return m_absorption;
 }
 
@@ -134,6 +150,7 @@ uint8 CItemArmor::getShieldAbsorption()
 
 bool CItemArmor::IsShield()
 {
+	PROFILE_FUNC();
     return m_shieldSize > 0 && m_shieldSize < 6;
 }
 
@@ -149,11 +166,13 @@ bool CItemArmor::IsShield()
 
 uint16 CItemArmor::getScriptType()
 {
+	PROFILE_FUNC();
 	return m_scriptType;
 }
 
 void CItemArmor::setScriptType(uint16 ScriptType)
 {
+	PROFILE_FUNC();
 	m_scriptType = ScriptType;
 }
 
@@ -165,6 +184,7 @@ void CItemArmor::setScriptType(uint16 ScriptType)
 
 void CItemArmor::addModifier(CModifier* modifier)
 {
+	PROFILE_FUNC();
     if (IsShield() && modifier->getModID() == MOD_DEF)
     {
         // reduction calc source: www.bluegartr.com/threads/84830-Shield-Asstery
@@ -186,6 +206,7 @@ void CItemArmor::addModifier(CModifier* modifier)
 
 int16 CItemArmor::getModifier(uint16 mod)
 {
+	PROFILE_FUNC();
 	for (uint16 i = 0; i < modList.size(); ++i)
 	{
 		if (modList.at(i)->getModID() == mod)
@@ -198,6 +219,7 @@ int16 CItemArmor::getModifier(uint16 mod)
 
 void CItemArmor::addLatent(CLatentEffect* latent)
 {
+	PROFILE_FUNC();
 	latentList.push_back(latent);
 }
 
@@ -209,11 +231,13 @@ void CItemArmor::addLatent(CLatentEffect* latent)
 
 void CItemArmor::setTrialNumber(uint16 trial)
 {
+	PROFILE_FUNC();
 	m_trialNumber = trial;
 }
 
 uint16 CItemArmor::getTrialNumber()
 {
+	PROFILE_FUNC();
 	return m_trialNumber;
 }
 
@@ -225,6 +249,7 @@ uint16 CItemArmor::getTrialNumber()
 
 void CItemArmor::LoadAugment(uint8 slot, uint16 augment)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(getAugment(slot) != 0);
 
     m_augments[slot] = augment;
@@ -237,6 +262,7 @@ void CItemArmor::LoadAugment(uint8 slot, uint16 augment)
 
 void CItemArmor::setAugment(uint8 slot, uint16 type, uint8 value)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(getAugment(slot) != 0);
 
     packBitsBE((uint8*)(m_augments+slot), type, 0, 11);
@@ -247,6 +273,7 @@ void CItemArmor::setAugment(uint8 slot, uint16 type, uint8 value)
 
 void CItemArmor::SetAugmentMod(uint16 type, uint8 value)
 {
+	PROFILE_FUNC();
     // TODO: если augmenttype совпадает с modtype, то мы може установить значение сразу,
     //       либо придется использовать дополнительную логику
 
@@ -259,6 +286,7 @@ void CItemArmor::SetAugmentMod(uint16 type, uint8 value)
 
 uint16 CItemArmor::getAugment(uint8 slot)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(slot >= ARRAYLENGTH(m_augments));
 
 	return m_augments[slot];

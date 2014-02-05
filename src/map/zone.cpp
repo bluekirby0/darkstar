@@ -72,6 +72,7 @@
 
 int32 zone_server(uint32 tick, CTaskMgr::CTask* PTask)
 {
+	PROFILE_FUNC();
 	((CZone*)PTask->m_data)->ZoneServer(tick);
 	return 0;
 }
@@ -85,6 +86,7 @@ int32 zone_server(uint32 tick, CTaskMgr::CTask* PTask)
 
 int32 zone_server_region(uint32 tick, CTaskMgr::CTask* PTask)
 {
+	PROFILE_FUNC();
 	CZone* PZone = (CZone*)PTask->m_data;
 
 	if ((tick - PZone->m_RegionCheckTime) < 1000)
@@ -105,6 +107,7 @@ int32 zone_server_region(uint32 tick, CTaskMgr::CTask* PTask)
 
 CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
 {
+	PROFILE_FUNC();
   ZoneTimer = NULL;
 
   m_zoneID = ZoneID;
@@ -142,81 +145,97 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
 
 ZONEID CZone::GetID()
 {
+	PROFILE_FUNC();
 	return m_zoneID;
 }
 
 ZONETYPE CZone::GetType()
 {
+	PROFILE_FUNC();
   return m_zoneType;
 }
 
 REGIONTYPE CZone::GetRegionID()
 {
+	PROFILE_FUNC();
     return m_regionID;
 }
 
 CONTINENTTYPE CZone::GetContinentID()
 {
+	PROFILE_FUNC();
     return m_continentID;
 }
 
 uint32 CZone::GetIP()
 {
+	PROFILE_FUNC();
 	return m_zoneIP;
 }
 
 uint16 CZone::GetPort()
 {
+	PROFILE_FUNC();
 	return m_zonePort;
 }
 
 uint16 CZone::GetTax()
 {
+	PROFILE_FUNC();
 	return m_tax;
 }
 
 WEATHER CZone::GetWeather()
 {
+	PROFILE_FUNC();
 	return m_Weather;
 }
 
 uint32 CZone::GetWeatherChangeTime()
 {
+	PROFILE_FUNC();
     return m_WeatherChangeTime;
 }
 
 const int8* CZone::GetName()
 {
+	PROFILE_FUNC();
 	return m_zoneName.c_str();
 }
 
 uint8 CZone::GetSoloBattleMusic()
 {
+	PROFILE_FUNC();
 	return m_zoneMusic.m_bSongS;
 }
 
 uint8 CZone::GetPartyBattleMusic()
 {
+	PROFILE_FUNC();
 	return m_zoneMusic.m_bSongM;
 }
 
 uint8 CZone::GetBackgroundMusic()
 {
+	PROFILE_FUNC();
 	return m_zoneMusic.m_song;
 }
 
 bool CZone::CanUseMisc(uint16 misc)
 {
+	PROFILE_FUNC();
 	return (m_miscMask & misc) == misc;
 }
 
 bool CZone::IsWeatherStatic()
 {
+	PROFILE_FUNC();
     return m_IsWeatherStatic;
 }
 
 zoneLine_t* CZone::GetZoneLine(uint32 zoneLineID)
 {
+	PROFILE_FUNC();
 	for(zoneLineList_t::const_iterator  i = m_zoneLineList.begin();
 		i != m_zoneLineList.end();
 		i++ )
@@ -231,6 +250,7 @@ zoneLine_t* CZone::GetZoneLine(uint32 zoneLineID)
 
 void  CZone::HealAllMobs()
 {
+	PROFILE_FUNC();
   for (EntityList_t::const_iterator it = m_mobList.begin() ; it != m_mobList.end() ; ++it)
     {
       CMobEntity* PCurrentMob = (CMobEntity*)it->second;
@@ -249,6 +269,7 @@ void  CZone::HealAllMobs()
 
 void CZone::LoadZoneLines()
 {
+	PROFILE_FUNC();
 	static const int8 fmtQuery[] = "SELECT zoneline, tozone, tox, toy, toz, rotation FROM zonelines WHERE fromzone = %u";
 
 	int32 ret = Sql_Query(SqlHandle, fmtQuery, m_zoneID);
@@ -279,6 +300,7 @@ void CZone::LoadZoneLines()
 
 void CZone::LoadZoneWeather()
 {
+	PROFILE_FUNC();
     static const int8* Query =
         "SELECT "
           "weather.none,"
@@ -342,6 +364,7 @@ void CZone::LoadZoneWeather()
 
 void CZone::LoadZoneSettings()
 {
+	PROFILE_FUNC();
     static const int8* Query =
         "SELECT "
           "zone.name,"
@@ -395,6 +418,7 @@ void CZone::LoadZoneSettings()
 
 void CZone::LoadNavMesh()
 {
+	PROFILE_FUNC();
 
   // disable / enable maps navmesh in zone_settings.sql
   if(!m_useNavMesh) return;
@@ -430,6 +454,7 @@ void CZone::LoadNavMesh()
 
 void CZone::InsertMOB(CBaseEntity* PMob)
 {
+	PROFILE_FUNC();
   if ((PMob != NULL) && (PMob->objtype == TYPE_MOB))
   {
     PMob->loc.zone = this;
@@ -447,6 +472,7 @@ void CZone::InsertMOB(CBaseEntity* PMob)
 
 void CZone::InsertNPC(CBaseEntity* PNpc)
 {
+	PROFILE_FUNC();
 	if ((PNpc != NULL) && (PNpc->objtype == TYPE_NPC))
 	{
         PNpc->loc.zone = this;
@@ -463,6 +489,7 @@ void CZone::InsertNPC(CBaseEntity* PNpc)
 
 void CZone::DeletePET(CBaseEntity* PPet)
 {
+	PROFILE_FUNC();
 	if(PPet != NULL)
     {
 		m_petList.erase(PPet->targid);
@@ -477,6 +504,7 @@ void CZone::DeletePET(CBaseEntity* PPet)
 
 void CZone::InsertPET(CBaseEntity* PPet)
 {
+	PROFILE_FUNC();
 	if ((PPet != NULL) && (PPet->objtype == TYPE_PET))
 	{
         uint16 targid = 0x700;
@@ -522,6 +550,7 @@ void CZone::InsertPET(CBaseEntity* PPet)
 
 void CZone::InsertRegion(CRegion* Region)
 {
+	PROFILE_FUNC();
 	if (Region != NULL)
 	{
 		m_regionList.push_back(Region);
@@ -537,6 +566,7 @@ void CZone::InsertRegion(CRegion* Region)
 
 void CZone::FindPartyForMob(CBaseEntity* PEntity)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PEntity == NULL);
     DSP_DEBUG_BREAK_IF(PEntity->objtype != TYPE_MOB);
 
@@ -579,6 +609,7 @@ void CZone::FindPartyForMob(CBaseEntity* PEntity)
 
 void CZone::TransportDepart(CBaseEntity* PTransportNPC)
 {
+	PROFILE_FUNC();
     for (EntityList_t::const_iterator it = m_charList.begin() ; it != m_charList.end() ; ++it)
 	{
 		CCharEntity* PCurrentChar = (CCharEntity*)it->second;
@@ -598,6 +629,7 @@ void CZone::TransportDepart(CBaseEntity* PTransportNPC)
 
 void CZone::SetWeather(WEATHER weather)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(weather >= MAX_WEATHER_ID);
 
 	if (m_Weather == weather)
@@ -649,6 +681,7 @@ void CZone::SetWeather(WEATHER weather)
 
 int CZone::GetWeatherElement()
 {
+	PROFILE_FUNC();
     static uint8 Element[] =
     {
         0,  //WEATHER_NONE
@@ -684,6 +717,7 @@ int CZone::GetWeatherElement()
 
 void CZone::DecreaseZoneCounter(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(PChar == NULL);
     DSP_DEBUG_BREAK_IF(PChar->loc.zone != this);
 
@@ -861,6 +895,7 @@ void CZone::DecreaseZoneCounter(CCharEntity* PChar)
 
 void CZone::IncreaseZoneCounter(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PChar == NULL);
     DSP_DEBUG_BREAK_IF(PChar->loc.zone != NULL);
 	DSP_DEBUG_BREAK_IF(PChar->PTreasurePool != NULL);
@@ -965,6 +1000,7 @@ void CZone::IncreaseZoneCounter(CCharEntity* PChar)
 
 void CZone::SpawnMOBs(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	for (EntityList_t::const_iterator it = m_mobList.begin() ; it != m_mobList.end() ; ++it)
 	{
 		CMobEntity* PCurrentMob = (CMobEntity*)it->second;
@@ -1020,6 +1056,7 @@ void CZone::SpawnMOBs(CCharEntity* PChar)
 
 void CZone::SpawnPETs(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	for (EntityList_t::const_iterator it = m_petList.begin() ; it != m_petList.end() ; ++it)
 	{
 		CPetEntity* PCurrentPet = (CPetEntity*)it->second;
@@ -1053,6 +1090,7 @@ void CZone::SpawnPETs(CCharEntity* PChar)
 
 void CZone::SpawnNPCs(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	for (EntityList_t::const_iterator it = m_npcList.begin() ; it != m_npcList.end() ; ++it)
 	{
 		CNpcEntity* PCurrentNpc = (CNpcEntity*)it->second;
@@ -1091,6 +1129,7 @@ void CZone::SpawnNPCs(CCharEntity* PChar)
 
 void CZone::SpawnPCs(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	for (EntityList_t::const_iterator it = m_charList.begin() ; it != m_charList.end() ; ++it)
 	{
 		CCharEntity* PCurrentChar = (CCharEntity*)it->second;
@@ -1134,6 +1173,7 @@ void CZone::SpawnPCs(CCharEntity* PChar)
 
 void CZone::SpawnMoogle(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	for (EntityList_t::const_iterator it = m_npcList.begin() ; it != m_npcList.end() ; ++it)
 	{
 		CNpcEntity* PCurrentNpc = (CNpcEntity*)it->second;
@@ -1157,6 +1197,7 @@ void CZone::SpawnMoogle(CCharEntity* PChar)
 
 void CZone::SpawnTransport(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	if (m_Transport != NULL)
     {
 		PChar->pushPacket(new CEntityUpdatePacket(m_Transport, ENTITY_SPAWN));
@@ -1172,6 +1213,7 @@ void CZone::SpawnTransport(CCharEntity* PChar)
 
 CBaseEntity* CZone::GetEntity(uint16 targid, uint8 filter)
 {
+	PROFILE_FUNC();
 	CBaseEntity* PEntity = NULL;
 
 	if (targid < 0x400)
@@ -1233,6 +1275,7 @@ CBaseEntity* CZone::GetEntity(uint16 targid, uint8 filter)
 
 void CZone::TOTDChange(TIMETYPE TOTD)
 {
+	PROFILE_FUNC();
 	SCRIPTTYPE ScriptType = SCRIPT_NONE;
 
 	switch (TOTD)
@@ -1359,6 +1402,7 @@ void CZone::TOTDChange(TIMETYPE TOTD)
 
 CCharEntity* CZone::GetCharByName(int8* name)
 {
+	PROFILE_FUNC();
     if (!m_charList.empty())
     {
         for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
@@ -1381,6 +1425,7 @@ CCharEntity* CZone::GetCharByName(int8* name)
 
 void CZone::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message_type, CBasicPacket* packet)
 {
+	PROFILE_FUNC();
 	if (!m_charList.empty())
 	{
 		switch(message_type)
@@ -1447,6 +1492,7 @@ void CZone::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message_type, C
 
 void CZone::WideScan(CCharEntity* PChar, uint16 radius)
 {
+	PROFILE_FUNC();
 	PChar->pushPacket(new CWideScanPacket(WIDESCAN_BEGIN));
 	for (EntityList_t::const_iterator it = m_npcList.begin() ; it != m_npcList.end() ; ++it)
 	{
@@ -1548,6 +1594,7 @@ void CZone::ZoneServer(uint32 tick)
 
 void CZone::ZoneServerRegion(uint32 tick)
 {
+	PROFILE_FUNC();
 	for (EntityList_t::const_iterator it = m_mobList.begin() ; it != m_mobList.end() ; ++it)
 	{
 		CMobEntity* PMob = (CMobEntity*)it->second;
@@ -1601,6 +1648,7 @@ void CZone::ZoneServerRegion(uint32 tick)
 
 EntityList_t CZone::GetCharList()
 {
+	PROFILE_FUNC();
 	return m_charList;
 }
 

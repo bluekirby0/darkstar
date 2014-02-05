@@ -29,6 +29,7 @@
 
 CItemUsable::CItemUsable(uint16 id) : CItem(id)
 {
+	PROFILE_FUNC();
 	setType(ITEM_USABLE);
 
 	m_UseDelay		 = 0;
@@ -46,110 +47,132 @@ CItemUsable::CItemUsable(uint16 id) : CItem(id)
 
 CItemUsable::~CItemUsable()
 {
+	PROFILE_FUNC();
 }
 
 void CItemUsable::setUseDelay(uint8 UseDelay)
 {
+	PROFILE_FUNC();
 	m_UseDelay = UseDelay;
 }
 
 uint8 CItemUsable::getUseDelay()
 {
+	PROFILE_FUNC();
 	return m_UseDelay;
 }
 
 void CItemUsable::setReuseDelay(uint32 ReuseDelay)
 {
+	PROFILE_FUNC();
 	m_ReuseDelay = ReuseDelay;
 }
 
 uint32 CItemUsable::getReuseDelay()
 {
+	PROFILE_FUNC();
 	return m_ReuseDelay;
 }
 
 void CItemUsable::setLastUseTime(uint32 LastUseTime)
 {
+	PROFILE_FUNC();
 	m_LastUseTime = LastUseTime;
 }
 
 uint32 CItemUsable::getLastUseTime()
 {
+	PROFILE_FUNC();
 	return m_LastUseTime;
 }
 
 uint32 CItemUsable::getNextUseTime()
 {
+	PROFILE_FUNC();
     return m_LastUseTime + m_ReuseDelay;
 }
 
 void CItemUsable::setCurrentCharges(uint8 CurrCharges)
 {
+	PROFILE_FUNC();
 	m_CurrCharges = dsp_cap(CurrCharges, 0, m_MaxCharges);
 }
 
 uint8 CItemUsable::getCurrentCharges()
 {
+	PROFILE_FUNC();
 	return m_CurrCharges;
 }
 
 void CItemUsable::setMaxCharges(uint8 MaxCharges)
 {
+	PROFILE_FUNC();
 	m_MaxCharges = MaxCharges;
 }
 
 uint8 CItemUsable::getMaxCharges()
 {
+	PROFILE_FUNC();
 	return m_MaxCharges;
 }
 
 void CItemUsable::setAnimationID(uint16 Animation)
 {
+	PROFILE_FUNC();
 	m_Animation = Animation;
 }
 
 uint16 CItemUsable::getAnimationID()
 {
+	PROFILE_FUNC();
 	return m_Animation;
 }
 
 void CItemUsable::setAnimationTime(uint16 AnimationTime)
 {
+	PROFILE_FUNC();
 	m_AnimationTime = AnimationTime;
 }
 
 uint16 CItemUsable::getAnimationTime()
 {
+	PROFILE_FUNC();
 	return m_AnimationTime;
 }
 
 void CItemUsable::setActivationTime(uint16 ActivationTime)
 {
+	PROFILE_FUNC();
 	m_ActivationTime = ActivationTime;
 }
 
 uint16 CItemUsable::getActivationTime()
 {
+	PROFILE_FUNC();
 	return m_ActivationTime;
 }
 
 void CItemUsable::setValidTarget(uint8 ValidTarget)
 {
+	PROFILE_FUNC();
 	m_ValidTarget = ValidTarget;
 }
 	
 uint8 CItemUsable::getValidTarget() 
 {
+	PROFILE_FUNC();
 	return m_ValidTarget;
 }
 
 uint16 CItemUsable::getAoE()
-{ 
+{
+	PROFILE_FUNC();
     return m_AoE; 
 }
 
 void CItemUsable::setAoE(uint16 AoE) 
-{ 
+{
+	PROFILE_FUNC();
     m_AoE = AoE; 
 }
 
@@ -161,6 +184,7 @@ void CItemUsable::setAoE(uint16 AoE)
 
 void CItemUsable::setAssignTime(uint32 VanaTime)
 {
+	PROFILE_FUNC();
     m_AssignTime = VanaTime;
 }
 
@@ -172,6 +196,7 @@ void CItemUsable::setAssignTime(uint32 VanaTime)
 
 uint32 CItemUsable::getReuseTime()
 {
+	PROFILE_FUNC();
     uint32 CurrentTime = CVanaTime::getInstance()->getVanaTime();
     uint32 ReuseTime   = dsp_max(m_AssignTime + m_UseDelay, m_LastUseTime + m_ReuseDelay);
 

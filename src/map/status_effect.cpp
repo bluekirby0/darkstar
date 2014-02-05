@@ -29,6 +29,7 @@
 
 CStatusEffect::CStatusEffect(EFFECT id, uint16 icon, uint16 power, uint32 tick, uint32 duration, uint32 subid, uint16 subPower, uint16 tier)
 {
+	PROFILE_FUNC();
 	m_StatusID = id;
     m_Type     = 0;
 	m_SubID	   = subid;
@@ -44,6 +45,7 @@ CStatusEffect::CStatusEffect(EFFECT id, uint16 icon, uint16 power, uint32 tick, 
 
 CStatusEffect::~CStatusEffect()
 {
+	PROFILE_FUNC();
 	for (uint32 i = 0; i < modList.size(); ++i)
 	{
 		delete modList.at(i);
@@ -52,86 +54,103 @@ CStatusEffect::~CStatusEffect()
 
 const int8* CStatusEffect::GetName()
 {
+	PROFILE_FUNC();
 	return m_Name.c_str();
 }
 
 void CStatusEffect::SetOwner(CBattleEntity* Owner)
 {
+	PROFILE_FUNC();
     m_POwner = Owner;
 }
 
 EFFECT CStatusEffect::GetStatusID()
 {
+	PROFILE_FUNC();
 	return m_StatusID;
 }
 
 CBattleEntity* CStatusEffect::GetOwner()
 {
+	PROFILE_FUNC();
 	return m_POwner;
 }
 
 uint32 CStatusEffect::GetSubID()
 {
+	PROFILE_FUNC();
 	return m_SubID;
 }
 
 uint16 CStatusEffect::GetType()
 {
+	PROFILE_FUNC();
     return m_Type;
 }
 
 uint16 CStatusEffect::GetIcon()
 {
+	PROFILE_FUNC();
 	return m_Icon;
 }
 
 uint16 CStatusEffect::GetPower()
 {
+	PROFILE_FUNC();
 	return m_Power;
 }
 
 uint16 CStatusEffect::GetSubPower()
 {
+	PROFILE_FUNC();
     return m_SubPower;
 }
 
 uint16 CStatusEffect::GetTier()
 {
+	PROFILE_FUNC();
     return m_Tier;
 }
 
 uint16 CStatusEffect::GetFlag()
 {
+	PROFILE_FUNC();
 	return m_Flag;
 }
 
 uint32 CStatusEffect::GetTickTime()
 {
+	PROFILE_FUNC();
 	return m_TickTime;
 }
 
 uint32 CStatusEffect::GetDuration()
 {
+	PROFILE_FUNC();
 	return m_Duration;
 }
 
 uint32 CStatusEffect::GetStartTime()
 {
+	PROFILE_FUNC();
 	return m_StartTime;
 }
 
 uint32 CStatusEffect::GetLastTick()
 {
+	PROFILE_FUNC();
 	return m_LastTick;
 }
 
 void CStatusEffect::SetFlag(uint16 Flag)
 {
+	PROFILE_FUNC();
     m_Flag |= Flag;
 }
 
 void CStatusEffect::SetIcon(uint16 Icon)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_POwner == NULL);
 
 	m_Icon = Icon;
@@ -140,58 +159,69 @@ void CStatusEffect::SetIcon(uint16 Icon)
 
 void CStatusEffect::SetType(uint16 Type)
 {
+	PROFILE_FUNC();
     m_Type = Type;
 }
 
 void CStatusEffect::SetPower(uint16 Power)
 {
+	PROFILE_FUNC();
 	m_Power = Power;
 }
 
 void CStatusEffect::SetSubPower(uint16 subPower)
 {
+	PROFILE_FUNC();
     m_SubPower = subPower;
 }
 
 void CStatusEffect::SetTier(uint16 tier)
 {
+	PROFILE_FUNC();
     m_Tier = tier;
 }
 
 void CStatusEffect::SetDuration(uint32 Duration)
 {
+	PROFILE_FUNC();
 	m_Duration = Duration;
 }
 
 void CStatusEffect::SetStartTime(uint32 StartTime)
 {
+	PROFILE_FUNC();
 	m_LastTick  = StartTime;
 	m_StartTime = StartTime;
 }
 
 void CStatusEffect::SetLastTick(uint32 LastTick)
 {
+	PROFILE_FUNC();
 	m_LastTick = LastTick;
 }
 
 void CStatusEffect::SetTickTime(uint32 tick)
 {
+	PROFILE_FUNC();
 	m_TickTime = tick;
 }
 
 void CStatusEffect::SetName(const int8* name)
 {
+	PROFILE_FUNC();
 	m_Name.clear();
 	m_Name.insert(0,name);
 }
 
 void CStatusEffect::SetName(string_t name)
 {
+	PROFILE_FUNC();
 	m_Name = name;
 }
 
 void CStatusEffect::addMod(uint16 modType, int16 amount)
 {
+	PROFILE_FUNC();
 	for (uint32 i = 0; i < modList.size(); ++i)
 	{
 		if (modList.at(i)->getModID() == modType)

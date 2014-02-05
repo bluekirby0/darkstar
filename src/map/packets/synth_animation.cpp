@@ -29,6 +29,7 @@
 
 CSynthAnimationPacket::CSynthAnimationPacket(CCharEntity * PChar, uint16 effect, uint8 param)
 {
+	PROFILE_FUNC();
 	this->type = 0x30;
 	this->size = 0x08;
 

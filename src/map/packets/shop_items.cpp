@@ -31,6 +31,7 @@
 
 CShopItemsPacket::CShopItemsPacket(CCharEntity * PChar)
 {
+	PROFILE_FUNC();
 	this->type = 0x3C;
 	this->size = 0x04;
 

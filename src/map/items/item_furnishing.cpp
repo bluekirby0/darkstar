@@ -25,6 +25,7 @@
 
 CItemFurnishing::CItemFurnishing(uint16 id) : CItem(id)
 {
+	PROFILE_FUNC();
 	setType(ITEM_FURNISHING);
 
 	m_storage      = 0;
@@ -40,84 +41,101 @@ CItemFurnishing::CItemFurnishing(uint16 id) : CItem(id)
 
 CItemFurnishing::~CItemFurnishing()
 {
+	PROFILE_FUNC();
 }
 
 void CItemFurnishing::setStorage(uint8 storage)
 {
+	PROFILE_FUNC();
 	m_storage = dsp_min(storage,80);
 }
 
 uint8 CItemFurnishing::getStorage()
 {
+	PROFILE_FUNC();
 	return m_storage;
 }
 
 void CItemFurnishing::setMoghancement(uint8 moghancement)
 {
+	PROFILE_FUNC();
 	m_moghancement = moghancement;
 }
 
 uint8 CItemFurnishing::getMoghancement()
 {
+	PROFILE_FUNC();
 	return m_moghancement;
 }
 
 void CItemFurnishing::setElement(uint8 element)
 {
+	PROFILE_FUNC();
 	m_element = element;
 }
 
 uint8 CItemFurnishing::getElement()
 {
+	PROFILE_FUNC();
 	return m_element;
 }
 
 void CItemFurnishing::setAura(uint8 aura)
 {
+	PROFILE_FUNC();
 	m_aura = aura;
 }
 
 uint8 CItemFurnishing::getAura()
 {
+	PROFILE_FUNC();
 	return m_aura;
 }
 
 void CItemFurnishing::setCol(uint8 col)
 {
+	PROFILE_FUNC();
 	m_col = col;
 }
 	
 uint8 CItemFurnishing::getCol()
 {
+	PROFILE_FUNC();
 	return m_col;
 }
 
 void CItemFurnishing::setRow(uint8 row)
 {
+	PROFILE_FUNC();
 	m_row = row;
 }
 
 uint8 CItemFurnishing::getRow()
 {
+	PROFILE_FUNC();
 	return m_row;
 }
 
 void CItemFurnishing::setLevel(uint8 level)
 {
+	PROFILE_FUNC();
 	m_level = level;
 }
 
 uint8 CItemFurnishing::getLevel()
 {
+	PROFILE_FUNC();
 	return m_level;
 }
 
 void CItemFurnishing::setRotation(uint8 rotation)
 {
+	PROFILE_FUNC();
 	m_rotation = rotation;
 }
 
 uint8 CItemFurnishing::getRotation()
 {
+	PROFILE_FUNC();
 	return m_rotation;
 }

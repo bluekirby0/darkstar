@@ -188,6 +188,7 @@ Escape sequences for Select Character Set
 
 int VFPRINTF(HANDLE handle,const char *fmt,va_list argptr)
 {
+	PROFILE_FUNC();
 	/////////////////////////////////////////////////////////////////
 	/* XXX Two streams are being used. Disabled to avoid inconsistency [flaviojs]		
 	static COORD saveposition = {0,0};
@@ -501,6 +502,7 @@ int VFPRINTF(HANDLE handle,const char *fmt,va_list argptr)
 }
 int FPRINTF(HANDLE handle, const char *fmt ...)
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list argptr;
 	va_start(argptr,fmt);
@@ -522,6 +524,7 @@ int FPRINTF(HANDLE handle, const char *fmt ...)
 //vprintf_without_ansiformats
 int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 {
+	PROFILE_FUNC();
 	char *p, *q;
 	NEWBUF(tempbuf); // temporary buffer
 
@@ -636,7 +639,8 @@ int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 	return 0;
 }
 int	FPRINTF(FILE *file, const char *fmt, ...)
-{	
+{
+	PROFILE_FUNC();	
 	int ret;
 	va_list argptr;
 	va_start(argptr, fmt);
@@ -656,6 +660,7 @@ char timestamp_format[20] = ""; //For displaying Timestamps
 
 int _vShowMessage(MSGTYPE flag,const char *string,va_list ap)
 {
+	PROFILE_FUNC();
 	char prefix[100];
 	va_list apcopy;
 #if defined(DEBUGLOGMAP) || defined(DEBUGLOGLOGIN)
@@ -749,12 +754,14 @@ int _vShowMessage(MSGTYPE flag,const char *string,va_list ap)
 }
 void ClearScreen(void)
 {
+	PROFILE_FUNC();
 #ifndef _WIN32
 	ShowMessage(CL_CLS);	// to prevent empty string passed messages
 #endif
 }
 int _ShowMessage(MSGTYPE flag, const char *string, ...)
 {
+	PROFILE_FUNC();
 	int ret;
 	va_list ap;
 	va_start(ap, string);

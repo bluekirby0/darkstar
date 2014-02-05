@@ -39,11 +39,13 @@
 
 CRecastContainer::CRecastContainer(CCharEntity* PChar) : m_PChar(PChar)
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PChar == NULL || m_PChar->objtype != TYPE_PC);
 }
 
 CRecastContainer::~CRecastContainer()
 {
+	PROFILE_FUNC();
     for (uint8 type = 0; type < MAX_RECASTTPE_SIZE; ++type)
     {
         RecastList_t* PRecastList = GetRecastList((RECASTTYPE)type);
@@ -63,6 +65,7 @@ CRecastContainer::~CRecastContainer()
 
 std::vector<Recast_t*>* CRecastContainer::GetRecastList(RECASTTYPE type)
 {
+	PROFILE_FUNC();
     switch (type)
     {
         case RECAST_MAGIC:   return &RecastMagicList;
@@ -84,6 +87,7 @@ std::vector<Recast_t*>* CRecastContainer::GetRecastList(RECASTTYPE type)
 
 Recast_t* CRecastContainer::GetRecast(RECASTTYPE type, uint16 id)
 {
+	PROFILE_FUNC();
     RecastList_t* list = GetRecastList(type);
     for (std::vector<Recast_t*>::iterator it = list->begin() ; it != list->end(); ++it)
     {
@@ -104,6 +108,7 @@ Recast_t* CRecastContainer::GetRecast(RECASTTYPE type, uint16 id)
 
 void CRecastContainer::Add(RECASTTYPE type, uint16 id, uint32 duration, uint32 chargeTime, uint8 maxCharges)
 {
+	PROFILE_FUNC();
     Recast_t* recast = GetRecast(type, id);
 
     if( recast == NULL)
@@ -145,6 +150,7 @@ void CRecastContainer::Add(RECASTTYPE type, uint16 id, uint32 duration, uint32 c
 
 void CRecastContainer::Del(RECASTTYPE type)
 {
+	PROFILE_FUNC();
     RecastList_t* PRecastList = GetRecastList(type);
 
     for (uint16 i = 0; i < PRecastList->size(); ++i)
@@ -162,6 +168,7 @@ void CRecastContainer::Del(RECASTTYPE type)
 
 void CRecastContainer::Del(RECASTTYPE type, uint16 id)
 {
+	PROFILE_FUNC();
     RecastList_t* PRecastList = GetRecastList(type);
 
     for (uint16 i = 0; i < PRecastList->size(); ++i)
@@ -183,6 +190,7 @@ void CRecastContainer::Del(RECASTTYPE type, uint16 id)
 
 bool CRecastContainer::Has(RECASTTYPE type, uint16 id)
 {
+	PROFILE_FUNC();
     RecastList_t* PRecastList = GetRecastList(type);
 
     for (uint16 i = 0; i < PRecastList->size(); ++i)
@@ -203,6 +211,7 @@ bool CRecastContainer::Has(RECASTTYPE type, uint16 id)
 
 bool CRecastContainer::HasRecast(RECASTTYPE type, uint16 id)
 {
+	PROFILE_FUNC();
     RecastList_t* PRecastList = GetRecastList(type);
 
     for (uint16 i = 0; i < PRecastList->size(); ++i)
@@ -236,6 +245,7 @@ bool CRecastContainer::HasRecast(RECASTTYPE type, uint16 id)
 
 void CRecastContainer::Check(uint32 tick)
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(tick == 0);
 
     for (uint8 type = 0; type < MAX_RECASTTPE_SIZE; ++type)
@@ -277,6 +287,7 @@ void CRecastContainer::Check(uint32 tick)
 
 void CRecastContainer::ResetAbilities()
 {
+	PROFILE_FUNC();
     RecastList_t* PRecastList = GetRecastList(RECAST_ABILITY);
 
     uint32 timestamp = 0;

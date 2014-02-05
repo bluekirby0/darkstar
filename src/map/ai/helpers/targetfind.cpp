@@ -36,6 +36,7 @@ This file is part of DarkStar-server source code.
 
 CTargetFind::CTargetFind(CBattleEntity* PBattleEntity)
 {
+	PROFILE_FUNC();
     m_PBattleEntity = PBattleEntity;
 
     reset();
@@ -43,6 +44,7 @@ CTargetFind::CTargetFind(CBattleEntity* PBattleEntity)
 
 void CTargetFind::reset()
 {
+	PROFILE_FUNC();
     m_findType = FIND_NONE;
     m_targets.clear();
     m_conal = false;
@@ -58,6 +60,7 @@ void CTargetFind::reset()
 
 void CTargetFind::findSingleTarget(CBattleEntity* PTarget, uint8 flags)
 {
+	PROFILE_FUNC();
     m_findFlags = flags;
     m_zone = m_PBattleEntity->getZone();
     m_PTarget = NULL;
@@ -68,6 +71,7 @@ void CTargetFind::findSingleTarget(CBattleEntity* PTarget, uint8 flags)
 
 void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, float radius, uint8 flags)
 {
+	PROFILE_FUNC();
     m_findFlags = flags;
     m_radius = radius;
     m_zone = m_PBattleEntity->getZone();
@@ -174,6 +178,7 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
 
 void CTargetFind::findWithinCone(CBattleEntity* PTarget, float distance, float angle, uint8 flags)
 {
+	PROFILE_FUNC();
     m_findFlags = flags;
     m_conal = true;
 
@@ -210,6 +215,7 @@ void CTargetFind::findWithinCone(CBattleEntity* PTarget, float distance, float a
 
 void CTargetFind::addAllInMobList(CBattleEntity* PTarget, bool withPet)
 {
+	PROFILE_FUNC();
     CCharEntity* PChar = (CCharEntity*)findMaster(m_PBattleEntity);
     CBattleEntity* PBattleTarget = NULL;
 
@@ -227,6 +233,7 @@ void CTargetFind::addAllInMobList(CBattleEntity* PTarget, bool withPet)
 
 void CTargetFind::addAllInZone(CBattleEntity* PTarget, bool withPet)
 {
+	PROFILE_FUNC();
     EntityList_t m_charList = zoneutils::GetZone(PTarget->getZone())->GetCharList();
 
     for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
@@ -242,6 +249,7 @@ void CTargetFind::addAllInZone(CBattleEntity* PTarget, bool withPet)
 
 void CTargetFind::addAllInAlliance(CBattleEntity* PTarget, bool withPet)
 {
+	PROFILE_FUNC();
     CParty* party = NULL;
 
     for (uint16 i = 0; i < PTarget->PParty->m_PAlliance->partyList.size(); i++)
@@ -257,6 +265,7 @@ void CTargetFind::addAllInAlliance(CBattleEntity* PTarget, bool withPet)
 
 void CTargetFind::addAllInParty(CBattleEntity* PTarget, bool withPet)
 {
+	PROFILE_FUNC();
 
     CParty* party = PTarget->PParty;
 
@@ -271,6 +280,7 @@ void CTargetFind::addAllInParty(CBattleEntity* PTarget, bool withPet)
 
 void CTargetFind::addAllInEnmityList()
 {
+	PROFILE_FUNC();
     if (m_PBattleEntity->objtype == TYPE_MOB)
     {
         CMobEntity* mob = (CMobEntity*)m_PBattleEntity;
@@ -286,6 +296,7 @@ void CTargetFind::addAllInEnmityList()
 
 void CTargetFind::addEntity(CBattleEntity* PTarget, bool withPet)
 {
+	PROFILE_FUNC();
     if (validEntity(PTarget)){
         m_targets.push_back(PTarget);
     }
@@ -300,6 +311,7 @@ void CTargetFind::addEntity(CBattleEntity* PTarget, bool withPet)
 
 CBattleEntity* CTargetFind::findMaster(CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
     if (PTarget->PMaster != NULL){
         return PTarget->PMaster;
     }
@@ -308,6 +320,7 @@ CBattleEntity* CTargetFind::findMaster(CBattleEntity* PTarget)
 
 bool CTargetFind::isMobOwner(CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
     if (m_PBattleEntity->objtype != TYPE_PC || PTarget->objtype == TYPE_PC)
     {
         // always true for mobs, npcs, pets
@@ -356,6 +369,7 @@ validEntity will check if the given entity can be targeted in the AoE.
 */
 bool CTargetFind::validEntity(CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
     if (std::find(m_targets.begin(), m_targets.end(), PTarget) != m_targets.end()) {
         return false;
     }
@@ -420,6 +434,7 @@ bool CTargetFind::validEntity(CBattleEntity* PTarget)
 
 bool CTargetFind::checkIsPlayer(CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
     if (PTarget == NULL) return false;
     if (PTarget->objtype == TYPE_PC) return true;
 
@@ -429,11 +444,13 @@ bool CTargetFind::checkIsPlayer(CBattleEntity* PTarget)
 
 bool CTargetFind::isWithinArea(position_t* pos)
 {
+	PROFILE_FUNC();
     return distance(*m_PRadiusAround, *pos) <= m_radius;
 }
 
 bool CTargetFind::isWithinCone(position_t* pos)
 {
+	PROFILE_FUNC();
     position_t PPoint;
 
     // holds final weight
@@ -470,11 +487,13 @@ bool CTargetFind::isWithinCone(position_t* pos)
 
 bool CTargetFind::isWithinRange(position_t* pos, float range)
 {
+	PROFILE_FUNC();
     return distance(m_PBattleEntity->loc.p, *pos) <= range;
 }
 
 CBattleEntity* CTargetFind::getValidTarget(uint16 actionTargetID, uint8 validTargetFlags)
 {
+	PROFILE_FUNC();
 
     DSP_DEBUG_BREAK_IF(actionTargetID == 0);
 

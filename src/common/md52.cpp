@@ -42,6 +42,7 @@
 
 void md5_starts( md5_context *ctx )
 {
+	PROFILE_FUNC();
 	ctx->total[0] = 0;
 	ctx->total[1] = 0;
 
@@ -53,6 +54,7 @@ void md5_starts( md5_context *ctx )
 
 void md5_process( md5_context *ctx, uint8 data[64] )
 {
+	PROFILE_FUNC();
 	uint32 X[16], A, B, C, D;
 
 	GET_UINT32( X[0],  data,  0 );
@@ -176,6 +178,7 @@ void md5_process( md5_context *ctx, uint8 data[64] )
 
 void md5_update( md5_context *ctx, uint8 *input, uint32 length )
 {
+	PROFILE_FUNC();
 	uint32 left, fill;
 
 	if( ! length ) return;
@@ -222,6 +225,7 @@ static uint8 md5_padding[64] =
 
 void md5_finish( md5_context *ctx, uint8 digest[16] )
 {
+	PROFILE_FUNC();
 	uint32 last, padn;
 	uint32 high, low;
 	uint8 msglen[8];
@@ -251,6 +255,7 @@ void md5_finish( md5_context *ctx, uint8 digest[16] )
 
 void md5(unsigned char *text, unsigned char *hash, int size)
 {
+	PROFILE_FUNC();
 	md5_context ctx;
 	md5_starts( &ctx );
 	md5_update( &ctx, (uint8 *) text, size);

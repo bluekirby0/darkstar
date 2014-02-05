@@ -27,6 +27,7 @@
 CAutomatonEntity::CAutomatonEntity()
     : CPetEntity(PETTYPE_AUTOMATON)
 {
+	PROFILE_FUNC();
     memset(&m_Equip, 0, sizeof m_Equip);
     memset(&m_ElementMax, 0, sizeof m_ElementMax);
     memset(&m_ElementEquip, 0, sizeof m_ElementEquip);
@@ -35,31 +36,37 @@ CAutomatonEntity::CAutomatonEntity()
 
 CAutomatonEntity::~CAutomatonEntity()
 {
+	PROFILE_FUNC();
 
 }
 
 void CAutomatonEntity::setFrame(AUTOFRAMETYPE frame)
 {
+	PROFILE_FUNC();
     m_Equip.Frame = frame;
 }
 
 AUTOFRAMETYPE CAutomatonEntity::getFrame()
 {
+	PROFILE_FUNC();
     return (AUTOFRAMETYPE)m_Equip.Frame;
 }
 
 void CAutomatonEntity::setHead(AUTOHEADTYPE head)
 {
+	PROFILE_FUNC();
     m_Equip.Head = head;
 }
 
 AUTOHEADTYPE CAutomatonEntity::getHead()
 {
+	PROFILE_FUNC();
     return (AUTOHEADTYPE)m_Equip.Head;
 }
 
 void CAutomatonEntity::setAttachment(uint8 slotid, uint8 id)
 {
+	PROFILE_FUNC();
     if (slotid < 12)
     {
         m_Equip.Attachments[slotid] = id;
@@ -68,6 +75,7 @@ void CAutomatonEntity::setAttachment(uint8 slotid, uint8 id)
 
 uint8 CAutomatonEntity::getAttachment(uint8 slotid)
 {
+	PROFILE_FUNC();
     if (slotid < 12)
     {
         return m_Equip.Attachments[slotid];
@@ -77,12 +85,14 @@ uint8 CAutomatonEntity::getAttachment(uint8 slotid)
 
 void CAutomatonEntity::setElementMax(uint8 element, uint8 max)
 {
+	PROFILE_FUNC();
     if (element < 8)
         m_ElementMax[element] = max;
 }
 
 uint8 CAutomatonEntity::getElementMax(uint8 element)
 {
+	PROFILE_FUNC();
     if (element < 8)
         return m_ElementMax[element];
     return 0;
@@ -90,12 +100,14 @@ uint8 CAutomatonEntity::getElementMax(uint8 element)
 
 void CAutomatonEntity::addElementCapacity(uint8 element, int8 value)
 {
+	PROFILE_FUNC();
     if (element < 8)
         m_ElementEquip[element] += value;
 }
 
 uint8 CAutomatonEntity::getElementCapacity(uint8 element)
 {
+	PROFILE_FUNC();
     if (element < 8)
         return m_ElementEquip[element];
     return 0;

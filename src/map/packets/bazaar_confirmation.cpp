@@ -32,6 +32,7 @@
 
 CBazaarConfirmationPacket::CBazaarConfirmationPacket(CCharEntity* PChar, uint8 SlotID, uint8 Quantity)
 {
+	PROFILE_FUNC();
 	this->type = 0x09;  // 0x109
 	this->size = 0x13;
 

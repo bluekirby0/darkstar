@@ -41,6 +41,7 @@
 
 int32 checksum(unsigned char *buf,uint32 buflen, char checkhash[16])
 {
+	PROFILE_FUNC();
 	unsigned char hash[16];
 
 	md5((unsigned char *)buf, hash, buflen);
@@ -60,6 +61,7 @@ int32 checksum(unsigned char *buf,uint32 buflen, char checkhash[16])
 
 float distance(position_t A, position_t B)
 {
+	PROFILE_FUNC();
 	float one = 0, two = 0, three = 0, four = 0;
 
 	one = A.x - B.x;
@@ -81,6 +83,7 @@ float distance(position_t A, position_t B)
 
 int32 intpow32(int32 base, int32 exponent)
 {
+	PROFILE_FUNC();
 	int32 power = 1;
 	while (exponent)
 	{
@@ -100,6 +103,7 @@ int32 intpow32(int32 base, int32 exponent)
 
 void getMSB(uint32* result,uint32 value)
 {
+	PROFILE_FUNC();
 	*result = 0;
 	if(value == 0)
 		return;
@@ -119,11 +123,13 @@ Rotations of entities are saved in uint8s, which can only hold up to a value of 
 */
 float rotationToRadian(uint8 rotation)
 {
+	PROFILE_FUNC();
 	return (((float)rotation) / 255) * 2 * M_PI;
 }
 
 uint8 radianToRotation(float radian)
 {
+	PROFILE_FUNC();
 	return (radian / (2 * M_PI)) * 255;
 }
 
@@ -136,6 +142,7 @@ uint8 radianToRotation(float radian)
 
 uint8 getangle(position_t A, position_t B)
 {
+	PROFILE_FUNC();
 	uint8 angle = (uint8)(atanf(( B.z - A.z ) / ( B.x - A.x )) * -(128.0f / M_PI));
 
 	return (A.x > B.x ? angle + 128 : angle);
@@ -149,6 +156,7 @@ uint8 getangle(position_t A, position_t B)
 
 bool isFaceing(position_t A, position_t B, uint8 coneAngle)
 {
+	PROFILE_FUNC();
 	int32 angle = getangle(A,B);
 	return ( abs(angle - A.rotation) < (coneAngle >> 1) );
 }
@@ -162,6 +170,7 @@ Pi will make the position behind the target (180 degrees).
 */
 position_t nearPosition(position_t A, float offset, float radian)
 {
+	PROFILE_FUNC();
 	// PI * 0.75 offsets the rotation to the proper place
 	float totalRadians = rotationToRadian(A.rotation) + radian;
 	position_t B;
@@ -184,6 +193,7 @@ position_t nearPosition(position_t A, float offset, float radian)
 
 int32 hasBit(uint16 value, uint8* BitArray, uint32 size)
 {
+	PROFILE_FUNC();
 	if (value >= size * 8)
 	{
 		ShowError(CL_RED"hasBit: value (%u) is out of range\n" CL_RESET, value);
@@ -194,6 +204,7 @@ int32 hasBit(uint16 value, uint8* BitArray, uint32 size)
 
 int32 addBit(uint16 value, uint8* BitArray, uint32 size)
 {
+	PROFILE_FUNC();
 	if (!hasBit(value, BitArray, size) && (value < size * 8))
 	{
 		BitArray[value >> 3] |= (1 << (value % 8));
@@ -204,6 +215,7 @@ int32 addBit(uint16 value, uint8* BitArray, uint32 size)
 
 int32 delBit(uint16 value, uint8* BitArray, uint32 size)
 {
+	PROFILE_FUNC();
 	if(hasBit(value, BitArray, size))
 	{
 		BitArray[value >> 3] &= ~(1 << (value % 8));
@@ -220,11 +232,13 @@ int32 delBit(uint16 value, uint8* BitArray, uint32 size)
 
 uint32 packBitsBE(uint8* target, uint64 value, int32 bitOffset, uint8 lengthInBit)
 {
+	PROFILE_FUNC();
 	return packBitsBE(target, value, 0, bitOffset, lengthInBit);
 }
 
 uint32 packBitsBE(uint8* target, uint64 value, int32 byteOffset, int32 bitOffset, uint8 lengthInBit)
 {
+	PROFILE_FUNC();
 	byteOffset += (bitOffset >> 3);										//correct bitOffsets>=8
 	bitOffset  %= 8;
 
@@ -285,11 +299,13 @@ uint32 packBitsBE(uint8* target, uint64 value, int32 byteOffset, int32 bitOffset
 
 uint64 unpackBitsBE(uint8* target, int32 bitOffset, uint8 lengthInBit)
 {
+	PROFILE_FUNC();
 	return unpackBitsBE(target, 0, bitOffset, lengthInBit);
 }
 
 uint64 unpackBitsBE(uint8* target, int32 byteOffset, int32 bitOffset, uint8 lengthInBit)
 {
+	PROFILE_FUNC();
 	byteOffset += (bitOffset >> 3);
 	bitOffset  %= 8;
 
@@ -334,11 +350,13 @@ uint64 unpackBitsBE(uint8* target, int32 byteOffset, int32 bitOffset, uint8 leng
 
 uint32 packBitsLE(uint8* target, uint64 value, int32 bitOffset, uint8 lengthInBit)
 {
+	PROFILE_FUNC();
 	return packBitsLE(target, value, 0, bitOffset, lengthInBit);
 }
 
 uint32 packBitsLE(uint8* target, uint64 value, int32 byteOffset, int32 bitOffset, uint8 lengthInBit)
 {
+	PROFILE_FUNC();
 	byteOffset += (bitOffset >> 3);													//correct bitOffsets >= 8
 	bitOffset  %= 8;
 
@@ -379,11 +397,13 @@ uint32 packBitsLE(uint8* target, uint64 value, int32 byteOffset, int32 bitOffset
 
 uint64 unpackBitsLE(uint8* target, int32 bitOffset, uint8 lengthInBit)
 {
+	PROFILE_FUNC();
 	return unpackBitsLE(target, 0, bitOffset, lengthInBit);
 }
 
 uint64 unpackBitsLE(uint8* target, int32 byteOffset, int32 bitOffset, uint8 lengthInBit)
 {
+	PROFILE_FUNC();
 	byteOffset += (bitOffset >> 3);
 	bitOffset  %= 8;
 
@@ -427,6 +447,7 @@ uint64 unpackBitsLE(uint8* target, int32 byteOffset, int32 bitOffset, uint8 leng
 
 int8* EncodeStringLinkshell(int8* signature, int8* target)
 {
+	PROFILE_FUNC();
 	uint8 encodedSignature[16];
     memset(encodedSignature, 0, sizeof encodedSignature);
     uint8 chars = 0;
@@ -453,6 +474,7 @@ int8* EncodeStringLinkshell(int8* signature, int8* target)
 
 int8* DecodeStringLinkshell(int8* signature, int8* target)
 {
+	PROFILE_FUNC();
     uint8 decodedSignature[21];
     memset(decodedSignature, 0, sizeof decodedSignature);
 
@@ -485,6 +507,7 @@ int8* DecodeStringLinkshell(int8* signature, int8* target)
 
 int8* EncodeStringSignature(int8* signature, int8* target)
 {
+	PROFILE_FUNC();
 	uint8 encodedSignature[12];
     memset(encodedSignature, 0, sizeof encodedSignature);
     uint8 chars = 0;
@@ -511,6 +534,7 @@ int8* EncodeStringSignature(int8* signature, int8* target)
 
 int8* DecodeStringSignature(int8* signature, int8* target)
 {
+	PROFILE_FUNC();
     uint8 decodedSignature[16];
     memset(decodedSignature, 0, sizeof decodedSignature);
 
@@ -532,11 +556,13 @@ int8* DecodeStringSignature(int8* signature, int8* target)
 
 float RandomNumber()
 {
+	PROFILE_FUNC();
   return ((double) rand() / (RAND_MAX));
 }
 
 std::string escape(std::string const &s)
 {
+	PROFILE_FUNC();
 	std::size_t n = s.length();
 	std::string escaped;
 	escaped.reserve(n * 2);

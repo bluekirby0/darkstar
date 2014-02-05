@@ -25,21 +25,25 @@
 
 CBlueTrait::CBlueTrait(uint8 category, uint16 id) : CTrait(id)
 {
+	PROFILE_FUNC();
     m_category = category;
     m_points = 0;
 }
 
 uint8 CBlueTrait::getCategory()
 {
+	PROFILE_FUNC();
 	return m_category;
 }
 
 uint8 CBlueTrait::getPoints()
 {
+	PROFILE_FUNC();
 	return m_points;
 }
 
 void CBlueTrait::setPoints(uint8 points)
 {
+	PROFILE_FUNC();
 	m_points = points;
 }

@@ -36,6 +36,7 @@
 
 CItemWeapon::CItemWeapon(uint16 id) : CItemArmor(id)
 {
+	PROFILE_FUNC();
 	setType(ITEM_WEAPON);
 
 	m_skillType		= SKILL_NON;
@@ -51,10 +52,13 @@ CItemWeapon::CItemWeapon(uint16 id) : CItemArmor(id)
 	m_unlockId		= 0;
 }
 
-CItemWeapon::~CItemWeapon() {}
+CItemWeapon::~CItemWeapon() {
+	PROFILE_FUNC();
+}
 
 void CItemWeapon::resetDelay()
 {
+	PROFILE_FUNC();
     setDelay(getBaseDelay());
 }
 
@@ -66,11 +70,13 @@ void CItemWeapon::resetDelay()
 
 bool CItemWeapon::isThrowing()
 {
+	PROFILE_FUNC();
     return m_ranged && getSkillType() == SKILL_THR;
 }
 
 bool CItemWeapon::isRanged()
 {
+	PROFILE_FUNC();
     return m_ranged;
 }
 
@@ -82,6 +88,7 @@ bool CItemWeapon::isRanged()
 
 bool CItemWeapon::isTwoHanded()
 {
+	PROFILE_FUNC();
     return m_twoHanded;
 }
 
@@ -94,6 +101,7 @@ bool CItemWeapon::isTwoHanded()
 
 bool CItemWeapon::isUnlockable()
 {
+	PROFILE_FUNC();
     if(m_skillType == SKILL_NON) return false;
 
 	return ( m_unlockId > 0 ? true : false );
@@ -108,6 +116,7 @@ bool CItemWeapon::isUnlockable()
 
 void CItemWeapon::setSkillType(uint8 skillType)
 {
+	PROFILE_FUNC();
     switch (skillType)
     {
 	    case SKILL_GSD:
@@ -129,6 +138,7 @@ void CItemWeapon::setSkillType(uint8 skillType)
 
 uint8 CItemWeapon::getSkillType()
 {
+	PROFILE_FUNC();
 	return m_skillType;
 }
 
@@ -141,11 +151,13 @@ uint8 CItemWeapon::getSkillType()
 
 void CItemWeapon::setSubSkillType(uint8 subSkillType)
 {
+	PROFILE_FUNC();
 	m_subSkillType = subSkillType;
 }
 
 uint8 CItemWeapon::getSubSkillType()
 {
+	PROFILE_FUNC();
 	return m_subSkillType;
 }
 
@@ -159,11 +171,13 @@ uint8 CItemWeapon::getSubSkillType()
 
 void CItemWeapon::setDelay(uint16 delay)
 {
+	PROFILE_FUNC();
 	m_delay = delay;
 }
 
 int16 CItemWeapon::getDelay()
 {
+	PROFILE_FUNC();
 	return m_delay;
 }
 
@@ -177,11 +191,13 @@ int16 CItemWeapon::getDelay()
 
 void CItemWeapon::setBaseDelay(uint16 delay)
 {
+	PROFILE_FUNC();
 	m_baseDelay = delay;
 }
 
 int16 CItemWeapon::getBaseDelay()
 {
+	PROFILE_FUNC();
 	return m_baseDelay;
 }
 /************************************************************************
@@ -192,6 +208,7 @@ int16 CItemWeapon::getBaseDelay()
 
 uint16 CItemWeapon::getUnlockId()
 {
+	PROFILE_FUNC();
 	return m_unlockId;
 }
 
@@ -203,11 +220,13 @@ uint16 CItemWeapon::getUnlockId()
 
 void CItemWeapon::setDamage(uint16 damage)
 {
+	PROFILE_FUNC();
 	m_damage = damage;
 }
 
 uint16 CItemWeapon::getDamage()
 {
+	PROFILE_FUNC();
 	return m_damage;
 }
 
@@ -219,11 +238,13 @@ uint16 CItemWeapon::getDamage()
 
 void CItemWeapon::setDmgType(uint16 dmgType)
 {
+	PROFILE_FUNC();
 	m_dmgType = dmgType;
 }
 
 uint16 CItemWeapon::getDmgType()
 {
+	PROFILE_FUNC();
 	return m_dmgType;
 }
 
@@ -235,11 +256,13 @@ uint16 CItemWeapon::getDmgType()
 
 void CItemWeapon::setAdditionalEffect(uint8 effect)
 {
+	PROFILE_FUNC();
     m_effect = effect;
 }
 
 uint8 CItemWeapon::getAdditionalEffect()
 {
+	PROFILE_FUNC();
     return m_effect;
 }
 
@@ -252,6 +275,7 @@ uint8 CItemWeapon::getAdditionalEffect()
 
 void CItemWeapon::setUnlockable(uint16 unlockId)
 {
+	PROFILE_FUNC();
     m_unlockId = unlockId;
 }
 
@@ -263,6 +287,7 @@ void CItemWeapon::setUnlockable(uint16 unlockId)
 
 void CItemWeapon::setMaxHit(uint8 hit)
 {
+	PROFILE_FUNC();
     m_maxHit = dsp_min(hit, 8);
 }
 
@@ -274,6 +299,7 @@ void CItemWeapon::setMaxHit(uint8 hit)
 
 uint8 CItemWeapon::getHitCount()
 {
+	PROFILE_FUNC();
 	return battleutils::getHitCount(m_maxHit);
 }
 

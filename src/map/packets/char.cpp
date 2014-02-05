@@ -33,6 +33,7 @@
 
 CCharPacket::CCharPacket(CCharEntity * PChar, ENTITYUPDATE type)
 {
+	PROFILE_FUNC();
 	this->type = 0x0D;
 	this->size = 0x36;
 

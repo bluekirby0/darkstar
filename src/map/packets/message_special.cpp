@@ -39,6 +39,7 @@ CMessageSpecialPacket::CMessageSpecialPacket(
 	uint32 param3, 
 	bool ShowName)
 {
+	PROFILE_FUNC();
 	this->type = 0x2A;
 	this->size = 0x10;
 

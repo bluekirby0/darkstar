@@ -25,9 +25,11 @@
 
 CItemGeneral::CItemGeneral(uint16 id) : CItem(id)
 {
+	PROFILE_FUNC();
 	setType(ITEM_GENERAL);
 }
 
 CItemGeneral::~CItemGeneral()
 {
+	PROFILE_FUNC();
 }

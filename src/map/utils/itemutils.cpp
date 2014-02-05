@@ -50,7 +50,8 @@ namespace itemutils
     ************************************************************************/
 
     CItem* CreateItem(uint16 ItemID) 
-    {
+	{
+		PROFILE_FUNC();
 	    if( (ItemID >= 0x0200) && (ItemID <= 0x0206) ) 
 	    {
 		    return new CItemLinkshell(ItemID);
@@ -99,7 +100,8 @@ namespace itemutils
     ************************************************************************/
 
     CItem* GetItem(uint16 ItemID)
-    {
+	{
+		PROFILE_FUNC();
 	    if( (ItemID == 0xFFFF) ) 
 	    {
 		    return new CItemCurrency(ItemID);
@@ -153,7 +155,8 @@ namespace itemutils
     ************************************************************************/
 
     CItem* GetItem(CItem* PItem)
-    {
+	{
+		PROFILE_FUNC();
         DSP_DEBUG_BREAK_IF(PItem == NULL);
 
         if (PItem->isType(ITEM_WEAPON))
@@ -198,7 +201,8 @@ namespace itemutils
     ************************************************************************/
 
     CItem* GetItemPointer(uint16 ItemID)
-    {
+	{
+		PROFILE_FUNC();
 	    if (ItemID < MAX_ITEMID)
 	    {
 		    return g_pItemList[ItemID];
@@ -214,12 +218,14 @@ namespace itemutils
     ************************************************************************/
 
     CItemWeapon* GetUnarmedItem()
-    {
+	{
+		PROFILE_FUNC();
         return PUnarmedItem;
     }
 
     CItemWeapon* GetUnarmedH2HItem()
-    {
+	{
+		PROFILE_FUNC();
         return PUnarmedH2HItem;
     }
 
@@ -230,7 +236,8 @@ namespace itemutils
     ************************************************************************/
 
     DropList_t* GetDropList(uint16 DropID)
-    {
+	{
+		PROFILE_FUNC();
 	    if (DropID < MAX_DROPID)
 	    {
 		     return g_pDropList[DropID];
@@ -246,7 +253,8 @@ namespace itemutils
     ************************************************************************/
 
     LootList_t* GetLootList(uint16 LootID)
-    {
+	{
+		PROFILE_FUNC();
 	    if (LootID < MAX_LOOTID)
 	    {
 		     return g_pLootList[LootID];
@@ -262,7 +270,8 @@ namespace itemutils
     ************************************************************************/
 
     void LoadItemList()
-    {
+	{
+		PROFILE_FUNC();
 	    memset(g_pItemList,0,sizeof(g_pItemList));
 	    memset(g_pDropList,0,sizeof(g_pDropList));
 
@@ -435,7 +444,8 @@ namespace itemutils
     ************************************************************************/
 
     void LoadDropList()
-    {
+	{
+		PROFILE_FUNC();
         int32 ret = Sql_Query(SqlHandle, "SELECT dropId, itemId, type, rate FROM mob_droplist WHERE dropid < %u;", MAX_DROPID);
 
 	    if( ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
@@ -469,7 +479,8 @@ namespace itemutils
     ************************************************************************/
 
     void LoadLootList()
-    {
+	{
+		PROFILE_FUNC();
 		int32 ret = Sql_Query(SqlHandle, "SELECT LootDropId, itemId, rolls, lootGroupId FROM bcnm_loot WHERE LootDropId < %u;", MAX_LOOTID);
 
 	    if( ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
@@ -501,7 +512,7 @@ namespace itemutils
     ************************************************************************/
 
     void Initialize()
-    {
+	{
 		PROFILE_FUNC();
         LoadItemList();
         LoadDropList();
@@ -525,7 +536,8 @@ namespace itemutils
     ************************************************************************/
 
     void FreeItemList()
-    {
+	{
+		PROFILE_FUNC();
 	    for(int32 ItemID = 0; ItemID < MAX_ITEMID; ++ItemID)
 	    {
 		    if ((g_pItemList[ItemID] != NULL) && g_pItemList[ItemID]->isType(ITEM_ARMOR))

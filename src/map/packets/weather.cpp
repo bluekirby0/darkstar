@@ -28,6 +28,7 @@
 
 CWeatherPacket::CWeatherPacket(uint32 ChangeTime, WEATHER WeatherEffect) 
 {
+	PROFILE_FUNC();
 	this->type = 0x57;
 	this->size = 0x06;
 

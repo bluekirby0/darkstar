@@ -40,11 +40,13 @@
 
 CEnmityContainer::CEnmityContainer(CBattleEntity* holder)
 {
+	PROFILE_FUNC();
     m_EnmityHolder = holder;
 }
 
 CEnmityContainer::~CEnmityContainer()
 {
+	PROFILE_FUNC();
     Clear();
 }
 
@@ -56,6 +58,7 @@ CEnmityContainer::~CEnmityContainer()
 
 void CEnmityContainer::Clear(uint32 EntityID)
 {
+	PROFILE_FUNC();
 	if (EntityID == 0)
 	{
         for (EnmityList_t::iterator it = m_EnmityList.begin(); it != m_EnmityList.end(); ++it)
@@ -87,6 +90,7 @@ void CEnmityContainer::Clear(uint32 EntityID)
 
 void CEnmityContainer::AddBaseEnmity(CBattleEntity* PChar)
 {
+	PROFILE_FUNC();
     UpdateEnmity(PChar, 1, 1);
 }
 
@@ -98,6 +102,7 @@ void CEnmityContainer::AddBaseEnmity(CBattleEntity* PChar)
 
 void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int16 CE, int16 VE, bool withMaster)
 {
+	PROFILE_FUNC();
 	// you're too far away so i'm ignoring you
 	if(!IsWithinEnmityRange(PEntity))
 	{
@@ -171,6 +176,7 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int16 CE, int16 VE, 
 
 void CEnmityContainer::AddPartyEnmity(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     // TODO: добавляемые персонажи уже могут быть в списке enmity, я не уверен, что добавление базового значения здесь актуально
 
 	if (PChar->PParty != NULL)
@@ -206,10 +212,12 @@ void CEnmityContainer::AddPartyEnmity(CCharEntity* PChar)
 
 void CEnmityContainer::AddLinkEnmity(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
     UpdateEnmity(PEntity, 1, 1, false);
 }
 
 bool CEnmityContainer::HasTargetID(uint32 TargetID){
+	PROFILE_FUNC();
 	EnmityList_t::iterator PEnmity = m_EnmityList.lower_bound(TargetID);
 
     if( PEnmity != m_EnmityList.end() &&
@@ -231,6 +239,7 @@ bool CEnmityContainer::HasTargetID(uint32 TargetID){
 
 void CEnmityContainer::UpdateEnmityFromCure(CBattleEntity* PEntity, uint16 level, uint16 CureAmount, bool isCureV)
 {
+	PROFILE_FUNC();
 	if(isCureV){
 		UpdateEnmity(PEntity, 400, 700);
 	}
@@ -254,6 +263,7 @@ void CEnmityContainer::UpdateEnmityFromCure(CBattleEntity* PEntity, uint16 level
 
 void CEnmityContainer::LowerEnmityByPercent(CBattleEntity* PEntity, uint8 percent, CBattleEntity* HateReceiver)
 {
+	PROFILE_FUNC();
 
 	EnmityList_t::iterator PEnmity = m_EnmityList.lower_bound(PEntity->id);
 
@@ -305,6 +315,7 @@ void CEnmityContainer::LowerEnmityByPercent(CBattleEntity* PEntity, uint8 percen
 
 void CEnmityContainer::UpdateEnmityFromDamage(CBattleEntity* PEntity, uint16 Damage)
 {
+	PROFILE_FUNC();
 	// Crash fix, PEntity was in ACTION_FALL
 	if (PEntity->PBattleAI->GetCurrentAction() == ACTION_FALL)
 		return;
@@ -331,6 +342,7 @@ void CEnmityContainer::UpdateEnmityFromDamage(CBattleEntity* PEntity, uint16 Dam
 
 void CEnmityContainer::UpdateEnmityFromAttack(CBattleEntity* PEntity, uint16 Damage)
 {
+	PROFILE_FUNC();
     UpdateEnmity(PEntity, -(1800 * Damage / PEntity->GetMaxHP()), 0);
 }
 
@@ -342,6 +354,7 @@ void CEnmityContainer::UpdateEnmityFromAttack(CBattleEntity* PEntity, uint16 Dam
 
 CBattleEntity* CEnmityContainer::GetHighestEnmity()
 {
+	PROFILE_FUNC();
 	uint32 HighestEnmity = 0;
 
 	CBattleEntity* PEntity = NULL;
@@ -362,6 +375,7 @@ CBattleEntity* CEnmityContainer::GetHighestEnmity()
 
 void CEnmityContainer::DecayEnmity()
 {
+	PROFILE_FUNC();
     for (EnmityList_t::iterator it = m_EnmityList.begin(); it != m_EnmityList.end(); ++it)
     {
         EnmityObject_t* PEnmityObject = it->second;
@@ -373,10 +387,12 @@ void CEnmityContainer::DecayEnmity()
 
 bool CEnmityContainer::IsWithinEnmityRange(CBattleEntity* PEntity)
 {
+	PROFILE_FUNC();
 	return distance(m_EnmityHolder->loc.p, PEntity->loc.p) <= m_EnmityHolder->m_enmityRange;
 }
 
 EnmityList_t* CEnmityContainer::GetEnmityList()
 {
+	PROFILE_FUNC();
     return &m_EnmityList;
 }

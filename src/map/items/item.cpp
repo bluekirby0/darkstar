@@ -34,6 +34,7 @@
 
 CItem::CItem(uint16 id)
 {
+	PROFILE_FUNC();
     m_id = id;
 	
     m_subid      = 0;
@@ -55,6 +56,7 @@ CItem::CItem(uint16 id)
 
 CItem::~CItem()
 {
+	PROFILE_FUNC();
 }
 
 /************************************************************************
@@ -65,11 +67,13 @@ CItem::~CItem()
 	
 void CItem::setID(uint16 id)
 {
+	PROFILE_FUNC();
 	m_id = id;
 }
 
 uint16 CItem::getID()
 {
+	PROFILE_FUNC();
 	return m_id;
 }
 
@@ -81,11 +85,13 @@ uint16 CItem::getID()
 
 void CItem::setSubID(uint16 subid)
 {
+	PROFILE_FUNC();
 	m_subid = subid;
 }
 
 uint16 CItem::getSubID()
 {
+	PROFILE_FUNC();
 	return m_subid;
 }
 
@@ -97,11 +103,13 @@ uint16 CItem::getSubID()
 
 void CItem::setFlag(uint16 flag)
 {
+	PROFILE_FUNC();
 	m_flag = flag;
 }
 
 uint16 CItem::getFlag()
 {
+	PROFILE_FUNC();
 	return m_flag;
 }
 
@@ -113,11 +121,13 @@ uint16 CItem::getFlag()
 
 void CItem::setAHCat(uint8 ahCat)
 {
+	PROFILE_FUNC();
 	m_ahCat = ahCat;
 }
 
 uint8 CItem::getAHCat()
 {
+	PROFILE_FUNC();
 	return m_ahCat;
 }
 
@@ -129,11 +139,13 @@ uint8 CItem::getAHCat()
 
 void CItem::setType(uint8 type)
 {
+	PROFILE_FUNC();
 	m_type |= type;
 }
 
 bool CItem::isType(ITEM_TYPE type)
 {
+	PROFILE_FUNC();
 	return (m_type & type);
 }
 
@@ -145,11 +157,13 @@ bool CItem::isType(ITEM_TYPE type)
 
 void CItem::setSubType(uint8 subtype)
 {
+	PROFILE_FUNC();
 	m_subtype = (subtype > 128 ? m_subtype & subtype : m_subtype | subtype);
 }
 
 bool CItem::isSubType(ITEM_SUBTYPE subtype)
 {
+	PROFILE_FUNC();
 	return (m_subtype & subtype);
 }
 
@@ -161,11 +175,13 @@ bool CItem::isSubType(ITEM_SUBTYPE subtype)
 
 void CItem::setReserve(uint32 reserve)
 {
+	PROFILE_FUNC();
     m_reserve = (reserve < m_quantity ? reserve : m_quantity);
 }
 
 uint32 CItem::getReserve()
 {
+	PROFILE_FUNC();
     return m_reserve;
 }
 
@@ -177,11 +193,13 @@ uint32 CItem::getReserve()
 
 void CItem::setQuantity(uint32 quantity)
 {
+	PROFILE_FUNC();
 	m_quantity = (quantity < m_stackSize ? quantity : m_stackSize);
 }
 
 uint32 CItem::getQuantity()
 {
+	PROFILE_FUNC();
 	return m_quantity;
 }
 
@@ -193,11 +211,13 @@ uint32 CItem::getQuantity()
 
 void CItem::setStackSize(uint32 stackSize)
 {
+	PROFILE_FUNC();
 	m_stackSize = stackSize;
 }
 
 uint32 CItem::getStackSize()
 {
+	PROFILE_FUNC();
 	return m_stackSize;
 }
 
@@ -209,11 +229,13 @@ uint32 CItem::getStackSize()
 
 void CItem::setBasePrice(uint32 BasePrice)
 {
+	PROFILE_FUNC();
 	m_BasePrice = BasePrice;
 }
 
 uint32 CItem::getBasePrice()
 {
+	PROFILE_FUNC();
 	return m_BasePrice;
 }
 
@@ -225,11 +247,13 @@ uint32 CItem::getBasePrice()
 
 void CItem::setCharPrice(uint32 CharPrice)
 {
+	PROFILE_FUNC();
     if (!(m_flag & ITEM_FLAG_EX)) m_CharPrice = CharPrice;
 }
 
 uint32 CItem::getCharPrice()
 {
+	PROFILE_FUNC();
     return m_CharPrice;
 }
 
@@ -241,11 +265,13 @@ uint32 CItem::getCharPrice()
 
 const int8* CItem::getName()
 {
+	PROFILE_FUNC();
 	return m_name.c_str();
 }
 
 void CItem::setName(int8* name)
 {
+	PROFILE_FUNC();
 	m_name.clear();
 	m_name.insert(0,name);
 }
@@ -258,11 +284,13 @@ void CItem::setName(int8* name)
 
 const int8* CItem::getSender()
 {
+	PROFILE_FUNC();
     return m_send.c_str();
 }
 
 void CItem::setSender(int8* sender)
 {
+	PROFILE_FUNC();
     m_send.clear();
     m_send.insert(0,sender);
 }
@@ -275,11 +303,13 @@ void CItem::setSender(int8* sender)
 
 const int8* CItem::getReceiver()
 {
+	PROFILE_FUNC();
     return m_recv.c_str();
 }
 
 void CItem::setReceiver(int8* receiver)
 {
+	PROFILE_FUNC();
     m_recv.clear();
     m_recv.insert(0,receiver);
 }
@@ -292,11 +322,13 @@ void CItem::setReceiver(int8* receiver)
 
 const int8* CItem::getSignature()
 {
+	PROFILE_FUNC();
 	return m_sign.c_str();
 }
 
 void CItem::setSignature(int8* signature)
 {
+	PROFILE_FUNC();
 	m_sign.clear();
 	m_sign.insert(0,signature);
 }
@@ -309,11 +341,13 @@ void CItem::setSignature(int8* signature)
 
 uint8 CItem::getLocationID()
 {
+	PROFILE_FUNC();
 	return m_locationID;
 }
 
 void CItem::setLocationID(uint8 locationID)
 {
+	PROFILE_FUNC();
 	m_locationID = locationID;
 }
 
@@ -325,11 +359,13 @@ void CItem::setLocationID(uint8 locationID)
 
 uint8 CItem::getSlotID()
 {
+	PROFILE_FUNC();
 	return m_slotID;
 }
 	
 void CItem::setSlotID(uint8 slotID)
 {
+	PROFILE_FUNC();
 	m_slotID = slotID;
 }
 
@@ -341,11 +377,13 @@ void CItem::setSlotID(uint8 slotID)
 	
 void CItem::setWornItem(uint8 mode)
 {
+	PROFILE_FUNC();
 	m_wornItem = mode;
 }
 
 uint8 CItem::getWornItem()
 {
+	PROFILE_FUNC();
 	return m_wornItem;
 }
 
@@ -357,10 +395,12 @@ uint8 CItem::getWornItem()
 	
 void CItem::setSent(bool sent)
 {
+	PROFILE_FUNC();
 	m_sent = sent;
 }
 
 bool CItem::isSent()
 {
+	PROFILE_FUNC();
 	return m_sent;
 }

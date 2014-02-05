@@ -87,6 +87,7 @@ namespace synthutils
 
 bool isRightRecipe(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	const int8* fmtQuery =
 
 		"SELECT ID, KeyItem, Wood, Smith, Gold, Cloth, Leather, Bone, Alchemy, Cook, \
@@ -187,6 +188,7 @@ bool isRightRecipe(CCharEntity* PChar)
 
 double getSynthDifficulty(CCharEntity* PChar, uint8 skillID)
 {
+	PROFILE_FUNC();
 	uint8  ElementDirection = 0;
 	uint8  WeekDay = (uint8)CVanaTime::getInstance()->getWeekday();
 	uint8  crystalElement = PChar->CraftContainer->getType();
@@ -259,6 +261,7 @@ double getSynthDifficulty(CCharEntity* PChar, uint8 skillID)
 
 bool canSynthesizeHQ(CCharEntity* PChar, uint8 skillID)
 {
+	PROFILE_FUNC();
 	uint16 ModID = 0;
 
 	switch (skillID)
@@ -285,6 +288,7 @@ bool canSynthesizeHQ(CCharEntity* PChar, uint8 skillID)
 
 uint8 getGeneralCraft(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	uint8 skillValue   = 0;
 	uint8 generalCraft = 0;
 
@@ -312,6 +316,7 @@ uint8 getGeneralCraft(CCharEntity* PChar)
 
 uint8 calcSynthResult(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	uint8 count  = 0;
 	uint8 result = 0;
 	uint8 hqtier = 0;
@@ -445,6 +450,7 @@ uint8 calcSynthResult(CCharEntity* PChar)
 
 int32 doSynthSkillUp(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	//if (PChar->CraftContainer->getType() == ELEMENT_LIGHTNING)
 	//{
 	//	return 0;
@@ -557,6 +563,7 @@ int32 doSynthSkillUp(CCharEntity* PChar)
 
 int32 doSynthFail(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	uint8  carrentCraft = PChar->CraftContainer->getInvSlotID(0);
 	double synthDiff    = getSynthDifficulty(PChar, carrentCraft);
 	double moghouseAura = 0;
@@ -682,6 +689,7 @@ int32 doSynthFail(CCharEntity* PChar)
 
 int32 startSynth(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	uint16 effect  = 0;
 	uint8  element = 0;
 
@@ -788,6 +796,7 @@ int32 startSynth(CCharEntity* PChar)
 
 int32 doSynthResult(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	uint8 m_synthResult = PChar->CraftContainer->getQuantity(0);
 
 	if (m_synthResult == SYNTHESIS_FAIL)
@@ -874,6 +883,7 @@ int32 doSynthResult(CCharEntity* PChar)
 
 int32 sendSynthDone(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	doSynthResult(PChar);
 
 	PChar->animation = ANIMATION_NONE;

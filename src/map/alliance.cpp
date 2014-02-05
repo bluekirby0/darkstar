@@ -42,6 +42,7 @@
 
 CAlliance::CAlliance(CBattleEntity* PEntity) 
 {
+	PROFILE_FUNC();
 	DSP_DEBUG_BREAK_IF(PEntity->PParty == NULL);
 
     m_AllianceID   = PEntity->PParty->GetPartyID();
@@ -60,6 +61,7 @@ CAlliance::CAlliance(CBattleEntity* PEntity)
 
 void CAlliance::dissolveAlliance(void) 
 {
+	PROFILE_FUNC();
 	//first kick out the third party if it exsists
 	if (this->partyCount() == 3)
 		this->removeParty(this->partyList.at(2));
@@ -79,13 +81,15 @@ void CAlliance::dissolveAlliance(void)
 
 
 uint32 CAlliance::partyCount(void) 
-{	
+{
+	PROFILE_FUNC();
 	if (!partyList.empty()) return (unsigned int) partyList.size();
 	return 0;
 }
 
 void CAlliance::removeParty(CParty * party) 
 {
+	PROFILE_FUNC();
 		CAlliance* alliance = party->m_PAlliance;
 		bool mainPartyDisbanding = false;
 
@@ -152,6 +156,7 @@ void CAlliance::removeParty(CParty * party)
 
 void CAlliance::addParty(CParty * party) 
 {
+	PROFILE_FUNC();
 	party->m_PAlliance = this;
 	partyList.push_back(party);
 
@@ -172,13 +177,15 @@ void CAlliance::addParty(CParty * party)
 
 
 CParty* CAlliance::getMainParty() 
-{	
+{
+	PROFILE_FUNC();
 		return aLeader;
 }
 
 //Assigns a party leader for the party
 void CAlliance::setMainParty(CParty * aLeader) 
 {
+	PROFILE_FUNC();
 	
 	//Having no leader is bad so lets check if the pointer is not null.
 	if (aLeader != NULL) {

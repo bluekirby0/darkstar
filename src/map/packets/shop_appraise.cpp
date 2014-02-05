@@ -28,6 +28,7 @@
 
 CShopAppraisePacket::CShopAppraisePacket(uint8 slotID, uint32 sellPrice)
 {
+	PROFILE_FUNC();
 	this->type = 0x3D;
 	this->size = 0x08;
 

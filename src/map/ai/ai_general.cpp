@@ -41,6 +41,7 @@
 
 CAIGeneral::CAIGeneral()
 {
+	PROFILE_FUNC();
     m_PTargetFind = NULL;
     m_PPathFind = NULL;
     m_PMagicState = NULL;
@@ -49,6 +50,7 @@ CAIGeneral::CAIGeneral()
 
 CAIGeneral::~CAIGeneral()
 {
+	PROFILE_FUNC();
 	if(m_PTargetFind != NULL)
 	{
 	    delete m_PTargetFind;
@@ -73,6 +75,7 @@ CAIGeneral::~CAIGeneral()
 
 void CAIGeneral::Reset()
 {
+	PROFILE_FUNC();
     m_Tick = 0;
 	m_StartBattle = 0;
 	m_ActionType = ACTION_NONE;

@@ -64,6 +64,7 @@ int sock_arr_len = 0;
 /// @return Fd or -1
 int sock2fd(SOCKET s)
 {
+	PROFILE_FUNC();
 	int fd;
 
 	// search for the socket
@@ -86,6 +87,7 @@ int sock2fd(SOCKET s)
 /// @return New fd or -1
 int sock2newfd(SOCKET s)
 {
+	PROFILE_FUNC();
 	int fd;
 
 	// find an empty position
@@ -106,6 +108,7 @@ int sock2newfd(SOCKET s)
 
 int sAccept(int fd, struct sockaddr* addr, int* addrlen)
 {
+	PROFILE_FUNC();
 	SOCKET s;
 
 	// accept connection
@@ -117,6 +120,7 @@ int sAccept(int fd, struct sockaddr* addr, int* addrlen)
 
 int sClose(int fd)
 {
+	PROFILE_FUNC();
 	int ret = closesocket(fd2sock(fd));
 	fd2sock(fd) = INVALID_SOCKET;
 	return ret;
@@ -124,6 +128,7 @@ int sClose(int fd)
 
 int sSocket(int af, int type, int protocol)
 {
+	PROFILE_FUNC();
 	SOCKET s;
 
 	// create socket
@@ -158,6 +163,7 @@ int32 naddr_;   // # of ip addresses
 
 int32 makeConnection(uint32 ip, uint16 port, int32 type)
 {
+	PROFILE_FUNC();
 	struct sockaddr_in remote_address;
 	int32 fd;
 	int32 result;
@@ -217,6 +223,7 @@ int32 makeConnection(uint32 ip, uint16 port, int32 type)
 //функция, закрывающая сокет
 void do_close(int32 fd)
 {
+	PROFILE_FUNC();
 	sFD_CLR(fd, &readfds);// this needs to be done before closing the socket
 	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
 	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
@@ -226,6 +233,7 @@ void do_close(int32 fd)
 /// Uses loopback is no address is found.
 int socket_getips(uint32* ips, int max)
 {
+	PROFILE_FUNC();
 	int num = 0;
 
 	if( ips == NULL || max <= 0 )
@@ -315,6 +323,7 @@ int socket_getips(uint32* ips, int max)
 //Инициализация основных настроек сокета 
 bool _vsocket_init(void)
 {
+	PROFILE_FUNC();
 #ifdef WIN32
 	{// Start up windows networking
 		WSADATA wsaData;
@@ -370,18 +379,21 @@ bool _vsocket_init(void)
 
 //завершение работы сокета
 bool _vsocket_final(void){
+	PROFILE_FUNC();
 	return true;
 }
 
 // hostname/ip conversion functions
 uint32 host2ip(const char* hostname)
 {
+	PROFILE_FUNC();
 	struct hostent* h = gethostbyname(hostname);
 	return (h != NULL) ? ntohl(*(uint32*)h->h_addr) : 0;
 }
 
 const char* ip2str(uint32 ip, char ip_str[16])
 {
+	PROFILE_FUNC();
 	struct in_addr addr;
 	addr.s_addr = htonl(ip);
 	return (ip_str == NULL) ? inet_ntoa(addr) : strncpy(ip_str, inet_ntoa(addr), 16);
@@ -389,6 +401,7 @@ const char* ip2str(uint32 ip, char ip_str[16])
 
 uint32 str2ip(const char* ip_str)
 {
+	PROFILE_FUNC();
 	return ntohl(inet_addr(ip_str));
 }
 
@@ -396,6 +409,7 @@ uint32 str2ip(const char* ip_str)
 // Neccessary for sending port numbers to the RO client until Gravity notices that they forgot ntohs() calls.
 uint16 ntows(uint16 netshort)
 {
+	PROFILE_FUNC();
 	return ((netshort & 0xFF) << 8) | ((netshort & 0xFF00) >> 8);
 }
 /*****************************************************************************/
@@ -458,6 +472,7 @@ static int connect_check_(uint32 ip);
 /// @see connect_check_()
 static int connect_check(uint32 ip)
 {
+	PROFILE_FUNC();
 	int result = connect_check_(ip);
 	if( access_debug ) {
 		ShowInfo("connect_check: Connection from %d.%d.%d.%d %s\n", CONVIP(ip),result ? "allowed." : "denied!");
@@ -470,6 +485,7 @@ static int connect_check(uint32 ip)
 ///  1 or 2 : Connection Accepted
 static int connect_check_(uint32 ip)
 {
+	PROFILE_FUNC();
 	ConnectHistory* hist = connect_history[ip&0xFFFF];
 	int i;
 	int is_allowip = 0;
@@ -572,6 +588,7 @@ static int connect_check_(uint32 ip)
 /// Deletes old connection history records.
 static int connect_check_clear(uint32 tick,CTaskMgr::CTask* PTask)
 {
+	PROFILE_FUNC();
 	int i;
 	int clear = 0;
 	int list  = 0;
@@ -608,6 +625,7 @@ static int connect_check_clear(uint32 tick,CTaskMgr::CTask* PTask)
 /// Returns 1 is successful, 0 otherwise.
 int access_ipmask(const char* str, AccessControl* acc)
 {
+	PROFILE_FUNC();
 	uint32 ip;
 	uint32 mask;
 	unsigned int a[4];
@@ -655,6 +673,7 @@ int access_ipmask(const char* str, AccessControl* acc)
 //////////////////////////////
 int recv_to_fifo(int fd)
 {
+	PROFILE_FUNC();
 	int len;
 
 	if( !session_isActive(fd) )
@@ -684,6 +703,7 @@ int recv_to_fifo(int fd)
 
 int send_from_fifo(int fd)
 {
+	PROFILE_FUNC();
 	int len;
 
 	if( !session_isValid(fd) )
@@ -731,15 +751,18 @@ socket_data* session[FD_SETSIZE];
 
 bool session_isValid(int fd)
 {
+	PROFILE_FUNC();
 	return ( fd > 0 && fd < FD_SETSIZE && session[fd] != NULL );
 }
 bool session_isActive(int fd)
 {
+	PROFILE_FUNC();
 	return ( session_isValid(fd) && !session[fd]->flag.eof );
 }
 
 int32 makeConnection_tcp(uint32 ip, uint16 port)
 {
+	PROFILE_FUNC();
 	int fd = makeConnection(ip,port,SOCK_STREAM);
 	if( fd > 0 )
 	{
@@ -753,6 +776,7 @@ int32 makeConnection_tcp(uint32 ip, uint16 port)
  *--------------------------------------*/
 int connect_client(int listen_fd, sockaddr_in& client_address)
 {
+	PROFILE_FUNC();
 	int fd;
 	//struct sockaddr_in client_address;
 	socklen_t len;
@@ -798,6 +822,7 @@ int connect_client(int listen_fd, sockaddr_in& client_address)
 
 int32 makeListenBind_tcp(uint32 ip, uint16 port,RecvFunc connect_client)
 {
+	PROFILE_FUNC();
 	struct sockaddr_in server_address;
 	int fd;
 	int result;
@@ -851,6 +876,7 @@ int32 makeListenBind_tcp(uint32 ip, uint16 port,RecvFunc connect_client)
 }
 int32 realloc_fifo(int32 fd, uint32 rfifo_size, uint32 wfifo_size)
 {
+	PROFILE_FUNC();
 	if( !session_isValid(fd) )
 		return 0;
 
@@ -867,6 +893,7 @@ int32 realloc_fifo(int32 fd, uint32 rfifo_size, uint32 wfifo_size)
 }
 int32 realloc_writefifo(int32 fd, size_t addition)
 {
+	PROFILE_FUNC();
 	size_t newsize;
 
 	if( !session_isValid(fd) ) // might not happen
@@ -893,6 +920,7 @@ int32 realloc_writefifo(int32 fd, size_t addition)
 }
 int32 WFIFOSET(int32 fd, size_t len)
 {
+	PROFILE_FUNC();
 	size_t newreserve;
 	struct socket_data* s = session[fd];
 
@@ -939,6 +967,7 @@ int32 WFIFOSET(int32 fd, size_t len)
 }
 int32 RFIFOSKIP(int32 fd, size_t len)
 {
+	PROFILE_FUNC();
 	  struct socket_data *s;
 
 	if ( !session_isActive(fd) )
@@ -957,6 +986,7 @@ int32 RFIFOSKIP(int32 fd, size_t len)
 
 void do_close_tcp(int32 fd)
 {
+	PROFILE_FUNC();
 	flush_fifo(fd);
 	do_close(fd);
 	if(session[fd])delete_session(fd);
@@ -964,6 +994,7 @@ void do_close_tcp(int32 fd)
 
 int socket_config_read(const char* cfgName)
 {
+	PROFILE_FUNC();
 	char line[1024],w1[1024],w2[1024];
 	FILE *fp;
 
@@ -1024,6 +1055,7 @@ int socket_config_read(const char* cfgName)
 
 void socket_init_tcp(void)
 {
+	PROFILE_FUNC();
 	if(!_vsocket_init())
 		return;
 
@@ -1043,6 +1075,7 @@ void socket_init_tcp(void)
 
 void socket_final_tcp(void)
 {
+	PROFILE_FUNC();
 	if(!_vsocket_final())
 		return;
 	int i;
@@ -1075,11 +1108,13 @@ void socket_final_tcp(void)
 }
 void flush_fifo(int32 fd)
 {
+	PROFILE_FUNC();
 	if(session[fd] != NULL)
 		session[fd]->func_send(fd);
 }
 void flush_fifos(void)
 {
+	PROFILE_FUNC();
 	int i;
 	for(i = 1; i < fd_max; i++)
 		flush_fifo(i);
@@ -1089,11 +1124,13 @@ void flush_fifos(void)
 
 void set_defaultparse(ParseFunc defaultparse)
 {
+	PROFILE_FUNC();
 	default_func_parse = defaultparse;
 }
 
 void set_eof(int32 fd)
 {
+	PROFILE_FUNC();
 	if( session_isActive(fd) )
 	{
 		session[fd]->flag.eof = 1;
@@ -1101,6 +1138,7 @@ void set_eof(int32 fd)
 }
 int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse)
 {
+	PROFILE_FUNC();
 	CREATE(session[fd], struct socket_data, 1);
 	CREATE(session[fd]->rdata, unsigned char, RFIFO_SIZE);
 	CREATE(session[fd]->wdata, unsigned char, WFIFO_SIZE);
@@ -1117,6 +1155,7 @@ int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc fun
 
 int delete_session(int fd)
 {
+	PROFILE_FUNC();
 	if (fd <= 0 || fd >= FD_SETSIZE)
 		return -1;
 	if (session[fd]) {
@@ -1133,6 +1172,7 @@ int delete_session(int fd)
  *--------------------------------------*/
 void set_nonblocking(int fd, unsigned long yes)
 {
+	PROFILE_FUNC();
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
 	if( sIoctl(fd, FIONBIO, &yes) != 0 )
@@ -1192,6 +1232,7 @@ int32 makeBind_udp(uint32 ip, uint16 port)
 
 int socket_config_read(const char* cfgName)
 {
+	PROFILE_FUNC();
 	char line[1024],w1[1024],w2[1024];
 	FILE *fp;
 
@@ -1216,6 +1257,7 @@ int socket_config_read(const char* cfgName)
 
 void socket_init_udp(void)
 {
+	PROFILE_FUNC();
 	if(!_vsocket_init())
 		return;
 	#define SOCKET_CONF_FILENAME  "./conf/packet_darkstar_udp.conf"
@@ -1224,26 +1266,31 @@ void socket_init_udp(void)
 
 void do_close_udp(int32 fd)
 {
+	PROFILE_FUNC();
 	do_close(fd);
 }
 void socket_final_udp(void)
 {
+	PROFILE_FUNC();
 	if( !_vsocket_final() )
 		return;
 	//do_close_udp(listen_fd);
 }
 int32 recvudp(int32 fd,void *buff,size_t nbytes,int32 flags,struct sockaddr *from, socklen_t *addrlen)
 {
+	PROFILE_FUNC();
 	return sRecvfrom(fd,(char*)buff,nbytes,flags,from,addrlen);
 }
 int32 sendudp(int32 fd,void *buff,size_t nbytes,int32 flags,const struct sockaddr *from,socklen_t addrlen)
 {
+	PROFILE_FUNC();
 	return sSendto(fd,(const char*)buff,nbytes,flags,from,addrlen);
 }
 #endif
 
 bool socket_init(void)
 {
+	PROFILE_FUNC();
 #ifdef dsTCPSERV
 	socket_init_tcp();
 #elif defined( dsUDPSERV )
@@ -1253,6 +1300,7 @@ bool socket_init(void)
 }
 bool socket_final(void)
 {
+	PROFILE_FUNC();
 #ifdef dsTCPSERV
 	socket_final_tcp();
 #elif defined( dsUDPSERV )

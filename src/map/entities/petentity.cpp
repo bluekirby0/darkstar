@@ -30,6 +30,7 @@
 
 CPetEntity::CPetEntity(PETTYPE petType)
 {
+	PROFILE_FUNC();
 	objtype = TYPE_PET;
 	m_PetType = petType;
 	m_EcoSystem = SYSTEM_UNCLASSIFIED;
@@ -37,20 +38,24 @@ CPetEntity::CPetEntity(PETTYPE petType)
 
 CPetEntity::~CPetEntity()
 {
+	PROFILE_FUNC();
 
 }
 
 PETTYPE CPetEntity::getPetType(){
+	PROFILE_FUNC();
   return m_PetType;
 }
 
 bool CPetEntity::isBstPet()
 {
+	PROFILE_FUNC();
   return getPetType()==PETTYPE_JUG_PET || objtype == TYPE_MOB;
 }
 
 WYVERNTYPE CPetEntity::getWyvernType()
 {
+	PROFILE_FUNC();
   DSP_DEBUG_BREAK_IF(PMaster == NULL);
 
   switch(PMaster->GetSJob())

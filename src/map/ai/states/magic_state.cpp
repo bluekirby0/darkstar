@@ -35,6 +35,7 @@
 CMagicState::CMagicState(CBattleEntity* PEntity, CTargetFind* PTargetFind, float maxStartDistance, float maxFinishDistance)
 : CState(PEntity, PTargetFind)
 {
+	PROFILE_FUNC();
 	m_PSpell = NULL;
 	m_enableCasting = true;
 	m_maxStartDistance = maxStartDistance;
@@ -43,6 +44,7 @@ CMagicState::CMagicState(CBattleEntity* PEntity, CTargetFind* PTargetFind, float
 
 STATESTATUS CMagicState::CastSpell(CSpell* PSpell, CBattleEntity* PTarget, uint8 flags)
 {
+	PROFILE_FUNC();
 	if(!CanCastSpell(PSpell, PTarget, flags))
 	{
 		return STATESTATUS_ERROR;
@@ -75,6 +77,7 @@ STATESTATUS CMagicState::CastSpell(CSpell* PSpell, CBattleEntity* PTarget, uint8
 
 bool CMagicState::CanCastSpell(CSpell* PSpell, CBattleEntity* PTarget, uint8 flags)
 {
+	PROFILE_FUNC();
 	if(PSpell == NULL) return false;
 
 	if(!ValidCast(PSpell, PTarget))
@@ -119,21 +122,25 @@ bool CMagicState::CanCastSpell(CSpell* PSpell, CBattleEntity* PTarget, uint8 fla
 
 bool CMagicState::IsInterrupted()
 {
+	PROFILE_FUNC();
 	return m_interruptSpell;
 }
 
 void CMagicState::ForceInterrupt()
 {
+	PROFILE_FUNC();
 	m_interruptSpell = true;
 }
 
 CSpell* CMagicState::GetSpell()
 {
+	PROFILE_FUNC();
 	return m_PSpell;
 }
 
 STATESTATUS CMagicState::Update(uint32 tick)
 {
+	PROFILE_FUNC();
 	if(CState::Update(tick) == STATESTATUS_ERROR || !CheckValidTarget(m_PTarget))
 	{
 		return STATESTATUS_ERROR;
@@ -158,6 +165,7 @@ STATESTATUS CMagicState::Update(uint32 tick)
 
 void CMagicState::Clear()
 {
+	PROFILE_FUNC();
 	CState::Clear();
 
 	m_PSpell = NULL;
@@ -167,6 +175,7 @@ void CMagicState::Clear()
 
 uint32 CMagicState::CalculateCastTime(CSpell* PSpell)
 {
+	PROFILE_FUNC();
     if(PSpell == NULL)
     {
         return 0;
@@ -237,6 +246,7 @@ uint32 CMagicState::CalculateCastTime(CSpell* PSpell)
 
 int16 CMagicState::CalculateMPCost(CSpell* PSpell)
 {
+	PROFILE_FUNC();
     if(PSpell == NULL)
     {
         ShowWarning("CMagicState::CalculateMPCost Spell is NULL\n");
@@ -297,6 +307,7 @@ int16 CMagicState::CalculateMPCost(CSpell* PSpell)
 
 uint32 CMagicState::CalculateRecastTime(CSpell* PSpell)
 {
+	PROFILE_FUNC();
     if(PSpell == NULL)
     {
         return 0;
@@ -385,6 +396,7 @@ uint32 CMagicState::CalculateRecastTime(CSpell* PSpell)
 
 bool CMagicState::CheckInterrupt()
 {
+	PROFILE_FUNC();
 	if(m_interruptSpell)
 	{
 		PushMessage(MSGBASIC_IS_INTERRUPTED);
@@ -426,6 +438,7 @@ bool CMagicState::CheckInterrupt()
 
 bool CMagicState::ValidCast(CSpell* PSpell, CBattleEntity* PTarget)
 {
+	PROFILE_FUNC();
     if(!CheckValidTarget(PTarget)) return false;
 
 	if(!m_enableCasting ||
@@ -470,6 +483,7 @@ bool CMagicState::ValidCast(CSpell* PSpell, CBattleEntity* PTarget)
 
 void CMagicState::InterruptSpell()
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PSpell == NULL);
     DSP_DEBUG_BREAK_IF(m_PEntity->PBattleAI->GetCurrentAction() != ACTION_MAGIC_INTERRUPT);
 
@@ -490,6 +504,7 @@ void CMagicState::InterruptSpell()
 
 void CMagicState::FinishSpell()
 {
+	PROFILE_FUNC();
     DSP_DEBUG_BREAK_IF(m_PSpell == NULL);
 	DSP_DEBUG_BREAK_IF(m_PEntity->PBattleAI->GetCurrentAction() != ACTION_MAGIC_FINISH);
 
@@ -629,6 +644,7 @@ void CMagicState::FinishSpell()
 
 void CMagicState::CharOnTarget(apAction_t* action, int16 ce, int16 ve)
 {
+	PROFILE_FUNC();
     if(m_PEntity->objtype != TYPE_PC)
     {
         return;
@@ -697,6 +713,7 @@ void CMagicState::CharOnTarget(apAction_t* action, int16 ce, int16 ve)
 
 void CMagicState::CharAfterFinish()
 {
+	PROFILE_FUNC();
     if(m_PEntity->objtype != TYPE_PC)
     {
         return;
@@ -735,6 +752,7 @@ void CMagicState::CharAfterFinish()
 
 bool CMagicState::TryHitInterrupt(CBattleEntity* PAttacker)
 {
+	PROFILE_FUNC();
 
     if (!IsCasting() || IsInterrupted() || m_PSpell->getSpellGroup() == SPELLGROUP_SONG)
     {
@@ -752,11 +770,13 @@ bool CMagicState::TryHitInterrupt(CBattleEntity* PAttacker)
 
 bool CMagicState::IsCasting()
 {
+	PROFILE_FUNC();
 	return m_PSpell != NULL;
 }
 
 bool CMagicState::ValidCharCast(CSpell* PSpell)
 {
+	PROFILE_FUNC();
     CCharEntity* PChar = (CCharEntity*)m_PEntity;
 
     // has spell and can use it
@@ -794,6 +814,7 @@ bool CMagicState::ValidCharCast(CSpell* PSpell)
 
 void CMagicState::SpendCost(CSpell* PSpell)
 {
+	PROFILE_FUNC();
     if(m_PSpell->getSpellGroup() == SPELLGROUP_NINJUTSU)
     {
         if(!(m_flags & MAGICFLAGS_IGNORE_TOOLS))
@@ -821,11 +842,13 @@ void CMagicState::SpendCost(CSpell* PSpell)
 
 int16 CMagicState::ConserveMP(int16 cost)
 {
+	PROFILE_FUNC();
     return cost * ( (float)(rand()%8 + 8.0f) / 16.0f );
 }
 
 void CMagicState::SetRecast(CSpell* PSpell)
 {
+	PROFILE_FUNC();
 
     // only applies to pcs
     if(m_PEntity->objtype != TYPE_PC)

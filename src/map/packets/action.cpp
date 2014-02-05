@@ -47,6 +47,7 @@
 
 CActionPacket::CActionPacket(CBattleEntity * PEntity)
 {
+	PROFILE_FUNC();
 	this->type = 0x28;
 	this->size = 0x12;
 

@@ -35,6 +35,7 @@ void CCommandHandler::init(lua_State* L)
 
 int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
 {
+	PROFILE_FUNC();
     std::istringstream clstream(commandline);
     std::string cmdname;
     clstream >> cmdname;

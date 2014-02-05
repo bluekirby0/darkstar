@@ -26,6 +26,7 @@
 
 CItemShop::CItemShop(uint16 id) : CItem(id)
 {
+	PROFILE_FUNC();
 	// SetType(ITEM_SHOP);
 
 	m_MinPrice = 0;
@@ -36,55 +37,66 @@ CItemShop::CItemShop(uint16 id) : CItem(id)
 
 CItemShop::~CItemShop()
 {
+	PROFILE_FUNC();
 }
 
 uint32 CItemShop::getMinPrice()
 {
+	PROFILE_FUNC();
 	return m_MinPrice;
 }
 
 
 uint32 CItemShop::getMaxPrice()
 {
+	PROFILE_FUNC();
 	return m_MaxPrice;
 }
 
 bool CItemShop::IsInMenu()
 {
+	PROFILE_FUNC();
     return getQuantity() != 0;
 }
 
 bool CItemShop::IsDailyIncrease()
 {
+	PROFILE_FUNC();
 	return m_DailyIncrease;
 }
 
 void CItemShop::setMinPrice(uint32 price)
 {
+	PROFILE_FUNC();
 	m_MinPrice = price;
 }
 
 void CItemShop::setMaxPrice(uint32 price)
 {
+	PROFILE_FUNC();
 	m_MaxPrice = price;
 }
 
 void CItemShop::setDailyIncrease(uint16 increase)
 {
+	PROFILE_FUNC();
     m_DailyIncrease = increase;
 }
 
 uint16 CItemShop::getDailyIncrease()
 {
+	PROFILE_FUNC();
     return m_DailyIncrease;
 }
 
 void CItemShop::setInitialQuantity(uint16 increase)
 {
+	PROFILE_FUNC();
     m_InitialQuantity = increase;
 }
 
 uint16 CItemShop::getInitialQuantity()
 {
+	PROFILE_FUNC();
     return m_InitialQuantity;
 }

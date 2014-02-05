@@ -35,6 +35,7 @@
 
 CInstanceHandler::CInstanceHandler(uint16 zoneid)
 {
+	PROFILE_FUNC();
 	m_ZoneId = zoneid;
 
 	//Dynamis zone (need to add COP dyna zone)
@@ -61,6 +62,7 @@ CInstanceHandler::CInstanceHandler(uint16 zoneid)
 }
 
 void CInstanceHandler::handleInstances(uint32 tick){
+	PROFILE_FUNC();
 	for(int i=0; i<m_MaxInstances; i++){
 		if(m_Instances[i]!=NULL){ //handle it!
 			CInstance* PInstance = m_Instances[i];
@@ -189,6 +191,7 @@ void CInstanceHandler::handleInstances(uint32 tick){
 }
 
 void CInstanceHandler::wipeInstance(CInstance* inst){
+	PROFILE_FUNC();
 	if(inst->getInstanceNumber() <= m_MaxInstances && inst->getInstanceNumber()>0 &&
 		m_Instances[inst->getInstanceNumber()-1] != NULL){
 			ShowDebug("Wiping instance BCNMID: %i Instance %i \n",inst->getID(),inst->getInstanceNumber());
@@ -202,6 +205,7 @@ that this will be called if you warp BEFORE entering the bcnm (but still have ba
 hence it doesn't check if you're "in" the BCNM, it just tries to remove you from the list.
 */
 bool CInstanceHandler::disconnectFromBcnm(CCharEntity* PChar){ //includes warping
+	PROFILE_FUNC();
 	for(int i=0; i<m_MaxInstances; i++){
 		if(m_Instances[i]!=NULL){
 			if(m_Instances[i]->delPlayerFromBcnm(PChar)){
@@ -219,6 +223,7 @@ bool CInstanceHandler::disconnectFromBcnm(CCharEntity* PChar){ //includes warpin
 }
 
 bool CInstanceHandler::leaveBcnm(uint16 bcnmid, CCharEntity* PChar){
+	PROFILE_FUNC();
 	for(int i=0; i<m_MaxInstances; i++){
 		if(m_Instances[i]!=NULL && m_Instances[i]->getID() == bcnmid){
 			if(m_Instances[i]->isPlayerInBcnm(PChar)){
@@ -238,6 +243,7 @@ bool CInstanceHandler::leaveBcnm(uint16 bcnmid, CCharEntity* PChar){
 }
 
 bool CInstanceHandler::winBcnm(uint16 bcnmid, CCharEntity* PChar){
+	PROFILE_FUNC();
 	for(int i=0; i<m_MaxInstances; i++){
 		if(m_Instances[i]!=NULL && m_Instances[i]->getID() == bcnmid){
 			if(m_Instances[i]->isPlayerInBcnm(PChar)){
@@ -250,6 +256,7 @@ bool CInstanceHandler::winBcnm(uint16 bcnmid, CCharEntity* PChar){
 }
 
 bool CInstanceHandler::enterBcnm(uint16 bcnmid, CCharEntity* PChar){
+	PROFILE_FUNC();
 	for(int i=0; i<m_MaxInstances; i++){
 		if(m_Instances[i]!=NULL && m_Instances[i]->getID() == bcnmid){
 			if(m_Instances[i]->isValidPlayerForBcnm(PChar)){
@@ -263,6 +270,7 @@ bool CInstanceHandler::enterBcnm(uint16 bcnmid, CCharEntity* PChar){
 }
 
 int CInstanceHandler::registerBcnm(uint16 id, CCharEntity* PChar){
+	PROFILE_FUNC();
 	if(!hasFreeInstance()){
 		return -1;
 	}
@@ -427,6 +435,7 @@ int CInstanceHandler::registerBcnm(uint16 id, CCharEntity* PChar){
 }
 
 bool CInstanceHandler::hasFreeSpecialInstance(uint16 id){ //reserved for special instance like limbus
+	PROFILE_FUNC();
 
  switch(id)
 	  {
@@ -492,6 +501,7 @@ bool CInstanceHandler::hasFreeSpecialInstance(uint16 id){ //reserved for special
 }
 
 bool CInstanceHandler::hasSpecialInstanceEmpty(uint16 id){ //reserved for special instance like limbus
+	PROFILE_FUNC();
   if(id <= m_MaxInstances &&  id!=0){
 	  if(m_Instances[id-1] != NULL){
 					 return false;
@@ -499,12 +509,14 @@ bool CInstanceHandler::hasSpecialInstanceEmpty(uint16 id){ //reserved for specia
    }
  return true;
 }
-void CInstanceHandler::SetLootToBCNM(uint16 LootID,uint16 id,uint32 npcID){
+void CInstanceHandler::SetLootToBCNM(uint16 LootID, uint16 id, uint32 npcID){
+	PROFILE_FUNC();
 	m_Instances[id-1]->setLootId(LootID);
 	CBaseEntity* PNpc = (CBaseEntity*)zoneutils::GetEntity(npcID, TYPE_NPC);
 	m_Instances[id-1]->addNpc(PNpc);
 }
 void CInstanceHandler::RestoreOnInstance(uint16 id){
+	PROFILE_FUNC();
 int playermaxMP = 0;
 int playermaxHP = 0;
   if(id <= m_MaxInstances &&  id>0){
@@ -538,6 +550,7 @@ int playermaxHP = 0;
     }
 }
 int CInstanceHandler::SpecialInstanceLeftTime(uint16 id,uint32 tick){ //reserved for special instance like limbus
+	PROFILE_FUNC();
 
   if(id <= m_MaxInstances &&  id>0){
 
@@ -550,6 +563,7 @@ int CInstanceHandler::SpecialInstanceLeftTime(uint16 id,uint32 tick){ //reserved
  return 0;
 }
 int CInstanceHandler::GiveTimeToInstance(uint16 id, uint16 Time){
+	PROFILE_FUNC();
    if(id <= m_MaxInstances &&  id>0){
 	  if(m_Instances[id-1] != NULL){
 	          CInstance* PInstance = m_Instances[id-1];
@@ -559,6 +573,7 @@ int CInstanceHandler::GiveTimeToInstance(uint16 id, uint16 Time){
   return 1;
 }
 bool CInstanceHandler::hasFreeInstance(){
+	PROFILE_FUNC();
 
  for(int i=0; i<m_MaxInstances; i++){
  if(m_Instances[i] == NULL){
@@ -569,6 +584,7 @@ bool CInstanceHandler::hasFreeInstance(){
 }
 
 uint8 CInstanceHandler::findInstanceIDFor(CCharEntity* PChar){
+	PROFILE_FUNC();
 	for(int i=0; i<m_MaxInstances; i++){
 		if(m_Instances[i] != NULL){
 			if(m_Instances[i]->isValidPlayerForBcnm(PChar)){
@@ -581,6 +597,7 @@ uint8 CInstanceHandler::findInstanceIDFor(CCharEntity* PChar){
 
 CInstance* CInstanceHandler::getInstance(CCharEntity* PChar)
 {
+	PROFILE_FUNC();
     for (int i = 0; i < m_MaxInstances; i++)
         if (m_Instances[i] != NULL)
 			if (m_Instances[i]->isValidPlayerForBcnm(PChar))
@@ -593,6 +610,7 @@ uint32 CInstanceHandler::pollTimeLeft(uint16 id){
 }
 
 void CInstanceHandler::openTreasureChest(CCharEntity* PChar){
+	PROFILE_FUNC();
 		for(int i=0; i<m_MaxInstances; i++){
 		if(m_Instances[i] != NULL){
 			if(m_Instances[i]->isValidPlayerForBcnm(PChar)){
@@ -606,12 +624,14 @@ void CInstanceHandler::openTreasureChest(CCharEntity* PChar){
 //========================DYNAMIS FUNCTIONS=============================================//
 
 int CInstanceHandler::getUniqueDynaID(uint16 id){
+	PROFILE_FUNC();
 
 	CInstance* PInstance = m_Instances[0];
 	return PInstance->getDynaUniqueID();
 }
 
 int CInstanceHandler::registerDynamis(uint16 id, CCharEntity* PChar){
+	PROFILE_FUNC();
 	if(!hasFreeInstance()){
 		return -1;
 	}
@@ -639,6 +659,7 @@ int CInstanceHandler::registerDynamis(uint16 id, CCharEntity* PChar){
 }
 
 int CInstanceHandler::dynamisAddPlayer(uint16 dynaid, CCharEntity* PChar){
+	PROFILE_FUNC();
 
 	if(m_Instances[0]->addPlayerToDynamis(PChar)){
 		ShowDebug("InstanceHandler ::Registration for Dynamis by %s succeeded \n",PChar->GetName());
@@ -649,6 +670,7 @@ int CInstanceHandler::dynamisAddPlayer(uint16 dynaid, CCharEntity* PChar){
 
 int CInstanceHandler::SpecialInstanceAddPlayer(uint16 id, CCharEntity* PChar)
 {
+	PROFILE_FUNC();
 	short Inst =0;
 	switch(id)
 	{
@@ -678,6 +700,7 @@ int CInstanceHandler::SpecialInstanceAddPlayer(uint16 id, CCharEntity* PChar)
 	return 1;
 }
 int CInstanceHandler::dynamisMessage(uint16 Param1, uint16 Param2){
+	PROFILE_FUNC();
 
 	CInstance* PInstance = m_Instances[0];
 
@@ -688,6 +711,7 @@ int CInstanceHandler::dynamisMessage(uint16 Param1, uint16 Param2){
 }
 
 void CInstanceHandler::launchDynamisSecondPart(){
+	PROFILE_FUNC();
 	instanceutils::spawnSecondPartDynamis(m_Instances[0]);
 }
 
@@ -697,6 +721,7 @@ that this will be called if you warp BEFORE entering the dyna (but still have dy
 hence it doesn't check if you're "in" the BCNM, it just tries to remove you from the list.
 */
 bool CInstanceHandler::disconnectFromDynamis(CCharEntity* PChar){ //includes warping
+	PROFILE_FUNC();
 	if(m_Instances[0]!=NULL){
 		if(m_Instances[0]->delPlayerFromDynamis(PChar)){
 			luautils::OnBcnmLeave(PChar,m_Instances[0],LEAVE_WARPDC);
@@ -713,6 +738,7 @@ bool CInstanceHandler::disconnectFromDynamis(CCharEntity* PChar){ //includes war
 
 void CInstanceHandler::insertMonsterInList(CMobEntity* PMob)
 {
+	PROFILE_FUNC();
 	CInstance* PInstance = m_Instances[0];
 
 	if(PInstance->isMonsterInList(PMob) == false)
@@ -723,6 +749,7 @@ void CInstanceHandler::insertMonsterInList(CMobEntity* PMob)
 
 bool CInstanceHandler::checkMonsterInList(CMobEntity* PMob)
 {
+	PROFILE_FUNC();
 	CInstance* PInstance = m_Instances[0];
 
 	if(PInstance->isMonsterInList(PMob))

@@ -27,6 +27,7 @@
 
 CInventoryModifyPacket::CInventoryModifyPacket(uint8 LocationID, uint8 slotID, uint32 quantity) 
 {
+	PROFILE_FUNC();
 	this->type = 0x1E;
 	this->size = 0x08;
 

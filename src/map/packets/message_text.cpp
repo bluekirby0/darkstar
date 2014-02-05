@@ -29,6 +29,7 @@
 
 CMessageTextPacket::CMessageTextPacket(CBaseEntity* PEntity, uint16 messageID)
 {
+	PROFILE_FUNC();
 	this->type = 0x36;
 	this->size = 0x08;
 
